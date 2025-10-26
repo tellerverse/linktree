@@ -9,7 +9,7 @@
   z-index: -2;
 }
 
-/* Intro-Screen */
+/* Intro-Overlay */
 #intro {
   position: fixed;
   top: 0;
@@ -22,7 +22,7 @@
   align-items: center;
   cursor: pointer;
   z-index: 2;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
 }
 
 #intro .center-text {
@@ -38,7 +38,7 @@
   50% { opacity: 0.5; }
 }
 
-/* Glasiges Overlay */
+/* Linktree + Glas-Effekt */
 #linktree {
   position: fixed;
   top: 0;
@@ -50,7 +50,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+  z-index: 1;
+}
+
+#linktree.show {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .hidden {
@@ -65,11 +73,21 @@
   text-align: center;
   color: white;
   box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 1s ease;
 }
+
+.glass-box.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .glass-box h2 {
   margin-bottom: 20px;
   font-size: 1.8rem;
 }
+
 .glass-box ul {
   list-style: none;
   padding: 0;
