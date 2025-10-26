@@ -1,4 +1,4 @@
-/* Vollbildvideo */
+/* Hintergrundvideo */
 #bg-video {
   position: fixed;
   top: 0;
@@ -6,29 +6,36 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -2;
 }
 
-/* Intro-Button */
+/* Intro-Screen */
 #intro {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-#openLinktree {
-  font-size: 1.5rem;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: 0.3s;
+  z-index: 2;
+  transition: opacity 0.6s ease;
 }
-#openLinktree:hover {
-  background: rgba(255,255,255,0.4);
+
+#intro .center-text {
+  color: white;
+  font-size: 2rem;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 /* Glasiges Overlay */
@@ -39,11 +46,13 @@
   width: 100%;
   height: 100%;
   backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.5s ease;
 }
+
 .hidden {
   display: none;
 }
@@ -52,10 +61,14 @@
 .glass-box {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
-  padding: 40px;
+  padding: 40px 60px;
   text-align: center;
   color: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+.glass-box h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
 }
 .glass-box ul {
   list-style: none;
@@ -67,9 +80,9 @@
 .glass-box a {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
-  transition: 0.3s;
+  font-size: 1.3rem;
+  transition: color 0.3s;
 }
 .glass-box a:hover {
-  color: #a8d0ff;
+  color: #9fd3ff;
 }

@@ -1,11 +1,15 @@
-const openBtn = document.getElementById('openLinktree');
+const intro = document.getElementById('intro');
 const linktree = document.getElementById('linktree');
 const music = document.getElementById('bg-music');
 
-openBtn.addEventListener('click', () => {
-  linktree.classList.remove('hidden');
-  openBtn.style.display = 'none';
+intro.addEventListener('click', () => {
+  intro.style.opacity = '0';
+  setTimeout(() => {
+    intro.style.display = 'none';
+    linktree.classList.remove('hidden');
+  }, 600);
+
   music.play().catch(() => {
-    console.log('Autoplay blockiert – Musik startet nach Interaktion.');
+    console.warn('Autoplay blockiert – Musik startet nach Nutzerinteraktion.');
   });
 });
