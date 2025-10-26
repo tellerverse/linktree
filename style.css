@@ -1,53 +1,28 @@
-/* Basics */
-body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font-family: Arial, sans-serif; background:#111; color:white; }
-
-/* Hintergrundvideo */
 .bg-video {
-  position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition: opacity 1s ease; }
+  position: fixed;
+  top:50%; left:50%;
+  min-width:100%;
+  min-height:100%;
+  transform: translate(-50%,-50%);
+  object-fit: cover;
+  z-index: -2;
+  transition: opacity 1s ease;
+}
 .bg-video.hidden { opacity:0; z-index:-3; }
 
-/* Intro Overlay */
-#intro {
-  position:fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center;
-  background: rgba(0,0,0,0.4); cursor:pointer; z-index:2; transition:opacity 0.8s ease; }
-#intro .center-text { font-size:2rem; text-shadow:0 0 15px rgba(255,255,255,0.7); animation:pulse 1.5s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
-
 /* Slider Container */
-#slider { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; z-index:1; }
+#slider { position: fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; z-index:1; }
 
-/* Cards */
+/* Karten */
 .card {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.8); opacity:0; transition: all 0.8s ease;
-  background: rgba(255,255,255,0.15); border-radius:20px; padding:30px 50px; text-align:center; backdrop-filter:blur(20px); }
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  opacity:0;
+  transition: all 0.8s ease;
+  background: rgba(255,255,255,0.15);
+  border-radius:20px;
+  padding:30px 50px;
+  text-align:center;
+  backdrop-filter:blur(20px);
+}
 .card.active { transform:translate(-50%,-50%) scale(1); opacity:1; z-index:2; }
-
-/* Profile Pic */
-.profile-pic { width:120px; height:120px; border-radius:50%; margin-bottom:15px; object-fit:cover; }
-
-/* Headings */
-.card h1 { margin:10px 0 20px 0; font-size:2rem; }
-
-/* Links */
-.card ul.social-links { list-style:none; padding:0; margin:0; }
-.card ul.social-links li { margin:10px 0; }
-.card ul.social-links li a { color:white; text-decoration:none; font-size:1.3rem; transition:0.3s; }
-.card ul.social-links li a:hover { color:#ff66cc; }
-
-/* Navigation Buttons */
-.nav-btn {
-  position:absolute; top:50%; transform:translateY(-50%);
-  font-size:2rem; background:rgba(0,0,0,0.3); border:none; color:white; padding:10px 15px; border-radius:50%; cursor:pointer; transition:0.3s;
-}
-#prev { left:20px; }
-#next { right:20px; }
-.nav-btn:hover { background:rgba(0,0,0,0.6); }
-
-/* Mobile scaling */
-@media (max-width:768px) {
-  .card { padding:20px 25px; width:80%; }
-  .profile-pic { width:90px; height:90px; }
-  .card h1 { font-size:1.5rem; }
-  .card ul.social-links li a { font-size:1.1rem; }
-  .nav-btn { font-size:1.5rem; padding:8px 12px; }
-}
