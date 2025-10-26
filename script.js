@@ -10,8 +10,8 @@ const bgVideoNext = document.getElementById('bg-video-next');
 let current = 0;
 const total = cards.length;
 
-// Zeige Karte und Hintergrundvideo
-function showCard(index) {
+// Zeige Karte + Hintergrundvideo
+function showCard(index){
   cards.forEach((c,i)=>{
     c.classList.remove('active');
     if(i===index) c.classList.add('active');
@@ -21,11 +21,14 @@ function showCard(index) {
   bgVideoNext.querySelector('source').src = newVideoSrc;
   bgVideoNext.load();
   bgVideoNext.classList.remove('hidden');
-
-  // Crossfade Animation
   bgVideoNext.style.opacity = 0;
-  setTimeout(() => { bgVideoNext.style.transition = 'opacity 1s ease'; bgVideoNext.style.opacity = 1; }, 50);
-  setTimeout(() => {
+
+  setTimeout(()=>{
+    bgVideoNext.style.transition = 'opacity 1s ease';
+    bgVideoNext.style.opacity = 1;
+  }, 50);
+
+  setTimeout(()=>{
     bgVideo.src = newVideoSrc;
     bgVideo.load();
     bgVideoNext.classList.add('hidden');
@@ -34,7 +37,7 @@ function showCard(index) {
   }, 1050);
 }
 
-// Navigation
+// Navigation Buttons
 nextBtn.addEventListener('click', ()=>{
   current = (current+1)%total;
   showCard(current);
@@ -59,8 +62,8 @@ intro.addEventListener('click', ()=>{
   setTimeout(()=>{
     intro.style.display='none';
     slider.classList.remove('hidden');
-    showCard(current);
-  }, 800);
+    showCard(current); // erste Karte direkt anzeigen
+  },800);
 
   music.play().catch(()=>{ console.warn('Autoplay blockiert'); });
 });
