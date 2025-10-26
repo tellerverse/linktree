@@ -10,21 +10,28 @@ const bgVideoNext = document.getElementById('bg-video-next');
 let current = 0;
 const total = cards.length;
 
+// Zeige Karte und Hintergrundvideo
 function showCard(index) {
   cards.forEach((c,i)=>{
     c.classList.remove('active');
     if(i===index) c.classList.add('active');
   });
-  // Hintergrundvideo wechseln
-  const newVideo = cards[index].dataset.video;
-  bgVideoNext.querySelector('source').src = newVideo;
+
+  const newVideoSrc = cards[index].dataset.video;
+  bgVideoNext.querySelector('source').src = newVideoSrc;
   bgVideoNext.load();
   bgVideoNext.classList.remove('hidden');
-  setTimeout(()=>{
-    bgVideo.classList.add('hidden');
-    bgVideoNext.id='bg-video';
-    bgVideo.id='bg-video-next';
-  }, 50);
+
+  // Crossfade Animation
+  bgVideoNext.style.opacity = 0;
+  setTimeout(() => { bgVideoNext.style.transition = 'opacity 1s ease'; bgVideoNext.style.opacity = 1; }, 50);
+  setTimeout(() => {
+    bgVideo.src = newVideoSrc;
+    bgVideo.load();
+    bgVideoNext.classList.add('hidden');
+    bgVideoNext.style.transition = '';
+    bgVideoNext.style.opacity = 0;
+  }, 1050);
 }
 
 // Navigation
@@ -54,5 +61,6 @@ intro.addEventListener('click', ()=>{
     slider.classList.remove('hidden');
     showCard(current);
   }, 800);
+
   music.play().catch(()=>{ console.warn('Autoplay blockiert'); });
 });
