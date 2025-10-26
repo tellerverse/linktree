@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moritz.gg</title>
+  <title>Moritz.gg Slider</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Hintergrundvideo -->
-  <video autoplay muted loop id="bg-video">
+  <!-- Hintergrundvideos -->
+  <video autoplay muted loop id="bg-video" class="bg-video">
     <source src="mecoding.mp4" type="video/mp4">
+  </video>
+  <video muted loop id="bg-video-next" class="bg-video hidden">
+    <source src="mebanger.mp4" type="video/mp4">
   </video>
 
   <!-- Hintergrundmusik -->
@@ -18,22 +21,40 @@
     <source src="melistening.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Intro-Overlay (Click-to-open) -->
+  <!-- Intro Overlay -->
   <div id="intro">
     <div class="center-text">Click to open</div>
   </div>
 
-  <!-- Glas-Box Overlay -->
-  <div id="linktree" class="hidden">
-    <div class="glass-box">
-      <img src="mepicture.jpg" alt="Profilbild" class="profile-pic">
-      <h1>moritz.gg</h1>
+  <!-- Slider Container -->
+  <div id="slider" class="hidden">
+
+    <!-- Karte 1 -->
+    <div class="card active" data-video="mecoding.mp4" data-color="#8e44ad,#ff00ff,#ff6600">
+      <img src="medeving.png" class="profile-pic" alt="Entwickler">
+      <h1>Moritz - Entwickler</h1>
+      <ul class="social-links">
+        <li><a href="https://fortnite.com/" target="_blank">Fortnite Dev</a></li>
+        <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+        <li><a href="https://twitter.com/" target="_blank">Twitter</a></li>
+      </ul>
+    </div>
+
+    <!-- Karte 2 -->
+    <div class="card" data-video="mebanger.mp4" data-color="#ff66cc,#ff9933,#aa00ff">
+      <img src="mepicture.png" class="profile-pic" alt="Privat">
+      <h1>Moritz - Privat</h1>
       <ul class="social-links">
         <li><a href="https://instagram.com/" target="_blank">Instagram</a></li>
         <li><a href="https://youtube.com/" target="_blank">YouTube</a></li>
         <li><a href="https://twitch.tv/" target="_blank">Twitch</a></li>
       </ul>
     </div>
+
+    <!-- Navigation Buttons -->
+    <button id="prev" class="nav-btn">&#10094;</button>
+    <button id="next" class="nav-btn">&#10095;</button>
+
   </div>
 
   <script src="script.js"></script>
