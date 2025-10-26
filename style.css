@@ -1,17 +1,75 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  text-align: center;
-  padding: 50px;
+/* Vollbildvideo */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
 }
-button {
-  background: #007bff;
-  color: white;
-  padding: 10px 20px;
+
+/* Intro-Button */
+#intro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#openLinktree {
+  font-size: 1.5rem;
+  padding: 15px 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  backdrop-filter: blur(10px);
   cursor: pointer;
+  transition: 0.3s;
 }
-button:hover {
-  background: #0056b3;
+#openLinktree:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* Glasiges Overlay */
+#linktree {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hidden {
+  display: none;
+}
+
+/* Glas-Box */
+.glass-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+.glass-box ul {
+  list-style: none;
+  padding: 0;
+}
+.glass-box li {
+  margin: 15px 0;
+}
+.glass-box a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+.glass-box a:hover {
+  color: #a8d0ff;
 }

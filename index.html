@@ -3,13 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meine Website</title>
+  <title>Linktree</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Willkommen auf meiner Website</h1>
-  <p id="text">Diese Website ist mit JavaScript gemacht.</p>
-  <button id="changeText">Klick mich</button>
+
+  <!-- Hintergrundvideo -->
+  <video autoplay muted loop id="bg-video">
+    <source src="deinvideo.mp4" type="video/mp4">
+  </video>
+
+  <!-- Musik -->
+  <audio id="bg-music" loop>
+    <source src="deinemusik.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Start-Button -->
+  <div id="intro">
+    <button id="openLinktree">Linktree öffnen</button>
+  </div>
+
+  <!-- Glasiges Overlay -->
+  <div id="linktree" class="hidden">
+    <div class="glass-box">
+      <h2>Meine Links</h2>
+      <ul>
+        <li><a href="https://instagram.com/" target="_blank">Instagram</a></li>
+        <li><a href="https://youtube.com/" target="_blank">YouTube</a></li>
+        <li><a href="https://twitch.tv/" target="_blank">Twitch</a></li>
+      </ul>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
