@@ -1,8 +1,19 @@
+/* Reset / Basics */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background: #111;
+  color: white;
+}
+
 /* Hintergrundvideo */
 #bg-video {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -12,39 +23,31 @@
 /* Intro-Overlay */
 #intro {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0,0,0,0.4);
   cursor: pointer;
   z-index: 2;
   transition: opacity 0.8s ease;
 }
-
 #intro .center-text {
-  color: white;
   font-size: 2rem;
-  font-family: 'Arial', sans-serif;
-  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  text-shadow: 0 0 15px rgba(255,255,255,0.7);
   animation: pulse 1.5s infinite;
 }
-
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,100% { opacity:1; }
+  50% { opacity:0.5; }
 }
 
-/* Linktree + Glas-Effekt */
+/* Glas-Overlay */
 #linktree {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top:0; left:0;
+  width: 100%; height:100%;
   backdrop-filter: blur(20px);
   background: rgba(0,0,0,0.4);
   display: flex;
@@ -52,55 +55,70 @@
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 1.2s ease;
+  transition: opacity 1s ease;
   z-index: 1;
 }
-
 #linktree.show {
   opacity: 1;
   pointer-events: all;
 }
 
-.hidden {
-  display: none;
-}
-
 /* Glas-Box */
 .glass-box {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.15);
   border-radius: 20px;
-  padding: 40px 60px;
+  padding: 30px 50px;
   text-align: center;
-  color: white;
   box-shadow: 0 0 25px rgba(0,0,0,0.4);
   transform: translateY(30px);
   opacity: 0;
   transition: all 1s ease;
 }
-
 .glass-box.visible {
   transform: translateY(0);
   opacity: 1;
 }
-
-.glass-box h2 {
-  margin-bottom: 20px;
-  font-size: 1.8rem;
+.glass-box img.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
 }
-
-.glass-box ul {
+.glass-box h1 {
+  margin: 10px 0 20px 0;
+  font-size: 2rem;
+}
+.glass-box ul.social-links {
   list-style: none;
-  padding: 0;
+  padding:0;
+  margin:0;
 }
-.glass-box li {
-  margin: 15px 0;
+.glass-box ul.social-links li {
+  margin: 10px 0;
 }
-.glass-box a {
+.glass-box ul.social-links li a {
   color: white;
   text-decoration: none;
   font-size: 1.3rem;
-  transition: color 0.3s;
+  transition: 0.3s;
 }
-.glass-box a:hover {
+.glass-box ul.social-links li a:hover {
   color: #9fd3ff;
+}
+
+/* Mobile scaling */
+@media (max-width: 768px) {
+  .glass-box {
+    padding: 20px 25px;
+  }
+  .glass-box img.profile-pic {
+    width: 90px; height:90px;
+  }
+  .glass-box h1 {
+    font-size: 1.5rem;
+  }
+  .glass-box ul.social-links li a {
+    font-size: 1.1rem;
+  }
 }

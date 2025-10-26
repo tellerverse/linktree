@@ -4,15 +4,13 @@ const glassBox = document.querySelector('.glass-box');
 const music = document.getElementById('bg-music');
 
 intro.addEventListener('click', () => {
-  // Intro langsam ausblenden
+  // Intro ausblenden
   intro.style.opacity = '0';
-  
-  // Nach kurzer Verzögerung ausblenden und Linktree aktivieren
   setTimeout(() => {
     intro.style.display = 'none';
     linktree.classList.add('show');
 
-    // Glass-Box sanft reinfahren
+    // Glas-Box einblenden
     setTimeout(() => {
       glassBox.classList.add('visible');
     }, 300);
