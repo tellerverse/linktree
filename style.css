@@ -71,6 +71,45 @@ body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font
   .nav-btn { font-size:1.5rem; padding:8px 12px; }
 }
 
+.switch-btn {
+  position: absolute;
+  bottom: -25px; /* halb über Karte */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff00cc, #ff6600);
+  color: white;
+  font-size: 2rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(255, 100, 200, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+}
+.switch-btn:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 100, 200, 0.6);
+}
+
+/* Stelle sicher, dass die Karten genug Abstand unten haben */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: all 0.8s ease;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 50px 50px 80px 50px; /* mehr Platz unten */
+  text-align: center;
+  backdrop-filter: blur(20px);
+}
 
 #version {
   position: fixed;

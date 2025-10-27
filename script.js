@@ -37,15 +37,26 @@ function showCard(index){
   }, 1050);
 }
 
-// Navigation Buttons
-nextBtn.addEventListener('click', ()=>{
-  current = (current+1)%total;
+const switchBtn = document.getElementById('switch');
+
+// Nächste Karte beim Klick
+switchBtn.addEventListener('click', () => {
+  current = (current + 1) % total;
   showCard(current);
 });
-prevBtn.addEventListener('click', ()=>{
-  current = (current-1+total)%total;
-  showCard(current);
+
+// Swipe auf Mobile bleibt gleich:
+let startXX = 0;
+slider.addEventListener('touchstart', e => { startXX = e.touches[0].clientX; });
+slider.addEventListener('touchend', e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startXX - endX > 50) switchBtn.click(); // nach rechts wischen = nächste Karte
+  else if (endX - startXX > 50) { // optional rückwärts?
+    current = (current - 1 + total) % total;
+    showCard(current);
+  }
 });
+
 
 // Swipe für Mobile
 let startX=0;
