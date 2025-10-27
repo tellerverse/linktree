@@ -1,205 +1,45 @@
-/* ========== FONT SETUP ========== */
-@font-face {
-  font-family: 'Burbank';
-  src: url('Assets/burbankbigcondensed_black.otf') format('opentype');
-}
+@font-face { font-family: 'Burbank'; src: url('Assets/burbankbigcondensed_black.otf') format('opentype'); }
 
-/* ========== BASE ========== */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  color: white;
-  font-family: 'Burbank', 'Poppins', sans-serif;
-  letter-spacing: 0.5px;
-}
+html, body { margin:0; padding:0; height:100%; overflow:hidden; font-family:'Burbank','Poppins',sans-serif; color:white; letter-spacing:0.5px; }
+.bg-video { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; transition:opacity 1s ease; }
+.bg-video.hidden { opacity:0; }
 
-/* ========== BACKGROUND VIDEO ========== */
-.bg-video {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: -2;
-  transition: opacity 1s ease;
-}
-.bg-video.hidden { opacity: 0; }
+#intro { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); z-index:10; cursor:pointer; }
+.center-text { font-size:2rem; animation: blink 1.8s infinite; }
+@keyframes blink {50% {opacity:0.4;}}
 
-/* ========== INTRO ========== */
-#intro {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.8);
-  z-index: 10;
-  cursor: pointer;
-}
-.center-text { font-size: 2rem; animation: blink 1.8s infinite; }
-@keyframes blink { 50% { opacity: 0.4; } }
+#slider { position:relative; width:100%; height:100%; opacity:0; transition: opacity 1s ease; }
+#slider.active { opacity:1; }
 
-/* ========== SLIDER ========== */
-#slider {
-  position: relative;
-  width: 100%; height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-#slider.active { opacity: 1; }
-
-/* ========== CARD BASE ========== */
 .card {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  opacity: 0;
-  transition: all 0.8s ease;
-  width: min(85vw, 600px);
-  border-radius: 25px;
-  padding: 40px;
-  text-align: left;
-  backdrop-filter: blur(20px);
-  overflow: visible; /* wichtig für TicTacToe */
-  border: 2px solid rgba(255,255,255,0.15);
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.8);
+  opacity:0; transition:all 0.8s ease; width:min(85vw,600px); border-radius:25px; padding:40px; text-align:left;
+  backdrop-filter:blur(20px); overflow:visible; border:2px solid rgba(255,255,255,0.15);
 }
-.card.active {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  z-index: 2;
-}
+.card.active { transform:translate(-50%,-50%) scale(1); opacity:1; z-index:2; }
 
-/* dynamische Farbwerte */
-.card[data-color] {
-  --accent: attr(data-color color, #ffffff);
-}
-.card.active {
-  box-shadow: 0 0 40px var(--accent);
-  background: rgba(255,255,255,0.1); /* leicht transparent */
-}
+.card-header { display:flex; align-items:flex-start; gap:20px; }
+.profile-pic { width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid; flex-shrink:0; }
+.header-info { display:flex; flex-direction:column; justify-content:flex-start; gap:8px; flex:1; }
+.header-info h1 { margin:0; font-size:2rem; color:rgba(255,255,255,0.9); }
 
-/* ========== HEADER (Profilbild + Name + Links) ========== */
-.card-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-.profile-pic {
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--accent);
-  flex-shrink: 0;
-}
-.header-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 8px;
-  flex: 1;
-}
-.header-info h1 {
-  margin: 0;
-  font-size: 2rem;
-  color: rgba(255,255,255,0.9);
-}
+.social-links { list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:8px 16px; }
+.social-links li a { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.85); text-decoration:none; font-weight:600; }
+.social-links li a:hover { color:var(--accent); }
+.social-icon { width:24px; height:24px; object-fit:contain; }
 
-/* Links */
-.social-links {
-  list-style: none;
-  padding: 0; margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-}
-.social-links li a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-  font-weight: 600;
-}
-.social-links li a:hover { color: var(--accent); }
-.social-icon {
-  width: 24px; height: 24px; object-fit: contain;
-}
+.card-text { margin-top:20px; font-size:1rem; line-height:1.4; color: color-mix(in srgb, white 80%, var(--accent, #fff) 20%); }
 
-/* Text unter Header */
-.card-text {
-  margin-top: 20px;
-  font-size: 1rem;
-  line-height: 1.4;
-  color: color-mix(in srgb, white 80%, var(--accent) 20%);
-}
+.switch-btn { position:absolute; bottom:-35px; right:-35px; width:80px; height:80px; border-radius:50%; background:var(--accent,#ff66cc); border:none; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 0 20px var(--accent,#ff66cc); transition: transform .3s ease, box-shadow .3s ease; z-index:5; }
+.switch-btn:hover { transform:scale(1.1); box-shadow:0 0 35px var(--accent,#ff66cc); }
+.switch-icon { width:100%; height:100%; border-radius:50%; object-fit:cover; }
 
-/* ========== SWITCH BUTTON ========== */
-.switch-btn {
-  position: absolute;
-  bottom: -35px; right: -35px;
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: none; cursor: pointer;
-  display: flex; justify-content: center; align-items: center;
-  box-shadow: 0 0 20px var(--accent);
-  transition: transform .3s ease, box-shadow .3s ease;
-  z-index: 5;
-}
-.switch-btn:hover { transform: scale(1.1); box-shadow: 0 0 35px var(--accent); }
-.switch-icon { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+#version { position:fixed; bottom:10px; right:15px; color:rgba(255,255,255,0.4); font-size:.9rem; }
 
-/* ========== VERSION LABEL ========== */
-#version {
-  position: fixed;
-  bottom: 10px; right: 15px;
-  color: rgba(255,255,255,0.4);
-  font-size: .9rem;
-}
+#tictactoe-container { position:fixed; z-index:9999; pointer-events:auto; bottom:-150px; right:-100px; width:300px; height:300px; perspective:800px; transform-origin:center; opacity:0; transform:translateY(30px) rotateX(35deg) rotateY(-15deg) rotateZ(-5deg) scale(0.95); transition: opacity 0.6s cubic-bezier(.2,.9,.3,1), transform 0.6s cubic-bezier(.2,.9,.3,1); }
+.card.active + #tictactoe-container, .card.active ~ #tictactoe-container { opacity:1; transform:translateY(0) rotateX(35deg) rotateY(-15deg) rotateZ(-5deg) scale(1); }
 
-/* ========== TICTACTOE (RAUSHÄNGEND + ANIMATION) ========== */
-#tictactoe-container {
-  position: fixed !important;
-  z-index: 9999 !important;
-  pointer-events: auto !important;
-  bottom: -150px;
-  right: -100px;
-  width: 300px; height: 300px;
-  perspective: 800px;
-  transform-origin: center;
-  opacity: 0;
-  transform: translateY(30px) rotateX(35deg) rotateY(-15deg) rotateZ(-5deg) scale(0.95);
-  transition: opacity 0.6s cubic-bezier(.2,.9,.3,1), transform 0.6s cubic-bezier(.2,.9,.3,1);
-}
-.card.active #tictactoe-container {
-  opacity: 1;
-  transform: translateY(0) rotateX(35deg) rotateY(-15deg) rotateZ(-5deg) scale(1);
-  animation: ttt-bounce 0.7s cubic-bezier(.2,.9,.3,1);
-}
-@keyframes ttt-bounce {
-  0% { transform: translateY(30px) scale(0.9) rotateX(40deg); opacity: 0; }
-  60% { transform: translateY(-8px) scale(1.05) rotateX(33deg); opacity: 1; }
-  100% { transform: translateY(0) scale(1) rotateX(35deg); opacity: 1; }
-}
-#tictactoe {
-  width: 100%; height: 100%;
-  border: 3px solid rgba(255,255,255,0.6);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 18px rgba(255,255,255,0.06);
-  cursor: pointer;
-  transform: rotateX(35deg) rotateY(-15deg) rotateZ(-5deg);
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-#tictactoe:hover {
-  transform: rotateX(30deg) rotateY(-10deg) rotateZ(-3deg) scale(1.03);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 28px rgba(255,255,255,0.08);
-}
+#tictactoe { width:100%; height:100%; border:3px solid rgba(255,255,255,0.6); border-radius:20px; background:rgba(255,255,255,0.08); box-shadow:0 10px 30px rgba(0,0,0,0.35), 0 0 18px rgba(255,255,255,0.06); cursor:pointer; transform:rotateX(35deg) rotateY(-15deg) rotateZ(-5deg); transition: transform .3s ease, box-shadow .3s ease; }
+#tictactoe:hover { transform:rotateX(30deg) rotateY(-10deg) rotateZ(-3deg) scale(1.03); box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 28px rgba(255,255,255,0.08); }
 
-/* ========== MOBILE ========== */
-@media (max-width: 700px) {
-  .card { width: 90%; padding: 30px; }
-  #tictactoe-container { bottom: -120px; right: -60px; width: 220px; height: 220px; }
-  .profile-pic { width: 90px; height: 90px; }
-}
+@media (max-width:700px){ .card{width:90%;padding:30px;} #tictactoe-container{bottom:-120px; right:-60px;width:220px;height:220px;} .profile-pic{width:90px;height:90px;} }

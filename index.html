@@ -30,7 +30,7 @@
   <div id="slider" class="hidden">
 
     <!-- Karte 1 -->
-    <div class="card" data-video="Assets/mecoding.mp4" data-color="#ff66cc">
+    <div class="card active" data-video="Assets/mecoding.mp4" data-color="#ff66cc">
       <div class="card-header">
         <img src="Assets/medeving.jpg" class="profile-pic" alt="Entwickler">
         <div class="header-info">
@@ -43,8 +43,7 @@
           </ul>
         </div>
       </div>
-
-      <p class="card-text">
+      <div class="card-text">
         fortnite gamedeveloper<br>
         fluent <b>verse</b>, c#, javascript, python and pascal<br><br>
         verse commissions: <span style="color: rgb(0, 255, 0);">open</span><br><br>
@@ -53,13 +52,13 @@
         <a href="https://fortnite.gg/island?code=4059-2791-0712" style="color: inherit; text-decoration: none;">@bios trio</a>, 
         <a href="https://www.youtube.com/@AANDRE" style="color: inherit; text-decoration: none;">@aandre</a> 
         and more.
-      </p>
+      </div>
     </div>
 
     <!-- Karte 2 -->
     <div class="card" data-video="Assets/mebanger.mp4" data-color="#2de42e">
       <div class="card-header">
-        <img src="Assets/mepicture.jpg" class="profile-pic" alt="Entwickler">
+        <img src="Assets/mepicture.jpg" class="profile-pic" alt="Privat">
         <div class="header-info">
           <h1>moritz</h1>
           <ul class="social-links">
@@ -69,13 +68,7 @@
           </ul>
         </div>
       </div>
-
-      <p class="card-text">ich esse döner ohne gurke. <span style="font-family: 'Arial', monospace;">🥒</span></p>
-
-      <!-- TicTacToe hängt raus -->
-      <div id="tictactoe-container">
-        <canvas id="tictactoe" width="300" height="300"></canvas>
-      </div>
+      <div class="card-text">ich esse döner ohne gurke. <span style="font-family: 'Arial', monospace;">🥒</span></div>
     </div>
 
     <!-- Switch Button -->
@@ -86,6 +79,11 @@
     <!-- Version Label -->
     <div id="version">v2.3</div>
 
+  </div>
+
+  <!-- TicTacToe Container -->
+  <div id="tictactoe-container">
+    <canvas id="tictactoe"></canvas>
   </div>
 
   <script src="script.js"></script>
