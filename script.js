@@ -71,18 +71,18 @@ function showCard(index) {
     bgVideoNext.style.opacity = 0;
   }, 1050);
 }
+// === Dynamische Farben pro Karte ===
 document.querySelectorAll('.card').forEach(card => {
-  const color = card.dataset.color || '#ff66cc';
-  const root = card.style;
-  root.setProperty('--accent', color);
+  const color = card.dataset.color || "#ff66cc";
 
-  // Weiß*8 + Farbe*2 → 20% Farbanteil
-  const mix = (c1, c2, p) => {
-    const n = parseInt(c2.slice(1), 16),
-          r = (n >> 16) & 255,
-          g = (n >> 8) & 255,
-          b = n & 255;
-    return `rgba(${255 - (255 - r) * p}, ${255 - (255 - g) * p}, ${255 - (255 - b) * p}, 1)`;
+  // Farbe in RGB konvertieren
+  const hexToRgb = hex => {
+    const n = parseInt(hex.replace('#',''),16);
+    return [(n>>16)&255, (n>>8)&255, n&255];
   };
-  root.setProperty('--accent-faint', mix('#ffffff', color, 0.2));
+  const [r,g,b] = hexToRgb(color);
+
+  // CSS-Variablen setzen
+  card.style.setProperty('--accent', color);
+  card.style.setProperty('--accent-rgb', `${r},${g},${b}`);
 });
