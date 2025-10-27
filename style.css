@@ -201,3 +201,20 @@ html, body {
     width: 220px; height: 220px;
   }
 }
+/* === FIX: TicTacToe Position + Klickbarkeit === */
+#tictactoe-container {
+  position: fixed !important;  /* nicht von Karte abhängen */
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+#tictactoe {
+  pointer-events: auto !important;
+}
+
+body, #slider, .card {
+  pointer-events: none; /* verhindert Blockierung */
+}
+.card * {
+  pointer-events: auto; /* außer Kind-Elemente */
+}

@@ -67,26 +67,33 @@ canvas.addEventListener("click", e => {
 });
 drawBoard();
 
-/* === Optional Fallback: position Canvas global === */
 (function attachTTTOutsideCard() {
   const card = document.querySelectorAll('.card')[1];
-  const container = card?.querySelector('#tictactoe-container');
+  const container = document.querySelector('#tictactoe-container');
   if (!card || !container) return;
 
   document.body.appendChild(container);
+
   function positionContainer() {
     const rect = card.getBoundingClientRect();
     const w = container.offsetWidth;
     const h = container.offsetHeight;
-    const left = rect.left + rect.width - (w * 0.35);
-    const top  = rect.top + rect.height - (h * 0.55);
-    container.style.position = 'fixed';
-    container.style.left = `${Math.round(left)}px`;
-    container.style.top  = `${Math.round(top)}px`;
-    container.style.zIndex = 999;
+
+    // leicht nach außen verschoben (optisch halb-raus)
+    const left = rect.right - w * 0.6;
+    const top = rect.bottom - h * 0.55;
+
+    container.style.left = `${left}px`;
+    container.style.top = `${top}px`;
   }
+
   positionContainer();
   window.addEventListener('resize', positionContainer);
-  const observer = new MutationObserver(positionContainer);
+
+  const observer = new MutationObserver(() => {
+    if (card.classList.contains('active')) container.style.opacity = 1;
+    else container.style.opacity = 0;
+    positionContainer();
+  });
   observer.observe(card, { attributes: true, attributeFilter: ['class'] });
 })();
