@@ -26,17 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Hilfsfunktionen ===
   const fadeAudio = (video, targetVolume, duration) => {
-    const step = (targetVolume - video.volume) / (duration / 50);
+    const steps = 50;
+    const stepTime = duration / steps;
+    const delta = (targetVolume - video.volume) / steps;
+
+    let i = 0;
     const fade = setInterval(() => {
-      video.volume = Math.max(0, Math.min(1, video.volume + step));
-      if (
-        (step > 0 && video.volume >= targetVolume) ||
-        (step < 0 && video.volume <= targetVolume)
-      ) {
-        clearInterval(fade);
-      }
-    }, 50);
+      video.volume = Math.max(0, Math.min(1, video.volume + delta));
+      i++;
+      if (i >= steps) clearInterval(fade);
+    }, stepTime);
   };
+
+  // Im switchCard:
+  
+  // keine Pause, kein muted=true bei currentVide
   function switchCard() {
     if (isTransitioning) return;
     isTransitioning = true;
@@ -53,19 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
       nextCard.appendChild(switchBtn);
     }
 
-    // === Video wechseln ===
     const currentVideo = bgVideo;
     const nextVideo = bgVideoNext;
 
     nextVideo.src = nextCard.dataset.video;
     nextVideo.load();
     nextVideo.currentTime = 0;
-    nextVideo.volume = 0;
     nextVideo.muted = false;
+    nextVideo.volume = 0;
     nextVideo.classList.remove("hidden");
     nextVideo.play().catch(() => {});
 
-    // Audio-Fade Übergang
     fadeAudio(currentVideo, 0, 1500);
     fadeAudio(nextVideo, 1, 1500);
 
