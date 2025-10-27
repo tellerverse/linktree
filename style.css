@@ -47,7 +47,7 @@ body, html {
   cursor: pointer;
 }
 .center-text {
-  font-size: 2rem;
+  font-size: 10rem;
   text-transform: uppercase;
   animation: blink 1.8s infinite;
   font-family: 'Burbank', sans-serif;
@@ -125,7 +125,7 @@ body, html {
 
 .header-info h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 3rem;
   color: rgba(255,255,255,0.9);
 }
 
@@ -146,7 +146,7 @@ body, html {
   color: rgba(255,255,255,0.85);
   text-decoration: none;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .social-links li a:hover {
@@ -161,7 +161,7 @@ body, html {
 
 /* ========== CARD TEXT ========== */
 .card-text {
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.3;
   text-align: left;
   color: rgba(255,255,255,0.85);
@@ -228,7 +228,7 @@ body, html {
   }
 
   .header-info h1 {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
   .social-links {
@@ -237,7 +237,7 @@ body, html {
 
   .card-text {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1.25rem;
   }
 
   .switch-btn {
