@@ -1,101 +1,115 @@
-/* Basics */
-body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font-family: 'Arial', sans-serif; background:#111; color:white; }
+/* Reset & Base */
+body,html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
 
 /* Hintergrundvideo */
 .bg-video {
   position: fixed;
-  top:50%; left:50%;
-  min-width:100%;
-  min-height:100%;
-  transform: translate(-50%,-50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   z-index: -2;
   transition: opacity 1s ease;
 }
-.bg-video.hidden { opacity:0; z-index:-3; }
+.bg-video.hidden { opacity: 0; }
 
-/* Intro Overlay */
+/* Intro */
 #intro {
-  position:fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center;
-  background: rgba(0,0,0,0.4); cursor:pointer; z-index:2; transition:opacity 0.8s ease; }
-#intro .center-text { font-size:2rem; text-shadow:0 0 15px rgba(255,255,255,0.7); animation:pulse 1.5s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
-
-/* Slider Container */
-#slider {
-  position: fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; z-index:1;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 10;
+  cursor: pointer;
 }
-.hidden { opacity:0; pointer-events:none; transition:opacity 0.8s ease; }
+.center-text {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: blink 1.8s infinite;
+}
+@keyframes blink { 50% { opacity: 0.4; } }
+
+/* Slider */
+#slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#slider.active { opacity: 1; }
 
 /* Karten */
 .card {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   opacity: 0;
   transition: all 0.8s ease;
-  
-  /* Hintergrund: dunkler, mit leichtem Verlauf und Textur */
-  background: linear-gradient(145deg, rgba(20, 10, 25, 0.9), rgba(40, 0, 50, 0.8));
+  width: 340px;
+  background: linear-gradient(145deg, rgba(20,10,25,0.9), rgba(40,0,50,0.8));
   border-radius: 25px;
   padding: 50px;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
   text-align: center;
-  
-  /* Glas-/Glüheffekt */
   backdrop-filter: blur(20px);
   box-shadow: 0 0 40px rgba(255, 100, 200, 0.2);
-  
-  /* Leuchtende Umrandung wie der Button */
   border: 2px solid rgba(255, 100, 200, 0.6);
 }
-
 .card.active {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   z-index: 2;
 }
-
-/* Schöner Glow beim Hover */
 .card:hover {
   box-shadow: 0 0 60px rgba(255, 100, 200, 0.4);
   border-color: rgba(255, 100, 200, 0.8);
 }
+
 /* Profilbild */
-.profile-pic { width:120px; height:120px; border-radius:50%; margin-bottom:15px; object-fit:cover; }
-
-/* Headings */
-.card h1 { margin:10px 0 20px 0; font-size:2rem; }
-
-/* Links */
-.card ul.social-links { list-style:none; padding:0; margin:0; }
-.card ul.social-links li { margin:10px 0; }
-.card ul.social-links li a { color:white; text-decoration:none; font-size:1.3rem; transition:0.3s; }
-.card ul.social-links li a:hover { color:#ff66cc; }
-
-/* Navigation Buttons */
-.nav-btn {
-  position:absolute; top:50%; transform:translateY(-50%);
-  font-size:2rem; background:rgba(0,0,0,0.3); border:none; color:white; padding:10px 15px; border-radius:50%; cursor:pointer; transition:0.3s;
-}
-#prev { left:20px; }
-#next { right:20px; }
-.nav-btn:hover { background:rgba(0,0,0,0.6); }
-
-/* Mobile scaling */
-@media (max-width:768px) {
-  .card { padding:20px 25px; width:80%; }
-  .profile-pic { width:90px; height:90px; }
-  .card h1 { font-size:1.5rem; }
-  .card ul.social-links li a { font-size:1.1rem; }
-  .nav-btn { font-size:1.5rem; padding:8px 12px; }
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid rgba(255, 100, 200, 0.6);
 }
 
+/* Social Links */
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+.social-links li {
+  margin: 10px 0;
+}
+.social-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.social-links a:hover { color: #ff66cc; }
+
+/* Switch Button */
 .switch-btn {
-  position: absolute;
-  bottom: -35px;     /* halb auf Karte */
-  right: -35px;      /* halb außerhalb */
+  position: absolute;      /* jetzt relativ zur Karte */
+  bottom: -35px;           /* halb auf Karte */
+  right: -35px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -105,18 +119,15 @@ body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;          /* sorgt dafür, dass das Bild rund bleibt */
+  overflow: hidden;
   box-shadow: 0 0 20px rgba(255, 100, 200, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: 5;
 }
-
 .switch-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 0 35px rgba(255, 100, 200, 0.7);
 }
-
-/* Das Bild im Button */
 .switch-icon {
   width: 100%;
   height: 100%;
@@ -124,12 +135,21 @@ body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; font
   border-radius: 50%;
 }
 
+/* Version Label */
 #version {
   position: fixed;
   bottom: 10px;
   right: 15px;
+  color: rgba(255,255,255,0.4);
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.5);
-  font-family: monospace;
-  z-index: 100;
+  letter-spacing: 1px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .card {
+    width: 80%;
+    padding: 40px;
+    padding-bottom: 90px;
+  }
 }
