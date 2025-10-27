@@ -62,7 +62,7 @@ body, html {
 
 /* ========== CARD DESIGN ========== */
 .card {
-  position: absolute;
+  position: relative;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   opacity: 0;
@@ -118,8 +118,8 @@ body, html {
 
 /* ========== SWITCH BUTTON (HALB AUF KARTE) ========== */
 .switch-btn {
-  position: absolute;      /* relativ zur Karte */
-  bottom: -35px;           /* halb auf Karte */
+  position: absolute; /* relativ zur Karte */
+  bottom: -35px;
   right: -35px;
   width: 80px;
   height: 80px;
