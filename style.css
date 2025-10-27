@@ -76,7 +76,7 @@ html, body {
 }
 .card.active {
   box-shadow: 0 0 40px var(--accent);
-  background: color-mix(in srgb, white 10%, var(--accent) 90%, transparent 80%);
+  background: rgba(255,255,255,0.1); /* leicht transparent */
 }
 
 /* ========== HEADER (Profilbild + Name + Links) ========== */
@@ -126,9 +126,9 @@ html, body {
   width: 24px; height: 24px; object-fit: contain;
 }
 
-/* Text unten */
+/* Text unter Header */
 .card-text {
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 1rem;
   line-height: 1.4;
   color: color-mix(in srgb, white 80%, var(--accent) 20%);
@@ -160,12 +160,13 @@ html, body {
 
 /* ========== TICTACTOE (RAUSHÄNGEND + ANIMATION) ========== */
 #tictactoe-container {
-  position: absolute;
+  position: fixed !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
   bottom: -150px;
   right: -100px;
   width: 300px; height: 300px;
   perspective: 800px;
-  z-index: 6;
   transform-origin: center;
   opacity: 0;
   transform: translateY(30px) rotateX(35deg) rotateY(-15deg) rotateZ(-5deg) scale(0.95);
@@ -195,26 +196,10 @@ html, body {
   transform: rotateX(30deg) rotateY(-10deg) rotateZ(-3deg) scale(1.03);
   box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 28px rgba(255,255,255,0.08);
 }
+
+/* ========== MOBILE ========== */
 @media (max-width: 700px) {
-  #tictactoe-container {
-    bottom: -120px; right: -60px;
-    width: 220px; height: 220px;
-  }
-}
-/* === FIX: TicTacToe Position + Klickbarkeit === */
-#tictactoe-container {
-  position: fixed !important;  /* nicht von Karte abhängen */
-  z-index: 9999 !important;
-  pointer-events: auto !important;
-}
-
-#tictactoe {
-  pointer-events: auto !important;
-}
-
-body, #slider, .card {
-  pointer-events: none; /* verhindert Blockierung */
-}
-.card * {
-  pointer-events: auto; /* außer Kind-Elemente */
+  .card { width: 90%; padding: 30px; }
+  #tictactoe-container { bottom: -120px; right: -60px; width: 220px; height: 220px; }
+  .profile-pic { width: 90px; height: 90px; }
 }
