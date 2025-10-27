@@ -91,13 +91,13 @@ body, html {
   z-index: 2;
 }
 .card:hover {
-  box-shadow: 0 0 60px rgba(255, 100, 200, 0.4);
+  box-shadow: 0 0 150px rgba(255, 100, 200, 0.4);
   border-color: rgba(255, 100, 200, 0.8);
 }
 
 /* ========== PROFILE IMAGE ========== */
 .profile-pic {
-  width: 25%;
+  width: 150px;
   max-width: 150px;
   border-radius: 50%;
   object-fit: cover;
