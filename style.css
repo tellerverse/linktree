@@ -1,7 +1,7 @@
 /* ========== FONT SETUP ========== */
 @font-face {
   font-family: 'Burbank';
-  src: url('burbankbigcondensed_black.otf') format('opentype');
+  src: url('Assets/burbankbigcondensed_black.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
