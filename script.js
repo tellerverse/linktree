@@ -1,73 +1,90 @@
-const intro = document.getElementById('intro');
-const slider = document.getElementById('slider');
-const cards = document.querySelectorAll('.card');
-const bgVideo = document.getElementById('bg-video');
-const bgVideoNext = document.getElementById('bg-video-next');
-const bgMusic = document.getElementById('bg-music');
-const switchBtn = document.getElementById('switch');
+document.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("intro");
+  const slider = document.getElementById("slider");
+  const bgVideo = document.getElementById("bg-video");
+  const bgVideoNext = document.getElementById("bg-video-next");
+  const cards = document.querySelectorAll(".card");
+  const switchBtn = document.getElementById("switch");
 
-let current = 0;
-let total = cards.length;
+  let currentIndex = 0;
+  let isTransitioning = false;
 
-/* === Intro Klick === */
-intro.addEventListener('click', () => {
-  intro.style.opacity = 0;
-  setTimeout(() => intro.style.display = 'none', 1000);
-  slider.classList.add('active');
-  bgMusic.volume = 0.4;
-  bgMusic.play();
-  showCard(0);
-});
+  // Alle Videos dürfen Ton haben, aber starten stumm (Browser-Sicherheitsrichtlinie)
+  bgVideo.muted = true;
+  bgVideoNext.muted = true;
 
-/* === Button Klick === */
-switchBtn.addEventListener('click', () => {
-  current = (current + 1) % total;
-  showCard(current);
-});
-
-/* === Swipe Support === */
-let startX = 0;
-window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-window.addEventListener('touchend', e => {
-  let diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) > 50) {
-    if (diff < 0) current = (current + 1) % total;
-    else current = (current - 1 + total) % total;
-    showCard(current);
-  }
-});
-
-/* === Zeigt aktive Karte & Video-Wechsel === */
-function showCard(index) {
-  cards.forEach((card, i) => {
-    card.classList.toggle('active', i === index);
+  // === Intro: Klick zum Start ===
+  intro.addEventListener("click", () => {
+    intro.style.opacity = "0";
+    setTimeout(() => {
+      intro.style.display = "none";
+      slider.classList.add("active");
+      bgVideo.muted = false;
+      bgVideo.play().catch(() => {}); // Startversuch
+    }, 800);
   });
 
-  // Button an die aktive Karte anhängen
-  const activeCard = cards[index];
-  if (activeCard && !activeCard.contains(switchBtn)) {
-    activeCard.appendChild(switchBtn);
-  }
+  // === Hilfsfunktionen ===
+  const fadeAudio = (video, targetVolume, duration) => {
+    const step = (targetVolume - video.volume) / (duration / 50);
+    const fade = setInterval(() => {
+      video.volume = Math.max(0, Math.min(1, video.volume + step));
+      if (
+        (step > 0 && video.volume >= targetVolume) ||
+        (step < 0 && video.volume <= targetVolume)
+      ) {
+        clearInterval(fade);
+      }
+    }, 50);
+  };
 
-  // Crossfade des Hintergrundvideos
-  const newVideoSrc = cards[index].dataset.video;
-  if (bgVideoNext.querySelector('source').src.includes(newVideoSrc)) return;
+  const switchCard = () => {
+    if (isTransitioning) return;
+    isTransitioning = true;
 
-  bgVideoNext.querySelector('source').src = newVideoSrc;
-  bgVideoNext.load();
-  bgVideoNext.classList.remove('hidden');
-  bgVideoNext.style.opacity = 0;
+    const currentCard = cards[currentIndex];
+    currentCard.classList.remove("active");
 
-  setTimeout(() => {
-    bgVideoNext.style.transition = 'opacity 1s ease';
-    bgVideoNext.style.opacity = 1;
-  }, 50);
+    currentIndex = (currentIndex + 1) % cards.length;
+    const nextCard = cards[currentIndex];
+    nextCard.classList.add("active");
 
-  setTimeout(() => {
-    bgVideo.querySelector('source').src = newVideoSrc;
-    bgVideo.load();
-    bgVideoNext.classList.add('hidden');
-    bgVideoNext.style.transition = '';
-    bgVideoNext.style.opacity = 0;
-  }, 1050);
-}
+    // === Video wechseln ===
+    const currentVideo = bgVideo;
+    const nextVideo = bgVideoNext;
+
+    nextVideo.src = nextCard.dataset.video;
+    nextVideo.load();
+    nextVideo.currentTime = 0;
+    nextVideo.volume = 0;
+    nextVideo.muted = false;
+    nextVideo.classList.remove("hidden");
+    nextVideo.play().catch(() => {});
+
+    // Audio-Fade Übergang
+    fadeAudio(currentVideo, 0, 1500);
+    fadeAudio(nextVideo, 1, 1500);
+
+    // Video-Fade Übergang
+    nextVideo.style.opacity = "1";
+    currentVideo.style.opacity = "0";
+
+    setTimeout(() => {
+      // Videos tauschen
+      currentVideo.pause();
+      currentVideo.muted = true;
+      currentVideo.classList.add("hidden");
+
+      // Swap IDs
+      const tempSrc = currentVideo.src;
+      currentVideo.src = nextVideo.src;
+      nextVideo.src = tempSrc;
+
+      currentVideo.style.opacity = "1";
+      nextVideo.style.opacity = "0";
+      isTransitioning = false;
+    }, 1600);
+  };
+
+  switchBtn.addEventListener("click", switchCard);
+});
