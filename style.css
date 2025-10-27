@@ -1,14 +1,23 @@
-/* Reset & Base */
-body,html {
+/* ========== FONT SETUP ========== */
+@font-face {
+  font-family: 'Burbank';
+  src: url('burbankbigcondensed_black.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ========== BASE STYLES ========== */
+body, html {
   margin: 0;
   padding: 0;
   overflow: hidden;
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Burbank', 'Poppins', sans-serif; /* Burbank überall aktiv */
   color: white;
+  letter-spacing: 0.5px;
 }
 
-/* Hintergrundvideo */
+/* ========== BACKGROUND VIDEO ========== */
 .bg-video {
   position: fixed;
   top: 0;
@@ -21,7 +30,7 @@ body,html {
 }
 .bg-video.hidden { opacity: 0; }
 
-/* Intro */
+/* ========== INTRO ========== */
 #intro {
   position: fixed;
   top: 0; left: 0;
@@ -35,13 +44,13 @@ body,html {
 }
 .center-text {
   font-size: 2rem;
-  letter-spacing: 2px;
   text-transform: uppercase;
   animation: blink 1.8s infinite;
+  font-family: 'Burbank', sans-serif;
 }
 @keyframes blink { 50% { opacity: 0.4; } }
 
-/* Slider */
+/* ========== SLIDER ========== */
 #slider {
   position: relative;
   width: 100%;
@@ -51,7 +60,7 @@ body,html {
 }
 #slider.active { opacity: 1; }
 
-/* Karten */
+/* ========== CARD DESIGN ========== */
 .card {
   position: absolute;
   top: 50%; left: 50%;
@@ -67,6 +76,7 @@ body,html {
   backdrop-filter: blur(20px);
   box-shadow: 0 0 40px rgba(255, 100, 200, 0.2);
   border: 2px solid rgba(255, 100, 200, 0.6);
+  font-family: 'Burbank', sans-serif;
 }
 .card.active {
   transform: translate(-50%, -50%) scale(1);
@@ -78,7 +88,7 @@ body,html {
   border-color: rgba(255, 100, 200, 0.8);
 }
 
-/* Profilbild */
+/* ========== PROFILE IMAGE ========== */
 .profile-pic {
   width: 120px;
   height: 120px;
@@ -88,7 +98,7 @@ body,html {
   border: 2px solid rgba(255, 100, 200, 0.6);
 }
 
-/* Social Links */
+/* ========== SOCIAL LINKS ========== */
 .social-links {
   list-style: none;
   padding: 0;
@@ -102,13 +112,14 @@ body,html {
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
+  font-family: 'Burbank', sans-serif;
 }
 .social-links a:hover { color: #ff66cc; }
 
-/* Switch Button */
+/* ========== SWITCH BUTTON (HALB AUF KARTE) ========== */
 .switch-btn {
-  position: absolute;      /* jetzt relativ zur Karte */
-  bottom: -35px;           /* halb auf Karte */
+  position: absolute;
+  bottom: -35px;
   right: -35px;
   width: 80px;
   height: 80px;
@@ -135,7 +146,7 @@ body,html {
   border-radius: 50%;
 }
 
-/* Version Label */
+/* ========== VERSION LABEL ========== */
 #version {
   position: fixed;
   bottom: 10px;
@@ -143,9 +154,10 @@ body,html {
   color: rgba(255,255,255,0.4);
   font-size: 0.9rem;
   letter-spacing: 1px;
+  font-family: 'Burbank', sans-serif;
 }
 
-/* Mobile */
+/* ========== MOBILE ========== */
 @media (max-width: 600px) {
   .card {
     width: 80%;
