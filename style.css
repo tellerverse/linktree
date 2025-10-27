@@ -73,7 +73,7 @@ body, html {
   max-width: 600px;
   border-radius: 25px;
   padding: 30px;
-  text-align: center;
+  text-align: left;
   backdrop-filter: blur(20px);
   border: 2px solid var(--accent);
   background: rgba(var(--accent-rgb), 0.15);
@@ -100,11 +100,8 @@ body, html {
 /* ========== CARD HEADER (Profil + Name + Links) ========== */
 .card-header {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-start; /* Bild + Info oben ausrichten */
   gap: 20px;
-  width: 100%;
-  text-align: left;
 }
 
 /* Profilbild */
@@ -117,12 +114,12 @@ body, html {
   flex-shrink: 0;
 }
 
-/* Header-Info (Name + Links) */
+/* Header Info: Name + Links */
 .header-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-start; /* Name + Links oben anordnen */
+  gap: 8px;
   flex: 1;
 }
 
@@ -132,26 +129,29 @@ body, html {
   color: rgba(255,255,255,0.9);
 }
 
-/* ========== SOCIAL LINKS ========== */
+/* Links unter dem Namen */
 .social-links {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* falls mehrere Links */
   gap: 8px 16px;
 }
+
 .social-links li a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px; /* Abstand zwischen Icon und Text */
   color: rgba(255,255,255,0.85);
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
-  transition: color 0.3s ease;
 }
-.social-links li a:hover { color: var(--accent); }
+
+.social-links li a:hover {
+  color: var(--accent);
+}
 
 .social-icon {
   width: 24px;
