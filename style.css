@@ -247,3 +247,25 @@ body, html {
     max-height: 60px;
   }
 }
+/* ========== TICTACTOE ========== */
+#tictactoe-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  perspective: 800px;
+}
+
+#tictactoe {
+  transform: rotateX(20deg) rotateY(-10deg);
+  border: 3px solid rgba(255,255,255,0.5);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 25px rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#tictactoe:hover {
+  transform: rotateX(25deg) rotateY(-5deg) scale(1.02);
+}
