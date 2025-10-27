@@ -71,3 +71,18 @@ function showCard(index) {
     bgVideoNext.style.opacity = 0;
   }, 1050);
 }
+document.querySelectorAll('.card').forEach(card => {
+  const color = card.dataset.color || '#ff66cc';
+  const root = card.style;
+  root.setProperty('--accent', color);
+
+  // Weiß*8 + Farbe*2 → 20% Farbanteil
+  const mix = (c1, c2, p) => {
+    const n = parseInt(c2.slice(1), 16),
+          r = (n >> 16) & 255,
+          g = (n >> 8) & 255,
+          b = n & 255;
+    return `rgba(${255 - (255 - r) * p}, ${255 - (255 - g) * p}, ${255 - (255 - b) * p}, 1)`;
+  };
+  root.setProperty('--accent-faint', mix('#ffffff', color, 0.2));
+});
