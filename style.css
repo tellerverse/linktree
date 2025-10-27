@@ -118,8 +118,8 @@ body, html {
 
 /* ========== SWITCH BUTTON (HALB AUF KARTE) ========== */
 .switch-btn {
-  position: absolute;
-  bottom: -35px;
+  position: absolute;      /* relativ zur Karte */
+  bottom: -35px;           /* halb auf Karte */
   right: -35px;
   width: 80px;
   height: 80px;

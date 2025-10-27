@@ -37,8 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 50);
   };
-
-  const switchCard = () => {
+  function switchCard() {
     if (isTransitioning) return;
     isTransitioning = true;
 
@@ -48,6 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndex = (currentIndex + 1) % cards.length;
     const nextCard = cards[currentIndex];
     nextCard.classList.add("active");
+
+    // Button in die aktive Karte hängen
+    if (!nextCard.contains(switchBtn)) {
+      nextCard.appendChild(switchBtn);
+    }
 
     // === Video wechseln ===
     const currentVideo = bgVideo;
@@ -70,12 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentVideo.style.opacity = "0";
 
     setTimeout(() => {
-      // Videos tauschen
       currentVideo.pause();
       currentVideo.muted = true;
       currentVideo.classList.add("hidden");
 
-      // Swap IDs
+      // Videos tauschen
       const tempSrc = currentVideo.src;
       currentVideo.src = nextVideo.src;
       nextVideo.src = tempSrc;
@@ -84,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nextVideo.style.opacity = "0";
       isTransitioning = false;
     }, 1600);
-  };
+  }
 
   switchBtn.addEventListener("click", switchCard);
 });
