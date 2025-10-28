@@ -61,10 +61,10 @@ body, html {
 }
 
 /* Icons */
-.social-icon2 svg {
+.social-icon2 {
   width: 20px;
   height: 10px;
-  /* object-fit: contain; */
+  object-fit: contain;
   /* filter: drop-shadow(0 0 0 var(--card-color)); */
 }
 
