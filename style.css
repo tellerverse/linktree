@@ -23,6 +23,17 @@ body, html {
   --accent-faint: rgba(255,102,204,0.2);
 }
 
+a.glow {
+  /* style="color: inherit; text-decoration: none;" */
+  color: #ff00ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a.glow:hover {
+  text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+}
+
 /* ========== BACKGROUND VIDEO ========== */
 .bg-video {
   position: fixed;
