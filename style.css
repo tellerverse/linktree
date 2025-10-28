@@ -17,21 +17,6 @@ body, html {
   letter-spacing: 0.5px;
 }
 
-:root {
-  --accent: #ff66cc;
-  --accent-rgb: 255,102,204;
-}
-
-/* ========== LINKS ========== */
-a.glow, a.linkpurp, a.linkgreen {
-  color: var(--accent);
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
-  text-shadow: 0 0 10px var(--accent), 0 0 25px var(--accent);
-}
-
 /* ========== BACKGROUND VIDEO ========== */
 .bg-video {
   position: fixed;
@@ -84,10 +69,8 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   padding: 30px;
   text-align: left;
   backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.3);
-  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.6);
+  color: rgba(255,255,255,0.8);
   font-family: 'Burbank', sans-serif;
   box-sizing: border-box;
   opacity: 0;
@@ -95,14 +78,23 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border: 2px solid #ff66cc; /* default fallback */
 }
 .card.active {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   z-index: 2;
 }
-.card:hover {
-  box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.5);
+
+/* Dynamische Farben pro Karte */
+.card[data-color] {
+  --card-color: attr(data-color color, #ff66cc);
+  border-color: var(--card-color);
+}
+.card[data-color] .header-info h1,
+.card[data-color] .card-text,
+.card[data-color] .social-links li a {
+  color: rgba(255,255,255,0.8); /* mostly white + tint */
 }
 
 /* ========== CARD HEADER ========== */
@@ -118,7 +110,7 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--accent);
+  border: 2px solid currentColor;
   flex-shrink: 0;
 }
 
@@ -134,7 +126,6 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
 .header-info h1 {
   margin: 0;
   font-size: 3rem;
-  color: rgba(255,255,255,0.9);
 }
 
 /* Links */
@@ -146,39 +137,32 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   flex-wrap: wrap;
   gap: 8px 16px;
 }
-
 .social-links li a {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255,255,255,0.9);
   text-decoration: none;
   font-weight: 600;
   font-size: 1.3rem;
+  color: inherit;
   transition: color 0.3s ease, filter 0.3s ease;
 }
 
-.social-links li a:hover {
-  color: var(--accent);
-  filter: brightness(1.3);
-}
-
-/* Icons mit Farb-Tönung */
-.social-icon {
+/* Icon Farbe */
+.social-links li a .social-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(1) sepia(1)
-          saturate(1000%) hue-rotate(0deg)
-          drop-shadow(0 0 5px var(--accent));
+  filter: drop-shadow(0 0 3px var(--card-color));
   transition: filter 0.3s ease;
 }
 
-/* Icon-Farbe basierend auf Accent */
-.card[data-color] .social-icon {
-  filter: brightness(0) saturate(100%) invert(1)
-          sepia(1) saturate(800%) hue-rotate(0deg)
-          drop-shadow(0 0 5px var(--accent));
+/* Hover Effekt: Schrift + Icon weiß, Glow in Kartenfarbe */
+.social-links li a:hover {
+  color: #fff;
+}
+.social-links li a:hover .social-icon {
+  filter: brightness(1) saturate(100%) invert(1) drop-shadow(0 0 5px var(--card-color));
 }
 
 /* ========== CARD TEXT ========== */
@@ -186,7 +170,7 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   font-size: 1.3rem;
   line-height: 1.3;
   text-align: left;
-  color: rgba(255,255,255,0.9);
+  color: inherit;
 }
 
 /* ========== SWITCH BUTTON ========== */
@@ -199,19 +183,19 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
   height: 10vw;
   max-height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), rgba(var(--accent-rgb), 0.6));
+  background: var(--card-color);
   border: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+  box-shadow: 0 0 20px var(--card-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: 5;
 }
 .switch-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 35px rgba(var(--accent-rgb), 0.7);
+  box-shadow: 0 0 35px var(--card-color);
 }
 .switch-icon {
   width: 80%;
@@ -233,35 +217,11 @@ a.glow:hover, a.linkpurp:hover, a.linkgreen:hover {
 
 /* ========== RESPONSIVE (MOBILE) ========== */
 @media (max-width: 600px) {
-  .card {
-    width: 95vw;
-    padding: 20px;
-  }
-  .card-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-  }
-  .header-info h1 {
-    font-size: 2rem;
-  }
-  .social-links {
-    justify-content: center;
-  }
-  .card-text {
-    text-align: left;
-    font-size: 1.3rem;
-  }
-  .switch-btn {
-    width: 12vw;
-    height: 12vw;
-    max-width: 60px;
-    max-height: 60px;
-    right: 10px;
-    bottom: 0px;
-  }
+  .card { width: 95vw; padding: 20px; }
+  .card-header { flex-direction: column; align-items: center; text-align: center; }
+  .profile-pic { width: 100px; height: 100px; }
+  .header-info h1 { font-size: 2rem; }
+  .social-links { justify-content: center; }
+  .card-text { font-size: 1.3rem; text-align: left; }
+  .switch-btn { width: 12vw; height: 12vw; max-width: 60px; max-height: 60px; right: 10px; bottom: 0; }
 }
