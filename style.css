@@ -61,7 +61,7 @@ body, html {
 }
 
 .social-icon svg path {
-  fill: red;
+  /* fill: red; */
   transition: filter 0.3s ease, fill 0.3s ease;
 }
 
