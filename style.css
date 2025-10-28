@@ -60,6 +60,14 @@ body, html {
   filter: drop-shadow(0 0 0 var(--card-color));
 }
 
+/* Icons */
+.social-icon2 svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0 var(--card-color));
+}
+
 .social-icon svg path {
   fill: red;
   transition: filter 0.3s ease, fill 0.3s ease;
