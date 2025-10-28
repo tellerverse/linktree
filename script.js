@@ -92,17 +92,8 @@ function showCard(index) {
   }, 1050);
 }
 // === Dynamische Farben pro Karte ===
+// Setzt die CSS-Variable --card-color aus data-color jeder Karte
 document.querySelectorAll('.card').forEach(card => {
-  const color = card.dataset.color || "#ff66cc";
-
-  // Farbe in RGB konvertieren
-  const hexToRgb = hex => {
-    const n = parseInt(hex.replace('#',''),16);
-    return [(n>>16)&255, (n>>8)&255, n&255];
-  };
-  const [r,g,b] = hexToRgb(color);
-
-  // CSS-Variablen setzen
-  card.style.setProperty('--accent', color);
-  card.style.setProperty('--accent-rgb', `${r},${g},${b}`);
+  const color = card.dataset.color || '#ff66cc';
+  card.style.setProperty('--card-color', color);
 });
