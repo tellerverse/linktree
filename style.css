@@ -59,8 +59,11 @@ body, html {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  filter: drop-shadow(0 0 0 var(--card-color)); /* Standard: keine Glow */
-  transition: filter 0.3s ease, color 0.3s ease;
+  background-color: var(--card-color); /* gewünschte Farbe */
+  -webkit-mask: url('icon-white.png') no-repeat center / contain;
+  mask: url('icon-white.png') no-repeat center / contain;
+  /* filter: drop-shadow(0 0 0 var(--card-color)); /* Standard: keine Glow */
+  /* transition: filter 0.3s ease, color 0.3s ease; */
   /* Farbton direkt aus icon (weiß) beibehalten, keine Invertierung */
 }
 
@@ -69,6 +72,7 @@ body, html {
   color: #fff; /* Linktext wird weiß */
 }
 .social-links li a:hover .social-icon {
+  background-color: #fff; /* Icon-Hintergrund wird weiß */
   filter: drop-shadow(0 0 5px var(--card-color)); /* Glow in Kartenfarbe */
 }
 
