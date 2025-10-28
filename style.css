@@ -56,8 +56,6 @@ body, html {
 
 /* Icons */
 .social-icon svg {
-  width: 24px;
-  height: 24px;
   object-fit: contain;
   filter: drop-shadow(0 0 0 var(--card-color));
 }
