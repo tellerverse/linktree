@@ -58,10 +58,9 @@ body, html {
 .social-icon {
   width: 24px;
   height: 24px;
+  color: #ff66cc; /* färbt alle Pfade innerhalb des Symbols */
   object-fit: contain;
   filter: drop-shadow(0 0 0 var(--card-color));
-  fill: red;
-  color: red;
 }
 
 .social-icon path {
