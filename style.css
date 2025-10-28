@@ -60,6 +60,8 @@ body, html {
   height: 24px;
   object-fit: contain;
   filter: drop-shadow(0 0 0 var(--card-color));
+  fill: red;
+  color: red;
 }
 
 .social-icon path {
