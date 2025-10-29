@@ -143,9 +143,6 @@ a, button {
   box-shadow: 0 0 35px var(--card-color);
   background: color-mix(in srgb, var(--card-color) 80%, white 20%);
 }
-.card-play-btn .play-text {
-  pointer-events: none;
-}
 
 .text_link {
   display: inline-flex; 
