@@ -5,6 +5,7 @@
 
 /* Grundlegendes Setup */
 body, html {
+  cursor: url('mein-cursor.png'), auto;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -72,18 +73,29 @@ body, html {
   box-sizing:border-box; opacity:0;
   display:flex; flex-direction:column; gap:20px;
   transition: all 0.8s ease;
-  animation: float 6s ease-in-out infinite;
+  animation: colorPulse 4s infinite alternate;
 }
+
 .card.active {
   opacity:1;
   transform: translate(-50%, -50%) scale(1);
   z-index:2;
 }
 
-/* Floating Animation */
-@keyframes float {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.95) translateY(0px); }
-  50% { transform: translate(-50%, -50%) scale(1) translateY(-10px); }
+/* Farb-Pulsation (Helligkeit der Card-Color) */
+@keyframes colorPulse {
+  0% {
+    border-color: color-mix(in srgb, var(--card-color) 80%, white 20%);
+    color: color-mix(in srgb, var(--card-color) 80%, white 20%);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--card-color) 100%, white 0%);
+    color: color-mix(in srgb, var(--card-color) 100%, white 0%);
+  }
+  100% {
+    border-color: color-mix(in srgb, var(--card-color) 80%, white 20%);
+    color: color-mix(in srgb, var(--card-color) 80%, white 20%);
+  }
 }
 
 /* Card Header */
@@ -103,7 +115,7 @@ body, html {
 .social-links li a:hover {
   color: #fff;
   filter: drop-shadow(0 0 10px var(--card-color));
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(-3deg);
 }
 
 .social-icon {
@@ -119,7 +131,7 @@ body, html {
   transform: scale(1);
 }
 .social-icon.primary:hover {
-  transform: scale(1.3) rotate(-10deg);
+  transform: scale(1.3);
   filter: drop-shadow(0 0 20px var(--card-color)) brightness(1.5);
 }
 
