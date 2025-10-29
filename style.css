@@ -75,13 +75,13 @@ body, html {
 
 .social-icon.primary:hover {
   color: #ffffff; /* Hover-Farbe optional */
-  filter: drop-shadow(0 0 50px var(--card-color));
+  filter: drop-shadow(0 0 10px var(--card-color));
 }
 
 /* Hover Effekt */
 .social-links li a:hover {
   color: #fff;
-  filter: drop-shadow(0 0 50px var(--card-color));
+  filter: drop-shadow(0 0 10px var(--card-color));
   transform: scale(1.1); /* Text + Gesamte Linkfläche leicht größer */
 }
 
