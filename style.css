@@ -16,7 +16,7 @@ body, html {
 }
 
 a, button {
-  cursor: url('../Assets/cursor-click.cur'), pointer;
+  cursor: url('../Assets/cursor-red.cur'), pointer;
 }
 
 /* Hintergrundvideos */
