@@ -55,8 +55,8 @@ body, html {
 }
 
 .social-icon {
-  width: 64px;
-  height: 64px;
+  width: 24px;
+  height: 24px;
   display: inline-block;
   background-color: currentColor;
   transition: transform 0.2s ease, color 0.2s ease;
@@ -69,13 +69,14 @@ body, html {
 
 /* Farbe, Skalierung, Hover etc. */
 .social-icon.primary {
-  color: #00b4ff;
+  color: var(--currentColor);
   transform: scale(1);
 }
 
 .social-icon.primary:hover {
   transform: scale(1.1);
-  color: #0080ff; /* Hover-Farbe optional */
+  color: #ffffff; /* Hover-Farbe optional */
+  filter: drop-shadow(0 0 20px var(--card-color));
 }
 
 /* Icons */
@@ -93,13 +94,13 @@ body, html {
 } */
 
 /* Hover Effekt */
-/* .social-links li a:hover {
-  color: #fff; /* Linktext wird weiß */
-  /* filter: drop-shadow(0 0 20px var(--card-color)); */
-/* } */
-.social-links li a:hover .social-icon {
-  filter: drop-shadow(0 0 20px var(--card-color)); /* Glow in Kartenfarbe */
+.social-links li a:hover {
+  color: #fff;
+  filter: drop-shadow(0 0 20px var(--card-color));
 }
+/* .social-links li a:hover .social-icon {
+  filter: drop-shadow(0 0 20px var(--card-color));
+} */
 
 .card-text { color: var(--card-color); font-size:1.3rem; line-height:1.3; }
 
