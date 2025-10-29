@@ -55,8 +55,8 @@ body, html {
 }
 
 .social-icon {
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   display: inline-block;
   background-color: currentColor;
   transition: transform 0.2s ease, color 0.2s ease;
@@ -74,7 +74,6 @@ body, html {
 }
 
 .social-icon.primary:hover {
-  transform: scale(1.3);
   color: #ffffff; /* Hover-Farbe optional */
   filter: drop-shadow(0 0 50px var(--card-color));
 }
@@ -83,7 +82,7 @@ body, html {
 .social-links li a:hover {
   color: #fff;
   filter: drop-shadow(0 0 50px var(--card-color));
-  transform: scale(1.3); /* Text + Gesamte Linkfläche leicht größer */
+  transform: scale(1.1); /* Text + Gesamte Linkfläche leicht größer */
 }
 
 .card-text { color: var(--card-color); font-size:1.3rem; line-height:1.3; }
