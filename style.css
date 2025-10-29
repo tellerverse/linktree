@@ -15,6 +15,10 @@ body, html {
   perspective: 1000px; /* für Parallax Effekte */
 }
 
+a, button {
+  cursor: url('../Assets/cursor-click.cur'), pointer;
+}
+
 /* Hintergrundvideos */
 .bg-video {
   position: fixed;
