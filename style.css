@@ -5,7 +5,7 @@
 
 /* Grundlegendes Setup */
 body, html {
-  cursor: url('Assets/cursor.cur'), auto;
+  cursor: url('Assets/cursor-pink.cur'), auto;
   margin: 0;
   padding: 0;
   overflow: hidden;
