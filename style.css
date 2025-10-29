@@ -74,33 +74,17 @@ body, html {
 }
 
 .social-icon.primary:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
   color: #ffffff; /* Hover-Farbe optional */
-  filter: drop-shadow(0 0 20px var(--card-color));
+  filter: drop-shadow(0 0 50px var(--card-color));
 }
-
-/* Icons */
-/* .social-icon {
-  width: 24px;
-  height: 24px;
-  color: #ff66cc; färbt alle Pfade innerhalb des Symbols */
-  /* object-fit: contain;
-  filter: drop-shadow(0 0 0 var(--card-color));
-} */
-
-/* .social-icon path {
-  fill: red;
-  transition: filter 0.3s ease, fill 0.3s ease;
-} */
 
 /* Hover Effekt */
 .social-links li a:hover {
   color: #fff;
-  filter: drop-shadow(0 0 20px var(--card-color));
+  filter: drop-shadow(0 0 50px var(--card-color));
+  transform: scale(1.3); /* Text + Gesamte Linkfläche leicht größer */
 }
-/* .social-links li a:hover .social-icon {
-  filter: drop-shadow(0 0 20px var(--card-color));
-} */
 
 .card-text { color: var(--card-color); font-size:1.3rem; line-height:1.3; }
 
