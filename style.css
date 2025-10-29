@@ -123,7 +123,7 @@ a, button {
 }
 /* Play Button in Karte 2 */
 .card-play-btn {
-  width: 100%;
+  width: 40%;
   padding: 15px 0;
   margin-top: 20px;
   border-radius: 15px;
