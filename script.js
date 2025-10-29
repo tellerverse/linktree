@@ -18,34 +18,7 @@ function setCursor(fileName) {
   });
 }
 
-/* Intro Klick */
-intro.addEventListener('click', () => {
-  intro.style.opacity = 0;
-  setTimeout(() => intro.style.display = 'none', 1000);
-  slider.classList.add('active');
-  bgMusic.volume = 0.4; 
-  bgMusic.play();
-  showCard(0);
-});
-
-/* Switch Button */
-switchBtn.addEventListener('click', () => {
-  current = (current + 1) % total;
-  showCard(current);
-});
-
-/* Swipe Support */
-let startX = 0;
-window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-window.addEventListener('touchend', e => {
-  const diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) > 50) {
-    current = diff < 0 ? (current + 1) % total : (current - 1 + total) % total;
-    showCard(current);
-  }
-});
-
-/* Zeigt Karte & Video-Wechsel, setzt Farbe & Cursor */
+/* ------------------- Karten-Anzeige ------------------- */
 function showCard(index) {
   cards.forEach((card, i) => card.classList.toggle('active', i === index));
   const activeCard = cards[index];
@@ -78,3 +51,50 @@ function showCard(index) {
     bgVideoNext.style.opacity = 0;
   }, 1050);
 }
+
+/* ------------------- Intro Klick ------------------- */
+intro.addEventListener('click', () => {
+  intro.style.opacity = 0;
+  setTimeout(() => intro.style.display = 'none', 1000);
+  slider.classList.add('active');
+  bgMusic.volume = 0.4; 
+  bgMusic.play();
+
+  // Parameter auslesen oder default 0
+  const params = new URLSearchParams(window.location.search);
+  current = parseInt(params.get('card')) || 0;
+
+  showCard(current);
+});
+
+/* ------------------- Switch Button ------------------- */
+switchBtn.addEventListener('click', () => {
+  current = (current + 1) % total;
+  showCard(current);
+});
+
+/* ------------------- Swipe Support ------------------- */
+let startX = 0;
+window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+window.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - startX;
+  if (Math.abs(diff) > 50) {
+    current = diff < 0 ? (current + 1) % total : (current - 1 + total) % total;
+    showCard(current);
+  }
+});
+
+/* ------------------- Direkt Karte laden, falls Parameter gesetzt ------------------- */
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const paramCard = parseInt(params.get('card'));
+  if (!isNaN(paramCard) && paramCard >= 0 && paramCard < total) {
+    current = paramCard;
+    intro.style.opacity = 0;
+    intro.style.display = 'none';
+    slider.classList.add('active');
+    bgMusic.volume = 0.4; 
+    bgMusic.play();
+    showCard(current);
+  }
+});
