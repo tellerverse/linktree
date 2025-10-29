@@ -122,11 +122,45 @@ a, button {
   transform: scale(1.2) rotate(-3deg);
 }
 
+/* Play Button auf Karte 2 */
+#play-btn {
+  position: absolute;
+  bottom: -40px;
+  right: 50%; /* mittig horizontal */
+  transform: translateX(50%);
+  width: 10vw;
+  max-width: 80px;
+  height: 10vw;
+  max-height: 80px;
+  border-radius: 50%;
+  background: var(--card-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px var(--card-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 5;
+}
+#play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px var(--card-color);
+}
+#play-btn .play-text {
+  color: #fff;
+  font-family: 'Burbank', sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+
 .text_link {
   display: inline-flex; 
   align-items: center; 
   gap: 8px;
-  text-decoration: underline wavy var(--card-color) 1px; 
+  text-decoration: underline var(--card-color) 1px; 
   font-weight: 600; 
   font-size: 1.3rem;
   color: var(--card-color);
@@ -134,7 +168,7 @@ a, button {
 }
 
 .text_link:hover {
-  text-decoration: underline wavy #fff  1px; 
+  text-decoration: underline #fff  1px; 
   filter: brightness(1.3) drop-shadow(0 0 10px var(--card-color));
 }
 
