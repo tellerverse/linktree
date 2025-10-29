@@ -3,8 +3,8 @@
   src: url('Assets/burbankbigcondensed_black.otf') format('opentype');
 }
 
-/* Globale Animation für alle Texte außer #version */
-* :not(#version) {
+/* Animierte lila Swipe-Glühlinie für sichtbare Texte, außer #version */
+h1, h2, h3, h4, h5, h6, p, span, a, .center-text, .card-text, .switch-btn, .header-info h1, .social-links li a {
   position: relative;
   color: #9b59b6; /* Basis-Lila */
   background: linear-gradient(
