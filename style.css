@@ -54,25 +54,49 @@ body, html {
   transition: color 0.3s ease, filter 0.3s ease;
 }
 
-/* Icons */
 .social-icon {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  background-color: currentColor;
+  transition: transform 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+
+  /* Masken-Referenz aus CSS-Variable */
+  mask: var(--icon-url) no-repeat center / contain;
+  -webkit-mask: var(--icon-url) no-repeat center / contain;
+}
+
+/* Farbe, Skalierung, Hover etc. */
+.social-icon.primary {
+  color: #00b4ff;
+  transform: scale(1);
+}
+
+.social-icon.primary:hover {
+  transform: scale(1.1);
+  color: #0080ff; /* Hover-Farbe optional */
+}
+
+/* Icons */
+/* .social-icon {
   width: 24px;
   height: 24px;
-  color: #ff66cc; /* färbt alle Pfade innerhalb des Symbols */
-  object-fit: contain;
+  color: #ff66cc; färbt alle Pfade innerhalb des Symbols */
+  /* object-fit: contain;
   filter: drop-shadow(0 0 0 var(--card-color));
-}
+} */
 
-.social-icon path {
+/* .social-icon path {
   fill: red;
   transition: filter 0.3s ease, fill 0.3s ease;
-}
+} */
 
 /* Hover Effekt */
-.social-links li a:hover {
+/* .social-links li a:hover {
   color: #fff; /* Linktext wird weiß */
-  filter: drop-shadow(0 0 20px var(--card-color));
-}
+  /* filter: drop-shadow(0 0 20px var(--card-color)); */
+/* } */
 .social-links li a:hover .social-icon {
   filter: drop-shadow(0 0 20px var(--card-color)); /* Glow in Kartenfarbe */
 }
