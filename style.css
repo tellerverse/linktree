@@ -121,40 +121,31 @@ a, button {
   filter: drop-shadow(0 0 10px var(--card-color));
   transform: scale(1.2) rotate(-3deg);
 }
-
-/* Play Button auf Karte 2 */
-#play-btn {
-  position: absolute;
-  bottom: -40px;
-  right: 50%; /* mittig horizontal */
-  transform: translateX(50%);
-  width: 10vw;
-  max-width: 80px;
-  height: 10vw;
-  max-height: 80px;
-  border-radius: 50%;
+/* Play Button in Karte 2 */
+.card-play-btn {
+  width: 100%;
+  padding: 15px 0;
+  margin-top: 20px;
+  border-radius: 15px;
   background: var(--card-color);
   border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 20px var(--card-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 5;
-}
-#play-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 35px var(--card-color);
-}
-#play-btn .play-text {
   color: #fff;
   font-family: 'Burbank', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
   text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--card-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.card-play-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px var(--card-color);
+  background: color-mix(in srgb, var(--card-color) 80%, white 20%);
+}
+.card-play-btn .play-text {
   pointer-events: none;
 }
-
 
 .text_link {
   display: inline-flex; 
