@@ -3,10 +3,11 @@
   src: url('Assets/burbankbigcondensed_black.otf') format('opentype');
 }
 
-/* Animierte lila Swipe-Glühlinie für sichtbare Texte, außer #version */
-h1, h2, h3, h4, h5, h6, p, span, a, .center-text, .card-text, .switch-btn, .header-info h1, .social-links li a {
+/* Animierte lila Swipe-Glühlinie nur für sichtbare Textinhalte */
+.center-text,
+.card-header h1,
+.card-text {
   position: relative;
-  color: #9b59b6; /* Basis-Lila */
   background: linear-gradient(
     120deg,
     #9b59b6 0%,
@@ -26,6 +27,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, .center-text, .card-text, .switch-btn, .head
   100% { background-position: -200% 0; }
 }
 
+/* Body und allgemeine Einstellungen */
 body, html {
   margin: 0;
   padding: 0;
@@ -46,6 +48,8 @@ body, html {
   justify-content:center; align-items:center; background: rgba(0,0,0,0.8); 
   cursor:pointer; z-index:10; 
 }
+
+/* Blinken beim Intro-Text */
 .center-text { 
   font-size:5rem; text-transform:uppercase; animation: blink 1.8s infinite; 
 }
@@ -56,6 +60,7 @@ body, html {
 }
 #slider.active { opacity:1; }
 
+/* Karten */
 .card {
   position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);
   width:90vw; max-width:600px; border-radius:25px; padding:30px;
@@ -114,7 +119,7 @@ body, html {
   transform: scale(1.1);
 }
 
-.card-text { color: var(--card-color); font-size:1.3rem; line-height:1.3; }
+.card-text { font-size:1.3rem; line-height:1.3; }
 
 .switch-btn { 
   position:absolute; bottom:-40px; right:-40px; width:10vw; max-width:80px; height:10vw; max-height:80px; 
