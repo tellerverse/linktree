@@ -102,6 +102,21 @@ a, button {
   }
 }
 
+#cloud {
+  position: fixed; /* bleibt beim Scrollen an der Position */
+  top: 20px;       /* Abstand von oben */
+  right: 20px;     /* Abstand von rechts */
+  width: 60px;     /* kleinere Größe */
+  height: auto;    /* proportional skalieren */
+  z-index: 10;     /* über dem Hintergrundvideo */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#cloud:hover {
+  transform: scale(1.2); /* kleiner Hover-Effekt */
+}
+
 /* Card Header */
 .card-header { display:flex; gap:20px; align-items:flex-start; }
 .profile-pic { width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid var(--card-color); flex-shrink:0; }
