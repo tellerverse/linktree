@@ -208,5 +208,5 @@ a, button {
   .header-info h1 { font-size:2rem; }
   .social-links { justify-content:center; }
   .card-text { text-align:left; font-size:1.3rem; }
-  /* .switch-btn { width:12vw; height:12vw; max-width:60px; max-height:60px; right:10px; bottom:10; } */
+  .switch-btn { width:12vw; height:12vw; max-width:60px; max-height:60px; right:10px; bottom:10px; }
 }
