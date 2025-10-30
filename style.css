@@ -203,7 +203,7 @@ a, button {
   bottom: 20px;  /* gleiche Höhe wie Play-Button */
   right: 20px;    /* rechts in der Karte */
   left: auto;     /* sicherstellen, dass links nichts greift */
-  width: 10vw; 
+  width: 30vw; 
   max-width: 80px; 
   height: 10vw; 
   max-height: 80px;
