@@ -199,14 +199,23 @@ a, button {
 /* Switch Button */
 
 .switch-btn {
-  position:absolute; bottom:-40px; right:-40px;
-  width:10vw; max-width:80px; height:10vw; max-height:80px;
-  border-radius:50%; background: var(--card-color);
-  border:none; cursor:pointer;
-  display:flex; justify-content:center; align-items:center;
-  box-shadow:0 0 20px var(--card-color);
+  position: absolute;
+  bottom: 20px; /* gleichem Abstand wie Play-Button */
+  left: 20px;   /* gespiegelt zur rechten Ecke vorher */
+  width: 10vw;
+  max-width: 80px;
+  height: 10vw;
+  max-height: 80px;
+  border-radius: 50%;
+  background: var(--card-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px var(--card-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index:5;
+  z-index: 5;
 }
 
 .switch-btn:hover { transform: scale(1.1); box-shadow:0 0 35px var(--card-color); }
