@@ -102,24 +102,9 @@ a, button {
   }
 }
 
-#cloud {
-  position: fixed; /* bleibt beim Scrollen an der Position */
-  top: 20px;       /* Abstand von oben */
-  right: 20px;     /* Abstand von rechts */
-  width: 60px;     /* kleinere Größe */
-  height: auto;    /* proportional skalieren */
-  z-index: 10;     /* über dem Hintergrundvideo */
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#cloud:hover {
-  transform: scale(1.2); /* kleiner Hover-Effekt */
-}
-
 /* Card Header */
 .card-header { display:flex; gap:20px; align-items:flex-start; }
-.profile-pic { width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid var(--card-color); flex-shrink:0; }
+.profile-pic { width:120px; height:120px; border-radius:50%; object-fit:cover; filter: drop-shadow(0 0 10px var(--card-color)); border:2px solid var(--card-color); flex-shrink:0; }
 .header-info { display:flex; flex-direction:column; gap:8px; flex:1; }
 .header-info h1 { margin:0; color: var(--card-color); }
 
@@ -199,23 +184,14 @@ a, button {
 /* Switch Button */
 
 .switch-btn {
-  position: absolute;
-  bottom: 20px;  /* gleiche Höhe wie Play-Button */
-  right: 20px;    /* rechts in der Karte */
-  left: auto;     /* sicherstellen, dass links nichts greift */
-  width: 30vw; 
-  max-width: 80px; 
-  height: 10vw; 
-  max-height: 80px;
-  border-radius: 50%;
-  background: var(--card-color);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 20px var(--card-color);
-  z-index: 5;
+  position:absolute; bottom:-40px; right:-40px;
+  width:10vw; max-width:80px; height:10vw; max-height:80px;
+  border-radius:50%; background: var(--card-color);
+  border:none; cursor:pointer;
+  display:flex; justify-content:center; align-items:center;
+  box-shadow:0 0 20px var(--card-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index:5;
 }
 
 .switch-btn:hover { transform: scale(1.1); box-shadow:0 0 35px var(--card-color); }
@@ -232,5 +208,5 @@ a, button {
   .header-info h1 { font-size:2rem; }
   .social-links { justify-content:center; }
   .card-text { text-align:left; font-size:1.3rem; }
-  .switch-btn { width:12vw; height:12vw; max-width:60px; max-height:60px; right:10px; bottom:0; }
+  .switch-btn { width:12vw; height:12vw; max-width:60px; max-height:60px; right:10px; bottom:10; }
 }
