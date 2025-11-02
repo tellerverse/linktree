@@ -138,13 +138,15 @@ const volumeSlider=document.getElementById("volume-slider");
 
 function loadSong(index){
   const song = songs[index];
-  audio.src=song.src;
-  playerCover.src=song.cover;
-  playerTitle.textContent=song.title;
-  playerTitle.href=song.spotifyTrack;
-  playerArtist.textContent=song.artist;
-  playerArtist.href=song.spotifyArtist;
-  playPauseBtn.querySelector('img').src = 'Assets/music/play.svg';
+  audio.src = song.src;
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
+
+  // Setze Play-Button Icon
+  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
 }
 
 playPauseBtn.addEventListener("click", ()=>{
