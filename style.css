@@ -19,6 +19,18 @@ a, button {
   cursor: url('Assets/cursor-red.cur'), pointer;
 }
 
+.visitor-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+.visitor-display img {
+  filter: drop-shadow(0 0 4px var(--card-color));
+}
+
 /* Hintergrundvideos */
 .bg-video {
   position: fixed;
