@@ -144,7 +144,7 @@ function loadSong(index){
   playerTitle.href=song.spotifyTrack;
   playerArtist.textContent=song.artist;
   playerArtist.href=song.spotifyArtist;
-  playPauseBtn.textContent="▶️";
+  playPauseBtn.querySelector('img').src = 'Assets/music/play.svg';
 }
 
 playPauseBtn.addEventListener("click", ()=>{
