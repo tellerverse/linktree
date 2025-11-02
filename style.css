@@ -184,6 +184,27 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
   border-radius: 50%;
 }
 
+.player-btn {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  background-color: currentColor; /* Farbe aus --card-color */
+  mask: var(--icon-url) no-repeat center / contain;
+  -webkit-mask: var(--icon-url) no-repeat center / contain;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.player-btn.primary {
+  color: var(--card-color); /* automatisch gefärbt wie die Karte */
+}
+
+.player-btn.primary:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px var(--card-color));
+}
 
 /* --- media player (wird INNEN in active card positioniert) --- */
 /* Position absolute relative to the card (JS will move the element into the active card) */
