@@ -97,30 +97,25 @@ function showCard(index) {
     }
 }
 
+startIntroCountdown();
+
 function startAutoCounter() {
-  const startDate = new Date('2025-11-01T00:00:00Z'); // Startdatum für tägliche Steigerung
-  const dailyIncrease = 10; // Views pro Tag
-  const randomMax = 30;     // max Zufall
-  const baseViews = [1200, 200]; // Basis pro Karte (1. Karte, 2. Karte)
+  const startDate = new Date('2025-01-01T00:00:00Z');
+  const initialViews = 180;
+  const weeklyIncrease = 30;
 
   const visitorElems = document.querySelectorAll(".visitor-count");
 
-  // pro Karte einen zufälligen Offset zwischen 1 und 30
-  const randomOffsets = Array.from(visitorElems).map(() => Math.floor(Math.random() * randomMax) + 1);
-
   function updateCounts() {
     const now = new Date();
-    const daysPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    const weeksPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24 * 7));
+    const currentViews = initialViews + weeksPassed * weeklyIncrease;
 
-    visitorElems.forEach((el, i) => {
-      // Basis + zufall + tägliche Steigerung
-      const count = (baseViews[i] || 100) + randomOffsets[i] + Math.max(0, daysPassed) * dailyIncrease;
-      el.textContent = count;
-    });
+    visitorElems.forEach(el => el.textContent = currentViews);
   }
 
   updateCounts();
-  setInterval(updateCounts, 1000 * 60 * 60); // jede Stunde aktualisieren
+  setInterval(updateCounts, 1000 * 60 * 60);
 }
 
 startAutoCounter();
