@@ -133,19 +133,39 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 .card-play-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--card-color); }
 
-/* --- switch button --- */
+/* --- Switch Button --- */
 .switch-btn {
-  position:absolute;
-  bottom:-40px; right:-40px;
-  width:10vw; max-width:80px; height:10vw; max-height:80px;
-  border-radius:50%; background: var(--card-color);
-  border:none; cursor:pointer; display:flex; justify-content:center; align-items:center;
-  box-shadow:0 0 20px var(--card-color); transition: transform .2s, box-shadow .2s;
-  z-index:5;
+  position: absolute;
+  bottom: -50px;        /* Offset unter der Karte */
+  left: 50%;            /* horizontal zentrieren */
+  transform: translateX(-50%);
+  width: 10vw;
+  max-width: 80px;
+  height: 10vw;
+  max-height: 80px;
+  border-radius: 50%;
+  background: var(--card-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px var(--card-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 5;
 }
-.switch-btn:hover { transform: scale(1.08); box-shadow:0 0 35px var(--card-color); }
-.switch-icon { width:80%; height:80%; object-fit:cover; border-radius:50%; }
 
+.switch-btn:hover {
+  transform: translateX(-50%) scale(1.08);
+  box-shadow: 0 0 35px var(--card-color);
+}
+
+.switch-icon {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 50%;
+}
 /* --- media player (wird INNEN in active card positioniert) --- */
 /* Position absolute relative to the card (JS will move the element into the active card) */
 #media-player {
