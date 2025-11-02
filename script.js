@@ -10,12 +10,14 @@ const switchBtn = document.getElementById('switch');
 let current = 0;
 const total = cards.length;
 
+/* -------- URL Parameter für Karte -------- */
 const params = new URLSearchParams(window.location.search);
 const paramCard = parseInt(params.get('card'));
 if (!isNaN(paramCard) && paramCard >= 0 && paramCard < total) {
     current = paramCard;
 }
 
+/* -------- Cursor Handling -------- */
 function setCursor(fileName) {
     const path = `Assets/${fileName}`;
     document.body.style.cursor = `url('${path}'), auto`;
@@ -24,6 +26,7 @@ function setCursor(fileName) {
     });
 }
 
+/* -------- Intro Countdown -------- */
 function startIntroCountdown() {
     let count = 3;
     centerText.textContent = count;
@@ -39,6 +42,7 @@ function startIntroCountdown() {
     }, 1000);
 }
 
+/* -------- Intro Klick Handler -------- */
 function introClickHandler() {
     intro.removeEventListener('click', introClickHandler);
     intro.style.opacity = 0;
@@ -51,11 +55,13 @@ function introClickHandler() {
     showCard(current);
 }
 
+/* -------- Switch Button -------- */
 switchBtn.addEventListener('click', () => {
     current = (current + 1) % total;
     showCard(current);
 });
 
+/* -------- Swipe Support -------- */
 let startX = 0;
 window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 window.addEventListener('touchend', e => {
@@ -66,17 +72,21 @@ window.addEventListener('touchend', e => {
     }
 });
 
+/* -------- Zeigt Karte & Video-Wechsel -------- */
 function showCard(index) {
     cards.forEach((card, i) => card.classList.toggle('active', i === index));
     const activeCard = cards[index];
     if (activeCard && !activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
 
+    // Farbe setzen
     const color = activeCard.dataset.color || '#ff66cc';
     activeCard.style.setProperty('--card-color', color);
 
+    // Cursor wechseln
     const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
     setCursor(cursorFile);
 
+    // Video wechseln
     const newVideoSrc = activeCard.dataset.video;
     if (!bgVideoNext.querySelector('source').src.includes(newVideoSrc)) {
         bgVideoNext.querySelector('source').src = newVideoSrc;
@@ -97,25 +107,5 @@ function showCard(index) {
     }
 }
 
+// -------- Intro Countdown starten --------
 startIntroCountdown();
-
-function startAutoCounter() {
-  const startDate = new Date('2025-01-01T00:00:00Z');
-  const initialViews = 180;
-  const weeklyIncrease = 30;
-
-  const visitorElems = document.querySelectorAll(".visitor-count");
-
-  function updateCounts() {
-    const now = new Date();
-    const weeksPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24 * 7));
-    const currentViews = initialViews + weeksPassed * weeklyIncrease;
-
-    visitorElems.forEach(el => el.textContent = currentViews);
-  }
-
-  updateCounts();
-  setInterval(updateCounts, 1000 * 60 * 60);
-}
-
-startAutoCounter();
