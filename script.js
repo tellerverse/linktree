@@ -4,20 +4,47 @@ const slider = document.getElementById('slider');
 const cards = document.querySelectorAll('.card');
 const bgVideo = document.getElementById('bg-video');
 const bgVideoNext = document.getElementById('bg-video-next');
-const bgMusic = document.getElementById('bg-music');
 const switchBtn = document.getElementById('switch');
 
+const songs = [
+  {
+    title: "Song 1",
+    artist: "Artist 1",
+    cover: "Assets/cover1.jpg",
+    src: "Assets/song1.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  },
+  {
+    title: "Song 2",
+    artist: "Artist 2",
+    cover: "Assets/cover2.jpg",
+    src: "Assets/song2.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  },
+  {
+    title: "Song 3",
+    artist: "Artist 3",
+    cover: "Assets/cover3.jpg",
+    src: "Assets/song3.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  }
+];
+
+// ---------------- Slider / Karten ----------------
 let current = 0;
 const total = cards.length;
 
-/* -------- URL Parameter für Karte -------- */
+// URL Parameter für Karte
 const params = new URLSearchParams(window.location.search);
 const paramCard = parseInt(params.get('card'));
 if (!isNaN(paramCard) && paramCard >= 0 && paramCard < total) {
     current = paramCard;
 }
 
-/* -------- Cursor Handling -------- */
+// Cursor setzen
 function setCursor(fileName) {
     const path = `Assets/${fileName}`;
     document.body.style.cursor = `url('${path}'), auto`;
@@ -26,7 +53,7 @@ function setCursor(fileName) {
     });
 }
 
-/* -------- Intro Countdown -------- */
+// Intro Countdown
 function startIntroCountdown() {
     let count = 3;
     centerText.textContent = count;
@@ -42,26 +69,28 @@ function startIntroCountdown() {
     }, 1000);
 }
 
-/* -------- Intro Klick Handler -------- */
+// Intro Klick-Handler
 function introClickHandler() {
     intro.removeEventListener('click', introClickHandler);
     intro.style.opacity = 0;
     setTimeout(() => intro.style.display = 'none', 1000);
 
     slider.classList.add('active');
-    bgMusic.volume = 0.4;
-    bgMusic.play();
+
+    // Zufälligen Song auswählen und laden (nicht automatisch abspielen)
+    currentSongIndex = Math.floor(Math.random() * songs.length);
+    loadSong(currentSongIndex);
 
     showCard(current);
 }
 
-/* -------- Switch Button -------- */
+// Switch Button
 switchBtn.addEventListener('click', () => {
     current = (current + 1) % total;
     showCard(current);
 });
 
-/* -------- Swipe Support -------- */
+// Swipe Support
 let startX = 0;
 window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 window.addEventListener('touchend', e => {
@@ -72,21 +101,18 @@ window.addEventListener('touchend', e => {
     }
 });
 
-/* -------- Zeigt Karte & Video-Wechsel -------- */
+// Zeigt Karte & Video-Wechsel
 function showCard(index) {
     cards.forEach((card, i) => card.classList.toggle('active', i === index));
     const activeCard = cards[index];
     if (activeCard && !activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
 
-    // Farbe setzen
     const color = activeCard.dataset.color || '#ff66cc';
     activeCard.style.setProperty('--card-color', color);
 
-    // Cursor wechseln
     const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
     setCursor(cursorFile);
 
-    // Video wechseln
     const newVideoSrc = activeCard.dataset.video;
     if (!bgVideoNext.querySelector('source').src.includes(newVideoSrc)) {
         bgVideoNext.querySelector('source').src = newVideoSrc;
@@ -107,22 +133,24 @@ function showCard(index) {
     }
 }
 
-// -------- Intro Countdown starten --------
-startIntroCountdown();
-
+// ---------------- Besucher-Zähler ----------------
 function startAutoCounter() {
-  const startDate = new Date('2025-01-01T00:00:00Z'); // Startdatum
-  const initialViews = 180; // Startwert
-  const weeklyIncrease = 30; // Zuwachs pro Woche
+  const startDate = new Date('2025-11-01T00:00:00Z');
+  const dailyIncrease = 10;
+  const randomMax = 30;
+  const baseViews = [1200, 200];
 
   const visitorElems = document.querySelectorAll(".visitor-count");
+  const randomOffsets = Array.from(visitorElems).map(() => Math.floor(Math.random() * randomMax) + 1);
 
   function updateCounts() {
     const now = new Date();
-    const weeksPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24 * 7));
-    const currentViews = initialViews + weeksPassed * weeklyIncrease;
+    const daysPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
 
-    visitorElems.forEach(el => el.textContent = currentViews);
+    visitorElems.forEach((el, i) => {
+      const count = (baseViews[i] || 100) + randomOffsets[i] + Math.max(0, daysPassed) * dailyIncrease;
+      el.textContent = count;
+    });
   }
 
   updateCounts();
@@ -130,3 +158,68 @@ function startAutoCounter() {
 }
 
 startAutoCounter();
+
+// ---------------- Media Player ----------------
+let currentSongIndex;
+const audio = new Audio();
+const playerCover = document.getElementById("player-cover");
+const playerTitle = document.getElementById("player-title");
+const playerArtist = document.getElementById("player-artist");
+const playPauseBtn = document.getElementById("play-pause-btn");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const volumeSlider = document.getElementById("volume-slider");
+
+function loadSong(index) {
+  const song = songs[index];
+  audio.src = song.src;
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
+  playPauseBtn.textContent = "▶️"; // Start-Button
+}
+
+// Play/Pause
+function playPause() {
+  if(audio.paused){
+    audio.play();
+    playPauseBtn.textContent = "⏸️";
+  } else {
+    audio.pause();
+    playPauseBtn.textContent = "▶️";
+  }
+}
+
+// Nächster / Vorheriger Song
+function nextSong() {
+  currentSongIndex = (currentSongIndex + 1) % songs.length;
+  loadSong(currentSongIndex);
+  audio.play();
+  playPauseBtn.textContent = "⏸️";
+}
+
+function prevSong() {
+  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+  loadSong(currentSongIndex);
+  audio.play();
+  playPauseBtn.textContent = "⏸️";
+}
+
+// Event Listener
+playPauseBtn.addEventListener("click", playPause);
+nextBtn.addEventListener("click", nextSong);
+prevBtn.addEventListener("click", prevSong);
+volumeSlider.addEventListener("input", e => audio.volume = e.target.value);
+
+// Klick auf Cover/Title/Artist öffnet Spotify-Links
+playerCover.addEventListener("click", () => window.open(songs[currentSongIndex].spotifyTrack, "_blank"));
+playerTitle.addEventListener("click", () => window.open(songs[currentSongIndex].spotifyTrack, "_blank"));
+playerArtist.addEventListener("click", () => window.open(songs[currentSongIndex].spotifyArtist, "_blank"));
+
+// Song automatisch weiterspielen
+audio.addEventListener("ended", nextSong);
+
+// ---------------- Start Intro ----------------
+startIntroCountdown();
