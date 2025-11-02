@@ -109,3 +109,24 @@ function showCard(index) {
 
 // -------- Intro Countdown starten --------
 startIntroCountdown();
+
+function startAutoCounter() {
+  const startDate = new Date('2025-01-01T00:00:00Z'); // Startdatum
+  const initialViews = 180; // Startwert
+  const weeklyIncrease = 30; // Zuwachs pro Woche
+
+  const visitorElems = document.querySelectorAll(".visitor-count");
+
+  function updateCounts() {
+    const now = new Date();
+    const weeksPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24 * 7));
+    const currentViews = initialViews + weeksPassed * weeklyIncrease;
+
+    visitorElems.forEach(el => el.textContent = currentViews);
+  }
+
+  updateCounts();
+  setInterval(updateCounts, 1000 * 60 * 60); // jede Stunde aktualisieren
+}
+
+startAutoCounter();
