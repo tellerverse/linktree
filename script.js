@@ -70,6 +70,11 @@ function showCard(index) {
   if(activeCard && !activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
   const color = activeCard.dataset.color || '#ff66cc';
   activeCard.style.setProperty('--card-color', color);
+  const cardColor = activeCard.dataset.color || '#ff66cc';
+    const player = document.getElementById('media-player');
+    player.style.background = `rgba(0,0,0,0.5)`; // halbtransparent
+    player.style.border = `2px solid ${cardColor}`;
+    player.style.boxShadow = `0 0 20px ${cardColor}`;
   const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
   setCursor(cursorFile);
   const newVideoSrc = activeCard.dataset.video;
