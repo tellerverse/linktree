@@ -70,6 +70,7 @@ function startIntroCountdown() {
 }
 
 // Intro Klick-Handler
+// Intro Klick-Handler
 function introClickHandler() {
     intro.removeEventListener('click', introClickHandler);
     intro.style.opacity = 0;
@@ -77,12 +78,16 @@ function introClickHandler() {
 
     slider.classList.add('active');
 
-    // Zufälligen Song auswählen und laden (nicht automatisch abspielen)
+    // Zufälligen Song auswählen und laden
     currentSongIndex = Math.floor(Math.random() * songs.length);
     loadSong(currentSongIndex);
 
     showCard(current);
+
+    // -------- Auto Counter starten --------
+    startAutoCounter();
 }
+
 
 // Switch Button
 switchBtn.addEventListener('click', () => {
@@ -134,6 +139,8 @@ function showCard(index) {
 }
 
 // ---------------- Besucher-Zähler ----------------
+
+// Auto Counter
 function startAutoCounter() {
   const startDate = new Date('2025-11-01T00:00:00Z');
   const dailyIncrease = 10;
