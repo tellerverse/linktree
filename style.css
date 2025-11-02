@@ -133,6 +133,25 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 .card-play-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--card-color); }
 
+#player-controls button {
+  background:none;
+  border:none;
+  color: var(--card-color); /* Farbe an die Karte koppeln */
+  cursor:pointer;
+  padding:0;
+}
+
+.player-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor; /* funktioniert nur, wenn das SVG fill="currentColor" hat */
+}
+
+#player-controls button:hover .player-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px var(--card-color));
+}
+
 /* --- Switch Button --- */
 /* --- Switch Button (unten rechts in der Karte) --- */
 .switch-btn {

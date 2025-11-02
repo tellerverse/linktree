@@ -147,8 +147,22 @@ function loadSong(index){
   playPauseBtn.textContent="▶️";
 }
 
-playPauseBtn.addEventListener("click",()=>{ audio.paused? (audio.play(),playPauseBtn.textContent="⏸️"):(audio.pause(),playPauseBtn.textContent="▶️") });
-nextBtn.addEventListener("click",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); playPauseBtn.textContent="⏸️"; });
+playPauseBtn.addEventListener("click", ()=>{
+    if(audio.paused){
+        audio.play();
+        playPauseBtn.querySelector('img').src = 'Assets/music/pause.svg';
+    } else {
+        audio.pause();
+        playPauseBtn.querySelector('img').src = 'Assets/music/play.svg';
+    }
+});
+
+nextBtn.addEventListener("click", ()=>{
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(currentSongIndex);
+    audio.play();
+    playPauseBtn.querySelector('img').src = 'Assets/music/pause.svg';
+});
 volumeSlider.addEventListener("input", e=>audio.volume=e.target.value);
 [playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
 audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
@@ -183,3 +197,4 @@ audio.addEventListener('timeupdate', () => {
 timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
+
