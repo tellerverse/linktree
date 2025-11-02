@@ -126,3 +126,16 @@ function startAutoCounter(){
 
 // Start Intro
 startIntroCountdown();
+
+const timeSlider = document.getElementById('time-slider');
+
+// Aktualisiert den Slider während des Abspielens
+audio.addEventListener('timeupdate', () => {
+  const value = (audio.currentTime / audio.duration) * 100 || 0;
+  timeSlider.value = value;
+});
+
+// Slider kann Audio spulen
+timeSlider.addEventListener('input', (e) => {
+  audio.currentTime = (e.target.value / 100) * audio.duration;
+});
