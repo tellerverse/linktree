@@ -65,25 +65,64 @@ function introClickHandler() {
 
 // Switch / Cards
 function showCard(index) {
-  cards.forEach((c,i)=>c.classList.toggle('active', i===index));
+  // 1) Card aktivieren
+  cards.forEach((card, i) => card.classList.toggle('active', i === index));
   const activeCard = cards[index];
-  if(activeCard && !activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
+  if (!activeCard) return;
+
+  // 2) ensure switch button is inside active card
+  if (!activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
+
+  // 3) set card color variable
   const color = activeCard.dataset.color || '#ff66cc';
   activeCard.style.setProperty('--card-color', color);
-  const cardColor = activeCard.dataset.color || '#ff66cc';
-    const player = document.getElementById('media-player');
-    player.style.background = `rgba(0,0,0,0.5)`; // halbtransparent
-    player.style.border = `2px solid ${cardColor}`;
-    player.style.boxShadow = `0 0 20px ${cardColor}`;
+
+  // 4) cursor
   const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
   setCursor(cursorFile);
+
+  // 5) video crossfade
   const newVideoSrc = activeCard.dataset.video;
-  if(!bgVideoNext.querySelector('source').src.includes(newVideoSrc)){
-    bgVideoNext.querySelector('source').src=newVideoSrc; bgVideoNext.load();
-    bgVideoNext.classList.remove('hidden'); bgVideoNext.style.opacity=0;
-    setTimeout(()=>{bgVideoNext.style.transition='opacity 1s ease'; bgVideoNext.style.opacity=1},50);
-    setTimeout(()=>{bgVideo.querySelector('source').src=newVideoSrc; bgVideo.load(); bgVideoNext.classList.add('hidden'); bgVideoNext.style.transition=''; bgVideoNext.style.opacity=0},1050);
+  const nextSource = bgVideoNext.querySelector('source');
+  const mainSource = bgVideo.querySelector('source');
+  if (!nextSource.src.includes(newVideoSrc)) {
+    nextSource.src = newVideoSrc;
+    bgVideoNext.load();
+    bgVideoNext.classList.remove('hidden');
+    bgVideoNext.style.opacity = 0;
+    setTimeout(() => {
+      bgVideoNext.style.transition = 'opacity 1s ease';
+      bgVideoNext.style.opacity = 1;
+    }, 50);
+    setTimeout(() => {
+      mainSource.src = newVideoSrc;
+      bgVideo.load();
+      bgVideoNext.classList.add('hidden');
+      bgVideoNext.style.transition = '';
+      bgVideoNext.style.opacity = 0;
+    }, 1050);
   }
+
+  // 6) move media player element INTO the active card, position absolute relative to it
+  const mediaPlayer = document.getElementById('media-player');
+  if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
+    activeCard.appendChild(mediaPlayer);
+  }
+
+  // 7) style media player to match card color
+  mediaPlayer.style.setProperty('--card-color', color);
+  mediaPlayer.style.background = 'rgba(0,0,0,0.45)';
+  mediaPlayer.style.border = `2px solid ${color}`;
+  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`; // subtle colored glow
+
+  // 8) ensure active card allows overflow so player is visible
+  activeCard.style.overflow = 'visible';
+
+  // 9) update slider thumbs if present so border matches color
+  const timeSlider = document.getElementById('time-slider');
+  const volumeSlider = document.getElementById('volume-slider');
+  if (timeSlider) timeSlider.style.setProperty('--thumb-border', color);
+  if (volumeSlider) volumeSlider.style.setProperty('--thumb-border', color);
 }
 
 switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(current); });
