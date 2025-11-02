@@ -6,6 +6,33 @@ const bgVideo = document.getElementById('bg-video');
 const bgVideoNext = document.getElementById('bg-video-next');
 const bgMusic = document.getElementById('bg-music');
 const switchBtn = document.getElementById('switch');
+const songs = [
+  {
+    title: "Song 1",
+    artist: "Artist 1",
+    cover: "Assets/cover1.jpg",
+    src: "Assets/song1.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  },
+  {
+    title: "Song 2",
+    artist: "Artist 2",
+    cover: "Assets/cover2.jpg",
+    src: "Assets/song2.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  },
+  {
+    title: "Song 3",
+    artist: "Artist 3",
+    cover: "Assets/cover3.jpg",
+    src: "Assets/song3.mp3",
+    spotifyTrack: "https://open.spotify.com/track/...",
+    spotifyArtist: "https://open.spotify.com/artist/..."
+  }
+];
+
 
 let current = 0;
 const total = cards.length;
@@ -124,3 +151,62 @@ function startAutoCounter() {
 }
 
 startAutoCounter();
+
+
+let currentSongIndex = Math.floor(Math.random() * songs.length);
+const audio = new Audio();
+const playerCover = document.getElementById("player-cover");
+const playerTitle = document.getElementById("player-title");
+const playerArtist = document.getElementById("player-artist");
+const playPauseBtn = document.getElementById("play-pause-btn");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const volumeSlider = document.getElementById("volume-slider");
+
+function loadSong(index) {
+  const song = songs[index];
+  audio.src = song.src;
+  audio.play();
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
+  playPauseBtn.textContent = "⏸️";
+}
+
+function playPause() {
+  if(audio.paused){
+    audio.play();
+    playPauseBtn.textContent = "⏸️";
+  } else {
+    audio.pause();
+    playPauseBtn.textContent = "▶️";
+  }
+}
+
+function nextSong() {
+  currentSongIndex = (currentSongIndex + 1) % songs.length;
+  loadSong(currentSongIndex);
+}
+
+function prevSong() {
+  currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+  loadSong(currentSongIndex);
+}
+
+// Event Listener
+playPauseBtn.addEventListener("click", playPause);
+nextBtn.addEventListener("click", nextSong);
+prevBtn.addEventListener("click", prevSong);
+volumeSlider.addEventListener("input", e => audio.volume = e.target.value);
+
+// Klick auf Cover/Title/Artist öffnet Spotify-Links
+playerCover.addEventListener("click", () => window.open(songs[currentSongIndex].spotifyTrack, "_blank"));
+
+// Song automatisch weiterspielen
+audio.addEventListener("ended", nextSong);
+
+// Initial
+loadSong(currentSongIndex);
+volumeSlider.value = audio.volume;
