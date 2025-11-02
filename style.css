@@ -134,15 +134,13 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 .card-play-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--card-color); }
 
 /* --- Switch Button --- */
+/* --- Switch Button (unten rechts in der Karte) --- */
 .switch-btn {
   position: absolute;
-  bottom: -50px;        /* Offset unter der Karte */
-  left: 50%;            /* horizontal zentrieren */
-  transform: translateX(-50%);
-  width: 10vw;
-  max-width: 80px;
-  height: 10vw;
-  max-height: 80px;
+  bottom: 15px;
+  right: 15px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   background: var(--card-color);
   border: none;
@@ -156,16 +154,18 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 
 .switch-btn:hover {
-  transform: translateX(-50%) scale(1.08);
+  transform: scale(1.08);
   box-shadow: 0 0 35px var(--card-color);
 }
 
 .switch-icon {
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 70%;
   object-fit: cover;
   border-radius: 50%;
 }
+
+
 /* --- media player (wird INNEN in active card positioniert) --- */
 /* Position absolute relative to the card (JS will move the element into the active card) */
 #media-player {
