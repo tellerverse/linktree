@@ -8,28 +8,20 @@ const switchBtn = document.getElementById('switch');
 
 const songs = [
   {
-    title: "Song 1",
-    artist: "Artist 1",
-    cover: "Assets/cover1.jpg",
-    src: "Assets/song1.mp3",
-    spotifyTrack: "https://open.spotify.com/track/...",
-    spotifyArtist: "https://open.spotify.com/artist/..."
+    title: "STANNI",
+    artist: "Snake16",
+    cover: "Assets/music/stannicover.jpg",
+    src: "Assets/music/stanni.mp3",
+    spotifyTrack: "https://open.spotify.com/track/4BMykUWuRBoX7yiIFPSFXH?si=927e3a4aa6074347",
+    spotifyArtist: "https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"
   },
   {
-    title: "Song 2",
-    artist: "Artist 2",
-    cover: "Assets/cover2.jpg",
-    src: "Assets/song2.mp3",
-    spotifyTrack: "https://open.spotify.com/track/...",
-    spotifyArtist: "https://open.spotify.com/artist/..."
-  },
-  {
-    title: "Song 3",
-    artist: "Artist 3",
-    cover: "Assets/cover3.jpg",
-    src: "Assets/song3.mp3",
-    spotifyTrack: "https://open.spotify.com/track/...",
-    spotifyArtist: "https://open.spotify.com/artist/..."
+    title: "SAG VALLAH",
+    artist: "Snake16",
+    cover: "Assets/music/sagvallahcover.jpg",
+    src: "Assets/music/sagvallah.mp3",
+    spotifyTrack: "https://open.spotify.com/track/4GndsC4aWgsALl5sKq6dxY?si=aee1fb61de83427b",
+    spotifyArtist: "https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"
   }
 ];
 
@@ -46,7 +38,7 @@ if (!isNaN(paramCard) && paramCard >= 0 && paramCard < total) {
 
 // Cursor setzen
 function setCursor(fileName) {
-    const path = `Assets/${fileName}`;
+    const path = `Assets/cursor/${fileName}`;
     document.body.style.cursor = `url('${path}'), auto`;
     document.querySelectorAll('a, button').forEach(el => {
         el.style.cursor = `url('${path}'), pointer`;
@@ -69,7 +61,6 @@ function startIntroCountdown() {
     }, 1000);
 }
 
-// Intro Klick-Handler
 // Intro Klick-Handler
 function introClickHandler() {
     intro.removeEventListener('click', introClickHandler);

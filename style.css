@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'Burbank';
-  src: url('Assets/burbankbigcondensed_black.otf') format('opentype');
+  src: url('Assets/font/burbankbigcondensed_black.otf') format('opentype');
 }
 
 body, html {
-  cursor: url('Assets/cursor-pink.cur'), auto;
+  cursor: url('Assets/cursor/cursor-pink.cur'), auto;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -15,7 +15,7 @@ body, html {
 }
 
 a, button {
-  cursor: url('Assets/cursor-red.cur'), pointer;
+  cursor: url('Assets/cursor/cursor-red.cur'), pointer;
 }
 
 .visitor-display {
