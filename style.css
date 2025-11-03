@@ -133,13 +133,6 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 .card-play-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--card-color); }
 
-#player-controls button {
-  background:none;
-  border:none;
-  color: var(--card-color); /* Farbe an die Karte koppeln */
-  cursor:pointer;
-  padding:0;
-}
 
 .player-icon {
   width: 24px;
@@ -265,6 +258,9 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 #player-info { display:flex; flex-direction:column; gap:2px; min-width:120px; max-width:260px; overflow:hidden; }
 #player-info a { color:#fff; text-decoration:none; font-size:0.85rem; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
 #player-controls { display:flex; align-items:center; gap:8px; }
+
+/* buttons */
+#player-controls button { background:none; border:none; color:#fff; font-size:1.15rem; cursor:pointer; }
 
 /* time slider (playback) */
 #time-slider {
