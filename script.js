@@ -189,32 +189,53 @@ function startAutoCounter(){
 startIntroCountdown();
 
 const timeSlider = document.getElementById('time-slider');
-
 const currentTimeEl = document.getElementById('current-time');
 const totalTimeEl = document.getElementById('total-time');
 
 function formatTime(seconds) {
-  if (isNaN(seconds)) return "0:00";
+  if (!seconds || isNaN(seconds)) return "0:00";
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-// Wenn Song geladen ist → Dauer anzeigen
+function updateTimeUI() {
+  if (!audio.duration) return;
+  const percent = (audio.currentTime / audio.duration) * 100;
+  timeSlider.value = percent;
+  currentTimeEl.textContent = formatTime(audio.currentTime);
+}
+
+audio.addEventListener('timeupdate', updateTimeUI);
+
+// Neu laden = Metadaten warten → Dauer anzeigen
 audio.addEventListener('loadedmetadata', () => {
   totalTimeEl.textContent = formatTime(audio.duration);
 });
 
-// Beim Abspielen → Fortschritt + aktuelle Zeit aktualisieren
-audio.addEventListener('timeupdate', () => {
-  if (audio.duration) {
-    const value = (audio.currentTime / audio.duration) * 100;
-    timeSlider.value = value;
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-  }
-});
+// Wenn ein neuer Song geladen wird → neu binden
+function loadSong(index) {
+  const song = songs[index];
+  audio.src = song.src;
+  audio.load(); // wichtig!
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
 
-// Slider kann spulen
+  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+
+  // Aktualisiere Zeit-UI direkt nach Laden
+  audio.addEventListener('loadedmetadata', () => {
+    totalTimeEl.textContent = formatTime(audio.duration);
+    currentTimeEl.textContent = "0:00";
+    timeSlider.value = 0;
+  }, { once: true });
+}
+
 timeSlider.addEventListener('input', (e) => {
-  audio.currentTime = (e.target.value / 100) * audio.duration;
+  if (audio.duration) {
+    audio.currentTime = (e.target.value / 100) * audio.duration;
+  }
 });
