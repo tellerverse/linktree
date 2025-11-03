@@ -12,9 +12,16 @@ body, html {
   font-family: 'Burbank', 'Poppins', sans-serif;
   color: #fff;
   perspective: 1000px;
-  cursor: url('Assets/cursor/cursor-pink.cur'), auto;
+
+  /* Karten-Cursor */
+  --card-cursor: url('Assets/cursor/cursor-pink.cur'), auto;
+  cursor: var(--card-cursor);
 }
-a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
+
+/* Buttons/Links haben immer diesen Hover-Cursor */
+a, button {
+  cursor: url('Assets/cursor/cursor-pointer.cur'), pointer;
+}
 
 /* --- Hintergrundvideo --- */
 .bg-video {

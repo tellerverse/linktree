@@ -29,11 +29,10 @@ let current = 0;
 let currentSongIndex;
 const total = cards.length;
 
-// Cursor
+// Cursor setzen
 function setCursor(fileName) {
   const path = `Assets/cursor/${fileName}`;
-  document.body.style.cursor = `url('${path}'), auto`;
-  document.querySelectorAll('a, button').forEach(el => el.style.cursor = `url('${path}'), pointer`);
+  document.body.style.setProperty('--card-cursor', `url('${path}'), auto`);
 }
 
 // Intro Countdown
