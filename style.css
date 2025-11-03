@@ -185,17 +185,46 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 
 /* Allgemeine Mask-Button/Icons */
-.player-btn, .visitor-eye {
+.player-btn {
+  all: unset; /* entfernt Browser-Styles */
+  display: inline-block;
   width: 35px;
   height: 35px;
-  display: inline-block;
-  background-color: currentColor; /* übernimmt Farbe aus --card-color */
-  mask: var(--icon-url) no-repeat center / contain;
-  -webkit-mask: var(--icon-url) no-repeat center / contain;
-  border: none;
-  border-radius: 6px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+          mask-image: var(--icon-url);
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: contain;
+  color: var(--card-color);
   cursor: pointer;
   transition: transform 0.3s ease, filter 0.3s ease;
+  border-radius: 6px;
+}
+
+.player-btn:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px var(--card-color));
+}
+
+/* --- Eye Icon (div) --- */
+.visitor-eye {
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+          mask-image: var(--icon-url);
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: contain;
+  color: var(--card-color);
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .player-btn.primary, .visitor-eye.primary {
@@ -236,9 +265,6 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 #player-info { display:flex; flex-direction:column; gap:2px; min-width:120px; max-width:260px; overflow:hidden; }
 #player-info a { color:#fff; text-decoration:none; font-size:0.85rem; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
 #player-controls { display:flex; align-items:center; gap:8px; }
-
-/* buttons */
-#player-controls button { background:none; border:none; color:#fff; font-size:1.15rem; cursor:pointer; }
 
 /* time slider (playback) */
 #time-slider {
