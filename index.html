@@ -87,11 +87,12 @@
         <a id="player-artist" href="#" target="_blank"></a>
       </div>
       <div id="player-controls">
+        <span id="current-time">0:00</span>
         <input type="range" id="time-slider" min="0" max="100" value="0">
+        <span id="total-time">0:00</span>
+
         <button><div id="play-pause-btn" class="player-btn primary" style="--icon-url: url('Assets/music/play.svg')"></div></button>
         <button id="next-btn"><div class="player-btn primary" style="--icon-url: url('Assets/music/skip.svg')"></div></button>
-        <!-- <button id="play-pause-btn" class="player-btn primary" style="--icon-url: url('Assets/music/play.svg')"></button> -->
-        <!-- <button id="next-btn" class="player-btn primary" style="--icon-url: url('Assets/music/skip.svg')"></button> -->
         <input type="range" id="volume-slider" min="0" max="1" step="0.01">
       </div>
     </div>

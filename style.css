@@ -280,9 +280,22 @@ a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 }
 #time-slider:hover::-webkit-slider-thumb { background: var(--card-color); transform:scale(1.18); }
 #time-slider::-moz-range-thumb { width:14px; height:14px; background:#fff; border-radius:50%; border:2px solid var(--card-color); }
+#player-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#current-time, #total-time {
+  font-size: 0.75rem;
+  color: var(--card-color);
+  min-width: 36px;
+  text-align: center;
+  opacity: 0.9;
+}
 
 /* volume slider (small) */
-#volume-slider { width:80px; height:5px; -webkit-appearance:none; background:#fff; border-radius:4px; cursor:pointer; }
+#volume-slider { width:80px; height:5px; -webkit-appearance:none; background: var(--card-color); border-radius:4px; cursor:pointer; }
 #volume-slider::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid var(--card-color); }
 #volume-slider:hover::-webkit-slider-thumb { background: var(--card-color); transform:scale(1.15); }
 

@@ -190,14 +190,31 @@ startIntroCountdown();
 
 const timeSlider = document.getElementById('time-slider');
 
-// Aktualisiert den Slider während des Abspielens
-audio.addEventListener('timeupdate', () => {
-  const value = (audio.currentTime / audio.duration) * 100 || 0;
-  timeSlider.value = value;
+const currentTimeEl = document.getElementById('current-time');
+const totalTimeEl = document.getElementById('total-time');
+
+function formatTime(seconds) {
+  if (isNaN(seconds)) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+// Wenn Song geladen ist → Dauer anzeigen
+audio.addEventListener('loadedmetadata', () => {
+  totalTimeEl.textContent = formatTime(audio.duration);
 });
 
-// Slider kann Audio spulen
+// Beim Abspielen → Fortschritt + aktuelle Zeit aktualisieren
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    const value = (audio.currentTime / audio.duration) * 100;
+    timeSlider.value = value;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  }
+});
+
+// Slider kann spulen
 timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
-
