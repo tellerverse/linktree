@@ -20,7 +20,7 @@ body, html {
 
 /* Buttons/Links haben immer diesen Hover-Cursor */
 a, button {
-  cursor: url('Assets/cursor/cursor-pointer.cur'), pointer;
+  cursor: url('Assets/cursor/cursor-red.cur'), pointer;
 }
 
 /* --- Hintergrundvideo --- */
