@@ -136,6 +136,7 @@ const nextBtn=document.getElementById("next-btn");
 const volumeSlider=document.getElementById("volume-slider");
 const volumeIcon = document.getElementById('volume-icon');
 const audioElement = document.getElementById('your-audio-element'); // ersetze ggf.
+const volumeContainer = document.getElementById('volume-container');
 
 
 function loadSong(index){
@@ -252,3 +253,14 @@ volumeSlider.addEventListener('input', () => {
   audioElement.muted = volumeSlider.value == 0;
   volumeIcon.classList.toggle('muted', audioElement.muted);
 });
+
+function positionVolumeSlider() {
+  const rect = volumeContainer.getBoundingClientRect();
+  volumeSlider.style.left = `${rect.right + 10}px`; // rechts neben Icon
+  volumeSlider.style.top = `${rect.top}px`;         // auf gleicher Höhe
+}
+
+// immer nach Kartenwechsel oder Resize aufrufen
+showCard(current);
+window.addEventListener('resize', positionVolumeSlider);
+positionVolumeSlider();
