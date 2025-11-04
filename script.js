@@ -29,10 +29,11 @@ let current = 0;
 let currentSongIndex;
 const total = cards.length;
 
-// Cursor setzen
+// Cursor
 function setCursor(fileName) {
   const path = `Assets/cursor/${fileName}`;
-  document.body.style.setProperty('--card-cursor', `url('${path}'), auto`);
+  document.body.style.cursor = `url('${path}'), auto`;
+  document.querySelectorAll('a, button').forEach(el => el.style.cursor = `url('${path}'), pointer`);
 }
 
 // Intro Countdown
@@ -126,6 +127,49 @@ function showCard(index) {
 
 switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(current); });
 
+// Media Player
+const audio = new Audio();
+const playerCover=document.getElementById("player-cover");
+const playerTitle=document.getElementById("player-title");
+const playerArtist=document.getElementById("player-artist");
+const playPauseBtn=document.getElementById("play-pause-btn");
+const nextBtn=document.getElementById("next-btn");
+const volumeSlider=document.getElementById("volume-slider");
+
+function loadSong(index){
+  const song = songs[index];
+  audio.src = song.src;
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
+
+  // Setze Play-Button Icon
+  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+}
+
+playPauseBtn.addEventListener("click", ()=>{
+    if(audio.paused){
+        audio.play();
+        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
+    } else {
+        audio.pause();
+        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+    }
+});
+
+nextBtn.addEventListener("click", ()=>{
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(currentSongIndex);
+    audio.play();
+    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
+});
+
+volumeSlider.addEventListener("input", e=>audio.volume=e.target.value);
+[playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
+audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
+
 // Besucherzähler
 function startAutoCounter(){
   const startDate=new Date('2025-11-01T00:00:00Z'); const dailyIncrease=10; const randomMax=30;
@@ -145,76 +189,15 @@ function startAutoCounter(){
 startIntroCountdown();
 
 const timeSlider = document.getElementById('time-slider');
-const currentTimeEl = document.getElementById('current-time');
-const totalTimeEl = document.getElementById('total-time');
 
-function formatTime(seconds) {
-  if (!seconds || isNaN(seconds)) return "0:00";
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${s.toString().padStart(2, '0')}`;
-}
-
-function updateTimeUI() {
-  if (!audio.duration) return;
-  const percent = (audio.currentTime / audio.duration) * 100;
-  timeSlider.value = percent;
-  currentTimeEl.textContent = formatTime(audio.currentTime);
-}
-
-// Media Player 
-const audio = new Audio(); 
-const playerCover=document.getElementById("player-cover"); 
-const playerTitle=document.getElementById("player-title"); 
-const playerArtist=document.getElementById("player-artist"); 
-const playPauseBtn=document.getElementById("play-pause-btn"); 
-const nextBtn=document.getElementById("next-btn"); 
-const volumeSlider=document.getElementById("volume-slider"); 
-
-function loadSong(index){ 
-  const song = songs[index]; 
-  audio.src = song.src; 
-  playerCover.src = song.cover; 
-  playerTitle.textContent = song.title;
-  playerTitle.href = song.spotifyTrack;
-  playerArtist.textContent = song.artist;
-  playerArtist.href = song.spotifyArtist;
-// Setze Play-Button Icon playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
-} 
-playPauseBtn.addEventListener("click", ()=>{ 
-  if(audio.paused){ 
-    audio.play();
-    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
-  } else { 
-    audio.pause();
-    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
-  }
+// Aktualisiert den Slider während des Abspielens
+audio.addEventListener('timeupdate', () => {
+  const value = (audio.currentTime / audio.duration) * 100 || 0;
+  timeSlider.value = value;
 });
-nextBtn.addEventListener("click", ()=>{ 
-  currentSongIndex = (currentSongIndex + 1) % songs.length;
-  loadSong(currentSongIndex);
-  audio.play();
-  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
+
+// Slider kann Audio spulen
+timeSlider.addEventListener('input', (e) => {
+  audio.currentTime = (e.target.value / 100) * audio.duration;
 });
-volumeSlider.addEventListener("input", e=>audio.volume=e.target.value);
-[playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
-audio.addEventListener("ended",()=>{ 
-  currentSongIndex=(currentSongIndex+1)%songs.length;
-  loadSong(currentSongIndex);
-  audio.play();
-});
-// Besucherzähler function startAutoCounter(){ const startDate=new Date('2025-11-01T00:00:00Z');
-const dailyIncrease=10;
-const randomMax=30;
-const baseViews=[1200,200];
-const visitorElems=document.querySelectorAll(".visitor-count");
-const randomOffsets=Array.from(visitorElems).map(()=>Math.floor(Math.random()*randomMax)+1);
-function updateCounts(){ 
-  const now=new Date();
-  const daysPassed=Math.floor((now-startDate)/(1000*60*60*24));
-  visitorElems.forEach((el,i)=>{ const count=(baseViews[i]||100)+randomOffsets[i]+Math.max(0,daysPassed)*dailyIncrease;
-    el.textContent=count;
-  });
-} 
-updateCounts();
-setInterval(updateCounts,1000*60*60);
+

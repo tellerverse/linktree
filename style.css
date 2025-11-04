@@ -12,16 +12,9 @@ body, html {
   font-family: 'Burbank', 'Poppins', sans-serif;
   color: #fff;
   perspective: 1000px;
-
-  /* Karten-Cursor */
-  --card-cursor: url('Assets/cursor/cursor-pink.cur'), auto;
-  cursor: var(--card-cursor);
+  cursor: url('Assets/cursor/cursor-pink.cur'), auto;
 }
-
-/* Buttons/Links haben immer diesen Hover-Cursor */
-a, button, button > div, .player-btn, .switch-btn {
-  cursor: url('Assets/cursor/cursor-red.cur'), pointer;
-}
+a, button { cursor: url('Assets/cursor/cursor-red.cur'), pointer; }
 
 /* --- Hintergrundvideo --- */
 .bg-video {
@@ -147,33 +140,13 @@ a, button, button > div, .player-btn, .switch-btn {
   fill: currentColor; /* funktioniert nur, wenn das SVG fill="currentColor" hat */
 }
 
-#player-times {
-  display: flex;               /* macht es zu einem Flex-Container */
-  justify-content: space-between; /* links und rechts ausrichten */
-  width: 100%;                 /* füllt den verfügbaren Platz */
-  font-size: 0.75rem;
-  color: var(--card-color);
-  min-width: 36px;
-  opacity: 0.9;
-}
-
 #player-controls button:hover .player-icon {
   transform: scale(1.2);
   filter: drop-shadow(0 0 5px var(--card-color));
 }
 
-/* Slider initial versteckt */
-#volume-slider {
-  position: absolute;
-  left: 0; /* passt du dann mit JS oder CSS an */
-  top: -40px; /* über dem Icon */
-  width: 120px;
-  pointer-events: all; /* damit hover geht */
-  transition: opacity 0.2s ease;
-  z-index: 20;
-}
-
 /* --- Switch Button --- */
+/* --- Switch Button (unten rechts in der Karte) --- */
 .switch-btn {
   position: absolute;
   bottom: 15px;
@@ -247,21 +220,6 @@ a, button, button > div, .player-btn, .switch-btn {
   filter: drop-shadow(0 0 2px currentColor);
 }
 
-.social-icon { 
-  width: 35px; 
-  height: 35px; 
-  display: inline-block; 
-  background-color: currentColor; 
-  transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; 
-  cursor: pointer; 
-  mask: var(--icon-url) no-repeat center / contain; 
-  -webkit-mask: var(--icon-url) no-repeat center / contain; 
-} 
-.social-icon.primary { 
-  color: var(--currentColor); 
-  transform: scale(1); 
-}
-
 .player-btn.primary, .visitor-eye.primary {
   color: var(--card-color);
 }
@@ -299,8 +257,7 @@ a, button, button > div, .player-btn, .switch-btn {
 #player-cover { width:48px; height:48px; object-fit:cover; border-radius:10px; cursor:pointer; flex-shrink:0; }
 #player-info { display:flex; flex-direction:column; gap:2px; min-width:120px; max-width:260px; overflow:hidden; }
 #player-info a { color: var(--card-color); text-decoration:none; font-size:0.85rem; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
-#player-info a:hover { text-decoration: underline #fff 1px; filter: brightness(1.2) drop-shadow(0 0 10px var(--card-color)); }
-/* #player-controls { display:flex; align-items:center; gap:8px; } */
+#player-controls { display:flex; align-items:center; gap:8px; }
 
 /* buttons */
 #player-controls button { background:none; border:none; color:#fff; font-size:1.15rem; cursor:pointer; }
@@ -324,32 +281,8 @@ a, button, button > div, .player-btn, .switch-btn {
 #time-slider:hover::-webkit-slider-thumb { background: var(--card-color); transform:scale(1.18); }
 #time-slider::-moz-range-thumb { width:14px; height:14px; background:#fff; border-radius:50%; border:2px solid var(--card-color); }
 
-
-#current-time, #total-time {
-  font-size: 0.75rem;
-  color: var(--card-color);
-  min-width: 36px;
-  text-align: center;
-  opacity: 0.9;
-}
-#player-controls {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-#time-info {
-  flex-direction: column;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 0.7rem;
-  color: var(--card-color);
-  opacity: 0.8;
-  margin-bottom: -2px;
-}
-
 /* volume slider (small) */
+#volume-slider { width:80px; height:5px; -webkit-appearance:none; background: var(--card-color); border-radius:4px; cursor:pointer; }
 #volume-slider::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid var(--card-color); }
 #volume-slider:hover::-webkit-slider-thumb { background: var(--card-color); transform:scale(1.15); }
 
@@ -369,3 +302,4 @@ a, button, button > div, .player-btn, .switch-btn {
   .player-info { display:none; } /* save space */
   #media-player { bottom: -110px; left: 50%; transform: translateX(-50%); }
 }
+
