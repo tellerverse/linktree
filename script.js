@@ -41,14 +41,15 @@ volumeContainer.addEventListener('mouseleave',hideSlider);
 volumeSlider.addEventListener('mouseenter',showSlider);
 volumeSlider.addEventListener('mouseleave',hideSlider);
 
-volumeIcon.addEventListener('click',()=>{
-  audio.muted=!audio.muted;
-  volumeIcon.classList.toggle('muted',audio.muted);
+volumeIcon.addEventListener('click', () => {
+  audio.muted = !audio.muted;
+  volumeIcon.classList.toggle('muted', audio.muted);
 });
-volumeSlider.addEventListener('input',()=>{
-  audio.volume=volumeSlider.value;
-  audio.muted=volumeSlider.value==0;
-  volumeIcon.classList.toggle('muted',audio.muted);
+
+volumeSlider.addEventListener('input', () => {
+  audio.volume = volumeSlider.value;
+  audio.muted = volumeSlider.value == 0;
+  volumeIcon.classList.toggle('muted', audio.muted);
 });
 
 function updatePlayerUI(song){

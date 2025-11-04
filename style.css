@@ -49,12 +49,64 @@ body, html { margin:0; padding:0; height:100%; font-family:'Burbank',sans-serif;
 .player-btn:hover {transform:scale(1.2);filter:drop-shadow(0 0 10px var(--card-color));}
 
 /* Volume Slider außerhalb */
-#volume-container {position:relative;display:inline-block;cursor:pointer;}
-#volume-icon {width:24px;height:24px;background-color:var(--card-color);-webkit-mask:url('Assets/music/volume.svg') no-repeat center / contain;mask:url('Assets/music/volume.svg') no-repeat center / contain;transition: filter .2s, transform .2s;}
-#volume-icon.muted {filter:brightness(0.5) drop-shadow(0 0 2px red);position:relative;}
-#volume-icon.muted::after {content:'';position:absolute;top:50%;left:0;width:100%;height:2px;background:red;transform:rotate(-45deg);}
-#volume-slider {position:absolute;width:120px;opacity:0;pointer-events:all;transition:opacity .2s ease; z-index:50;}
-#volume-slider::-webkit-slider-thumb {-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--card-color);}
+#volume-container {
+  position: absolute;
+  bottom: 100px; /* über dem Media Player */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+#volume-icon {
+  width: 28px;
+  height: 28px;
+  background-color: var(--card-color);
+  -webkit-mask: url('Assets/music/volume.svg') no-repeat center / contain;
+  mask: url('Assets/music/volume.svg') no-repeat center / contain;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+#volume-icon.muted {
+  filter: brightness(0.5) drop-shadow(0 0 2px red);
+  position: relative;
+}
+
+#volume-icon.muted::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: red;
+  transform: rotate(-45deg);
+}
+
+#volume-slider {
+  width: 140px;
+  height: 5px;
+  border-radius: 5px;
+  background: var(--card-color);
+  cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--card-color);
+}
+#volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--card-color);
+}
 #volume-slider:hover::-webkit-slider-thumb {background:var(--card-color);transform:scale(1.15);}
 
 /* Switch Button */
