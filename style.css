@@ -162,57 +162,18 @@ a, button {
   filter: drop-shadow(0 0 5px var(--card-color));
 }
 
-/* Container für Icon + Slider */
-#volume-container {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* Lautsprecher Icon */
-#volume-icon {
-  width: 24px;
-  height: 24px;
-  background-color: var(--card-color);
-  -webkit-mask: url('Assets/music/volume.svg') no-repeat center / contain;
-          mask: url('Assets/music/volume.svg') no-repeat center / contain;
-  transition: filter 0.2s, transform 0.2s;
-}
-
-/* durchgestrichen wenn muted */
-#volume-icon.muted {
-  filter: brightness(0.5) drop-shadow(0 0 2px red);
-  position: relative;
-}
-#volume-icon.muted::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 0;
-  width: 100%; height: 2px;
-  background: red;
-  transform: rotate(-45deg);
-}
-
 /* Slider initial versteckt */
 #volume-slider {
   position: absolute;
   left: 0; /* passt du dann mit JS oder CSS an */
   top: -40px; /* über dem Icon */
   width: 120px;
-  opacity: 0;
   pointer-events: all; /* damit hover geht */
   transition: opacity 0.2s ease;
   z-index: 20;
 }
 
-/* Slider erscheint, wenn Container oder Slider gehovt wird */
-#volume-container:hover #volume-slider,
-#volume-slider:hover {
-  opacity: 1;
-}
-
 /* --- Switch Button --- */
-/* --- Switch Button (unten rechts in der Karte) --- */
 .switch-btn {
   position: absolute;
   bottom: 15px;
