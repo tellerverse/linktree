@@ -14,7 +14,7 @@ body, html {
   perspective: 1000px;
   cursor: url('Assets/cursor/cursor-pink.cur'), auto;
 }
-a, button { 
+a, button, button > div, .player-btn, .switch-btn {
   cursor: url('Assets/cursor/cursor-red.cur'), pointer;
 }
 
