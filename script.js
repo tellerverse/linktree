@@ -134,6 +134,9 @@ const playerArtist=document.getElementById("player-artist");
 const playPauseBtn=document.getElementById("play-pause-btn");
 const nextBtn=document.getElementById("next-btn");
 const volumeSlider=document.getElementById("volume-slider");
+const volumeIcon = document.getElementById('volume-icon');
+const audioElement = document.getElementById('your-audio-element'); // ersetze ggf.
+
 
 function loadSong(index){
   const song = songs[index];
@@ -165,7 +168,6 @@ nextBtn.addEventListener("click", ()=>{
     playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
 });
 
-volumeSlider.addEventListener("input", e=>audio.volume=e.target.value);
 [playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
 audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
 
@@ -237,4 +239,16 @@ timeSlider.addEventListener('input', (e) => {
   if (audio.duration) {
     audio.currentTime = (e.target.value / 100) * audio.duration;
   }
+});
+
+volumeIcon.addEventListener('click', () => {
+  audioElement.muted = !audioElement.muted;
+  volumeIcon.classList.toggle('muted', audioElement.muted);
+});
+
+// Slider steuert Lautstärke
+volumeSlider.addEventListener('input', () => {
+  audioElement.volume = volumeSlider.value;
+  audioElement.muted = volumeSlider.value == 0;
+  volumeIcon.classList.toggle('muted', audioElement.muted);
 });

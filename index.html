@@ -96,7 +96,10 @@
         </div>
         <button><div id="play-pause-btn" class="player-btn primary" style="--icon-url: url('Assets/music/play.svg')"></div></button>
         <button id="next-btn"><div class="player-btn primary" style="--icon-url: url('Assets/music/skip.svg')"></div></button>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.01">
+        <div id="volume-container">
+          <div id="volume-icon"></div>
+          <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        </div>
       </div>
     </div>
 
