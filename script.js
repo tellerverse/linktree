@@ -166,7 +166,7 @@ nextBtn.addEventListener("click", ()=>{
     playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
 });
 
-volumeSlider.addEventListener("input", e=>audio.volume=e.target.value/2);
+volumeSlider.addEventListener("input", e=>audio.volume=e.target.value/4);
 [playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
 audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
 
@@ -200,4 +200,3 @@ audio.addEventListener('timeupdate', () => {
 timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
-
