@@ -220,10 +220,9 @@ card.appendChild(bubbleContainer);
 // Hauptblase
 const mainBubble = document.createElement('div');
 mainBubble.classList.add('thought-bubble');
-mainBubble.style.transition = 'opacity 0.3s';
 bubbleContainer.appendChild(mainBubble);
 
-// Kleine Blasen
+// Zwei kleine Blasen
 const smallBubbles = [];
 for (let i = 0; i < 2; i++) {
   const sb = document.createElement('div');
@@ -240,7 +239,7 @@ for (let i = 0; i < 2; i++) {
   smallBubbles.push(sb);
 }
 
-// Position & Style aktualisieren
+// Funktion zur Positionierung
 function updateBubbles() {
   if (!card.classList.contains('active')) {
     bubbleContainer.style.display = 'none';
@@ -255,12 +254,12 @@ function updateBubbles() {
 
   // Hauptblase
   mainBubble.style.left = `${x}px`;
-  mainBubble.style.top = `${y - 80}px`;
+  mainBubble.style.top = `${y - 80}px`; // oben
   mainBubble.style.transform = 'translateX(-50%)';
 
   // Kleine Blasen
   smallBubbles.forEach((sb, i) => {
-    sb.style.left = `${x - i*3}px`;
+    sb.style.left = `${x - i*5}px`;
     sb.style.top = `${y - 40 + i*20}px`;
     sb.style.transform = 'translateX(-50%)';
   });
@@ -274,40 +273,23 @@ function updateBubbles() {
   });
 }
 
-// Zufälligen Text anzeigen
+// Zufälliger Text
 function showRandomThought() {
   mainBubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
-  mainBubble.style.opacity = 1;
-}
-
-// Kleine Blasen animieren
-function animateSmallBubbles() {
-  smallBubbles.forEach((sb, i) => {
-    sb.style.transition = `top 3s ease-out, opacity 3s ease-out`;
-    const startTop = parseFloat(sb.style.top);
-    sb.style.top = startTop - 15 + 'px';
-    sb.style.opacity = 0;
-    setTimeout(() => {
-      sb.style.top = startTop + 'px';
-      sb.style.opacity = 0.6;
-    }, 3000 + i * 200);
-  });
 }
 
 // Initial
 showRandomThought();
 updateBubbles();
-animateSmallBubbles();
 
-// Alle 4 Sekunden Text & Animation
+// Text alle 4 Sekunden wechseln, Blasen bleiben statisch
 setInterval(() => {
   showRandomThought();
   updateBubbles();
-  animateSmallBubbles();
 }, 4000);
 
 window.addEventListener('resize', updateBubbles);
 
-// Kartenswitch beobachten, damit Blasen sichtbar bleiben
+// Kartenswitch beobachten, Blasen nur sichtbar wenn Karte aktiv
 const observer = new MutationObserver(() => updateBubbles());
 observer.observe(card, { attributes: true, attributeFilter: ['class'] });
