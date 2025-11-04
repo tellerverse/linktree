@@ -205,21 +205,23 @@ const card = cards[1];
 const profile = card.querySelector('.profile-pic');
 const thoughts = ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"];
 
-// Container für Blasen
+// Blasen-Container
 const bubbleContainer = document.createElement('div');
 bubbleContainer.style.position = 'absolute';
-bubbleContainer.style.pointerEvents = 'none';
 bubbleContainer.style.top = 0;
 bubbleContainer.style.left = 0;
 bubbleContainer.style.width = '100%';
 bubbleContainer.style.height = '100%';
+bubbleContainer.style.pointerEvents = 'none';
+bubbleContainer.style.zIndex = 10; // über anderen Inhalten
 card.appendChild(bubbleContainer);
 
-// Hauptblase + kleine Blasen
+// Hauptblase
 const mainBubble = document.createElement('div');
 mainBubble.classList.add('thought-bubble');
 bubbleContainer.appendChild(mainBubble);
 
+// Kleine Blasen
 const smallBubbles = [];
 for (let i = 0; i < 2; i++) {
   const sb = document.createElement('div');
@@ -227,10 +229,12 @@ for (let i = 0; i < 2; i++) {
   sb.style.padding = '4px 6px';
   sb.style.fontSize = '0.7rem';
   sb.style.maxWidth = '60px';
+  sb.style.opacity = 0.7;
   bubbleContainer.appendChild(sb);
   smallBubbles.push(sb);
 }
 
+// Funktion zum Positionieren relativ zur Karte
 function updateBubbles() {
   if (!card.classList.contains('active')) {
     bubbleContainer.style.display = 'none';
@@ -238,20 +242,22 @@ function updateBubbles() {
   }
   bubbleContainer.style.display = 'block';
 
-  const rect = profile.getBoundingClientRect();
+  const profileRect = profile.getBoundingClientRect();
   const cardRect = card.getBoundingClientRect();
-  const left = rect.left - cardRect.left + rect.width / 2;
+  const x = profileRect.left - cardRect.left + profileRect.width / 2;
+  const y = profileRect.top - cardRect.top;
 
-  // Hauptblase
-  mainBubble.style.left = `${left}px`;
-  mainBubble.style.top = `${rect.top - cardRect.top - 70}px`;
+  // Hauptblase höher
+  mainBubble.style.left = `${x}px`;
+  mainBubble.style.top = `${y - 70}px`;
   mainBubble.style.transform = 'translateX(-50%)';
 
-  // kleine Blasen
+  // kleine Blasen mit „schwebender“ Animation
   smallBubbles.forEach((sb, i) => {
-    sb.style.left = `${left - (i*2)}px`;
-    sb.style.top = `${rect.top - cardRect.top - 30 + i*15}px`;
+    sb.style.left = `${x - i*3}px`;
+    sb.style.top = `${y - 30 + i*20}px`;
     sb.style.transform = 'translateX(-50%)';
+    sb.style.transition = `top 2s ease-in-out, opacity 2s ease-in-out`;
   });
 
   // Farben
@@ -263,23 +269,37 @@ function updateBubbles() {
   });
 }
 
+// Zufälligen Text
 function showRandomThought() {
   mainBubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
+}
+
+// Animate kleine Blasen
+function animateSmallBubbles() {
+  smallBubbles.forEach((sb, i) => {
+    sb.style.top = parseFloat(sb.style.top) - 10 + 'px';
+    sb.style.opacity = 0;
+    setTimeout(() => {
+      sb.style.top = parseFloat(sb.style.top) + 10 + 'px';
+      sb.style.opacity = 0.7;
+    }, 2000 + i*200);
+  });
 }
 
 // Initial
 showRandomThought();
 updateBubbles();
+animateSmallBubbles();
 
-// Aktualisieren alle 4 Sekunden
+// Alle 4 Sekunden Text wechseln + Blasenposition/Animation
 setInterval(() => {
   showRandomThought();
   updateBubbles();
+  animateSmallBubbles();
 }, 4000);
 
-// Fensterresize
 window.addEventListener('resize', updateBubbles);
 
-// Karte wechseln → sicherstellen, dass Position updatet
+// Kartenswitch beobachten
 const observer = new MutationObserver(() => updateBubbles());
 observer.observe(card, { attributes: true, attributeFilter: ['class'] });
