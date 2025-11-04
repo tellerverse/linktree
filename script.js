@@ -222,14 +222,15 @@ const mainBubble = document.createElement('div');
 mainBubble.classList.add('thought-bubble');
 bubbleContainer.appendChild(mainBubble);
 
-// Zwei kleine Blasen
+// Kleine Blasen (gedankenblasen-kette)
 const smallBubbles = [];
-for (let i = 0; i < 2; i++) {
+const smallSizes = [14, 10, 6]; // abnehmende Größe
+for (let i = 0; i < smallSizes.length; i++) {
   const sb = document.createElement('div');
   sb.classList.add('thought-bubble');
   sb.style.display = 'block';
-  sb.style.width = '12px';
-  sb.style.height = '12px';
+  sb.style.width = `${smallSizes[i]}px`;
+  sb.style.height = `${smallSizes[i]}px`;
   sb.style.padding = '0';
   sb.style.borderRadius = '50%';
   sb.style.textAlign = 'center';
@@ -254,14 +255,18 @@ function updateBubbles() {
 
   // Hauptblase
   mainBubble.style.left = `${x}px`;
-  mainBubble.style.top = `${y - 80}px`; // oben
+  mainBubble.style.top = `${y - 80}px`; // oben über Profilbild
   mainBubble.style.transform = 'translateX(-50%)';
 
-  // Kleine Blasen
+  // Kleine Blasen als Kette unter der großen Blase
+  let offsetX = 0;
+  let offsetY = 0;
   smallBubbles.forEach((sb, i) => {
-    sb.style.left = `${x - i*5}px`;
-    sb.style.top = `${y - 40 + i*20}px`;
+    sb.style.left = `${x + offsetX}px`;
+    sb.style.top = `${y - 80 + 40 + offsetY}px`; // 40px unter Hauptblase
     sb.style.transform = 'translateX(-50%)';
+    offsetX += 4;  // leicht nach rechts versetzt
+    offsetY += 10; // leicht nach unten versetzt
   });
 
   // Farben
@@ -282,7 +287,7 @@ function showRandomThought() {
 showRandomThought();
 updateBubbles();
 
-// Text alle 4 Sekunden wechseln, Blasen bleiben statisch
+// Text alle 4 Sekunden wechseln
 setInterval(() => {
   showRandomThought();
   updateBubbles();
@@ -290,6 +295,6 @@ setInterval(() => {
 
 window.addEventListener('resize', updateBubbles);
 
-// Kartenswitch beobachten, Blasen nur sichtbar wenn Karte aktiv
+// Kartenswitch beobachten
 const observer = new MutationObserver(() => updateBubbles());
 observer.observe(card, { attributes: true, attributeFilter: ['class'] });
