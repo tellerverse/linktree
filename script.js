@@ -166,7 +166,7 @@ nextBtn.addEventListener("click", ()=>{
     playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
 });
 
-volumeSlider.addEventListener("input", e=>audio.volume=e.target.value/4);
+volumeSlider.addEventListener("input", e=>audio.volume=e.target.value/6);
 [playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
 audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
 
@@ -199,4 +199,47 @@ audio.addEventListener('timeupdate', () => {
 // Slider kann Audio spulen
 timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
+});
+
+// Texte für jede Karte
+const cardThoughts = [
+  ["Hi, ich bin Moritz!", "Fortnite is life", "Coden macht Spaß"],
+  ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"]
+];
+
+// Blasen erstellen
+cards.forEach((card, i) => {
+  const profile = card.querySelector('.profile-pic');
+  const bubble = document.createElement('div');
+  bubble.classList.add('thought-bubble');
+  card.appendChild(bubble);
+
+  // Positionieren über Profilbild
+  function updatePosition() {
+    const rect = profile.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    bubble.style.left = `${rect.left - cardRect.left + rect.width/2}px`;
+    bubble.style.top = `${rect.top - cardRect.top - 40}px`;
+    bubble.style.transform = 'translateX(-50%)';
+  }
+
+  // Zufälligen Text anzeigen
+  function showRandomThought() {
+    const thoughts = cardThoughts[i];
+    bubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
+    bubble.style.opacity = 1;
+  }
+
+  // Initial
+  updatePosition();
+  showRandomThought();
+
+  // Alle 4 Sekunden wechseln
+  setInterval(() => {
+    showRandomThought();
+    updatePosition();
+  }, 4000);
+
+  // Bei Fensterresize
+  window.addEventListener('resize', updatePosition);
 });
