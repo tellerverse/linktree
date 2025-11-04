@@ -205,7 +205,8 @@ a, button {
 }
 
 /* Slider erscheint beim Hover auf Container */
-#volume-container:hover #volume-slider {
+#volume-container:hover #volume-slider,
+#volume-slider:hover {
   opacity: 1;
   pointer-events: all;
 }
