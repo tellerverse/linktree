@@ -201,11 +201,12 @@ timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
 
+ // --- Gedankblasen für Karte 2 ---
 const card = cards[1];
 const profile = card.querySelector('.profile-pic');
 const thoughts = ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"];
 
-// Container für alle Blasen
+// Blasen-Container
 const bubbleContainer = document.createElement('div');
 bubbleContainer.style.position = 'absolute';
 bubbleContainer.style.top = 0;
@@ -227,12 +228,14 @@ const smallBubbles = [];
 for (let i = 0; i < 2; i++) {
   const sb = document.createElement('div');
   sb.classList.add('thought-bubble');
-  sb.style.padding = '6px';
-  sb.style.fontSize = '0.6rem';
-  sb.style.maxWidth = '50px';
-  sb.style.opacity = 0.6;
-  sb.style.borderRadius = '50%'; // rund
+  sb.style.display = 'block';
+  sb.style.width = '12px';
+  sb.style.height = '12px';
+  sb.style.padding = '0';
+  sb.style.borderRadius = '50%';
   sb.style.textAlign = 'center';
+  sb.style.opacity = 0.6;
+  sb.style.overflow = 'hidden';
   bubbleContainer.appendChild(sb);
   smallBubbles.push(sb);
 }
@@ -252,17 +255,17 @@ function updateBubbles() {
 
   // Hauptblase
   mainBubble.style.left = `${x}px`;
-  mainBubble.style.top = `${y - 80}px`; // weiter oben
+  mainBubble.style.top = `${y - 80}px`;
   mainBubble.style.transform = 'translateX(-50%)';
 
-  // Kleine Blasen unterhalb
+  // Kleine Blasen
   smallBubbles.forEach((sb, i) => {
-    sb.style.left = `${x - i*5}px`;
+    sb.style.left = `${x - i*3}px`;
     sb.style.top = `${y - 40 + i*20}px`;
     sb.style.transform = 'translateX(-50%)';
   });
 
-  // Farbe anpassen
+  // Farben
   const color = card.dataset.color || '#fff';
   [mainBubble, ...smallBubbles].forEach(b => {
     b.style.background = color + '33';
@@ -277,7 +280,7 @@ function showRandomThought() {
   mainBubble.style.opacity = 1;
 }
 
-// Kleine Blasen animieren (schweben nach oben)
+// Kleine Blasen animieren
 function animateSmallBubbles() {
   smallBubbles.forEach((sb, i) => {
     sb.style.transition = `top 3s ease-out, opacity 3s ease-out`;
@@ -296,7 +299,7 @@ showRandomThought();
 updateBubbles();
 animateSmallBubbles();
 
-// Alle 4 Sekunden Text und Animation
+// Alle 4 Sekunden Text & Animation
 setInterval(() => {
   showRandomThought();
   updateBubbles();
@@ -305,6 +308,6 @@ setInterval(() => {
 
 window.addEventListener('resize', updateBubbles);
 
-// Kartenswitch beobachten
+// Kartenswitch beobachten, damit Blasen sichtbar bleiben
 const observer = new MutationObserver(() => updateBubbles());
 observer.observe(card, { attributes: true, attributeFilter: ['class'] });
