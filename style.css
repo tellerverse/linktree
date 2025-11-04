@@ -165,11 +165,8 @@ a, button {
 /* Container für Icon + Slider */
 #volume-container {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   cursor: pointer;
-  /* erweitere Container, damit Slider im Hoverbereich bleibt */
-  padding-right: 110px; /* Slider-Breite + Abstand */
 }
 
 /* Lautsprecher Icon */
@@ -199,11 +196,13 @@ a, button {
 /* Slider initial versteckt */
 #volume-slider {
   position: absolute;
-  left: 28px;
-  width: 100px;
+  left: 0; /* passt du dann mit JS oder CSS an */
+  top: -40px; /* über dem Icon */
+  width: 120px;
   opacity: 0;
-  pointer-events: all; /* wichtig */
+  pointer-events: all; /* damit hover geht */
   transition: opacity 0.2s ease;
+  z-index: 20;
 }
 
 /* Slider erscheint, wenn Container oder Slider gehovt wird */
