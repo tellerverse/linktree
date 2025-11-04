@@ -147,6 +147,16 @@ a, button {
   fill: currentColor; /* funktioniert nur, wenn das SVG fill="currentColor" hat */
 }
 
+#player-times {
+  display: flex;               /* macht es zu einem Flex-Container */
+  justify-content: space-between; /* links und rechts ausrichten */
+  width: 100%;                 /* füllt den verfügbaren Platz */
+  font-size: 0.75rem;
+  color: var(--card-color);
+  min-width: 36px;
+  opacity: 0.9;
+}
+
 #player-controls button:hover .player-icon {
   transform: scale(1.2);
   filter: drop-shadow(0 0 5px var(--card-color));
