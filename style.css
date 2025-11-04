@@ -395,6 +395,12 @@ adjust if needed */
   text-overflow:ellipsis;
   overflow:hidden;
 }
+
+#player-info a:hover { 
+  text-decoration: underline #fff 1px;
+  filter: brightness(1.2) drop-shadow(0 0 10px var(--card-color));
+}
+
 #player-controls { 
   display:flex;
   align-items:center;
