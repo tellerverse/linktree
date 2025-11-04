@@ -7,123 +7,260 @@ const bgVideoNext = document.getElementById('bg-video-next');
 const switchBtn = document.getElementById('switch');
 
 const songs = [
-  {title:"STANNI",artist:"Snake16",cover:"Assets/music/stannicover.jpg",src:"Assets/music/stanni.mp3",spotifyTrack:"https://open.spotify.com/track/4BMykUWuRBoX7yiIFPSFXH?si=927e3a4aa6074347",spotifyArtist:"https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"},
-  {title:"SAG VALLAH",artist:"Snake16",cover:"Assets/music/sagvallahcover.jpg",src:"Assets/music/sagvallah.mp3",spotifyTrack:"https://open.spotify.com/track/4GndsC4aWgsALl5sKq6dxY?si=aee1fb61de83427b",spotifyArtist:"https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"}
+  {
+    title: "STANNI",
+    artist: "Snake16",
+    cover: "Assets/music/stannicover.jpg",
+    src: "Assets/music/stanni.mp3",
+    spotifyTrack: "https://open.spotify.com/track/4BMykUWuRBoX7yiIFPSFXH?si=927e3a4aa6074347",
+    spotifyArtist: "https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"
+  },
+  {
+    title: "SAG VALLAH",
+    artist: "Snake16",
+    cover: "Assets/music/sagvallahcover.jpg",
+    src: "Assets/music/sagvallah.mp3",
+    spotifyTrack: "https://open.spotify.com/track/4GndsC4aWgsALl5sKq6dxY?si=aee1fb61de83427b",
+    spotifyArtist: "https://open.spotify.com/artist/2fgyuNiQxXwzAoN8qLFCCf?si=EkNKiE61RaqVEoHUFUFUaw"
+  }
 ];
 
-let current=0,currentSongIndex, total=cards.length;
-const audio=new Audio();
+let current = 0;
+let currentSongIndex;
+const total = cards.length;
+
+// Cursor setzen
+function setCursor(fileName) {
+  const path = `Assets/cursor/${fileName}`;
+  document.body.style.setProperty('--card-cursor', `url('${path}'), auto`);
+}
+
+// Intro Countdown
+function startIntroCountdown() {
+  let count = 3;
+  centerText.textContent = count;
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) centerText.textContent = count;
+    else {
+      clearInterval(interval);
+      centerText.textContent = 'Click';
+      intro.addEventListener('click', introClickHandler);
+    }
+  }, 1000);
+}
+
+// Intro Click
+function introClickHandler() {
+  intro.removeEventListener('click', introClickHandler);
+  intro.style.opacity = 0;
+  setTimeout(() => intro.style.display='none',1000);
+  slider.classList.add('active');
+  currentSongIndex = Math.floor(Math.random()*songs.length);
+  loadSong(currentSongIndex);
+  showCard(current);
+  startAutoCounter();
+}
+
+// Switch / Cards
+function showCard(index) {
+  // 1) Card aktivieren
+  cards.forEach((card, i) => card.classList.toggle('active', i === index));
+  const activeCard = cards[index];
+  if (!activeCard) return;
+
+  // 2) ensure switch button is inside active card
+  if (!activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
+
+  // 3) set card color variable
+  const color = activeCard.dataset.color || '#ff66cc';
+  activeCard.style.setProperty('--card-color', color);
+
+  // 4) cursor
+  const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
+  setCursor(cursorFile);
+
+  // 5) video crossfade
+  const newVideoSrc = activeCard.dataset.video;
+  const nextSource = bgVideoNext.querySelector('source');
+  const mainSource = bgVideo.querySelector('source');
+  if (!nextSource.src.includes(newVideoSrc)) {
+    nextSource.src = newVideoSrc;
+    bgVideoNext.load();
+    bgVideoNext.classList.remove('hidden');
+    bgVideoNext.style.opacity = 0;
+    setTimeout(() => {
+      bgVideoNext.style.transition = 'opacity 1s ease';
+      bgVideoNext.style.opacity = 1;
+    }, 50);
+    setTimeout(() => {
+      mainSource.src = newVideoSrc;
+      bgVideo.load();
+      bgVideoNext.classList.add('hidden');
+      bgVideoNext.style.transition = '';
+      bgVideoNext.style.opacity = 0;
+    }, 1050);
+  }
+
+  // 6) move media player element INTO the active card, position absolute relative to it
+  const mediaPlayer = document.getElementById('media-player');
+  if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
+    activeCard.appendChild(mediaPlayer);
+  }
+
+  // 7) style media player to match card color
+  mediaPlayer.style.setProperty('--card-color', color);
+  mediaPlayer.style.background = 'rgba(0,0,0,0.45)';
+  mediaPlayer.style.border = `2px solid ${color}`;
+  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`; // subtle colored glow
+
+  // 8) ensure active card allows overflow so player is visible
+  activeCard.style.overflow = 'visible';
+
+  // 9) update slider thumbs if present so border matches color
+  const timeSlider = document.getElementById('time-slider');
+  const volumeSlider = document.getElementById('volume-slider');
+  if (timeSlider) timeSlider.style.setProperty('--thumb-border', color);
+  if (volumeSlider) volumeSlider.style.setProperty('--thumb-border', color);
+}
+
+switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(current); });
+
+// Media Player
+const audio = new Audio();
 const playerCover=document.getElementById("player-cover");
 const playerTitle=document.getElementById("player-title");
 const playerArtist=document.getElementById("player-artist");
 const playPauseBtn=document.getElementById("play-pause-btn");
 const nextBtn=document.getElementById("next-btn");
-const currentTimeEl=document.getElementById("current-time");
-const totalTimeEl=document.getElementById("total-time");
-const timeSlider=document.getElementById("time-slider");
-const volumeContainer = document.getElementById('volume-container');
+const volumeSlider=document.getElementById("volume-slider");
 const volumeIcon = document.getElementById('volume-icon');
-const volumeSlider = document.getElementById('volume-slider');
+const audioElement = document.getElementById('your-audio-element'); // ersetze ggf.
+const volumeContainer = document.getElementById('volume-container');
 
-// Volume Slider außerhalb body
-document.body.appendChild(volumeSlider);
-function positionVolumeSlider(){
-  const rect=volumeIcon.getBoundingClientRect();
-  volumeSlider.style.left=`${rect.right + 10}px`;
-  volumeSlider.style.top=`${rect.top}px`;
-}
-positionVolumeSlider();
-window.addEventListener('resize',positionVolumeSlider);
-function showSlider(){volumeSlider.style.opacity=1;}
-function hideSlider(){if(!volumeSlider.matches(':hover'))volumeSlider.style.opacity=0;}
-volumeContainer.addEventListener('mouseenter',showSlider);
-volumeContainer.addEventListener('mouseleave',hideSlider);
-volumeSlider.addEventListener('mouseenter',showSlider);
-volumeSlider.addEventListener('mouseleave',hideSlider);
 
-volumeIcon.addEventListener('click', () => {
-  audio.muted = !audio.muted;
-  volumeIcon.classList.toggle('muted', audio.muted);
-});
+function loadSong(index){
+  const song = songs[index];
+  audio.src = song.src;
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
 
-volumeSlider.addEventListener('input', () => {
-  audio.volume = volumeSlider.value;
-  audio.muted = volumeSlider.value == 0;
-  volumeIcon.classList.toggle('muted', audio.muted);
-});
-
-function updatePlayerUI(song){
-  playerCover.src=song.cover;
-  playerTitle.href=song.spotifyTrack;
-  playerTitle.textContent=song.title;
-  playerArtist.href=song.spotifyArtist;
-  playerArtist.textContent=song.artist;
-}
-
-function playSong(){
-  audio.play();
-  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
-}
-function pauseSong(){
-  audio.pause();
+  // Setze Play-Button Icon
   playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
 }
 
-playPauseBtn.addEventListener('click',()=>{
-  audio.paused?playSong():pauseSong();
-});
-nextBtn.addEventListener('click',()=>{
-  current=(current+1)%songs.length;
-  audio.src=songs[current].src;
-  updatePlayerUI(songs[current]);
-  playSong();
-});
-
-audio.addEventListener('timeupdate',()=>{
-  const cur=Math.floor(audio.currentTime);
-  const dur=Math.floor(audio.duration);
-  currentTimeEl.textContent=`${Math.floor(cur/60)}:${('0'+cur%60).slice(-2)}`;
-  totalTimeEl.textContent=`${Math.floor(dur/60)}:${('0'+dur%60).slice(-2)}`;
-  timeSlider.value=(cur/dur)*100||0;
+playPauseBtn.addEventListener("click", ()=>{
+    if(audio.paused){
+        audio.play();
+        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
+    } else {
+        audio.pause();
+        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+    }
 });
 
-timeSlider.addEventListener('input',()=>{
-  audio.currentTime=(timeSlider.value/100)*audio.duration;
+nextBtn.addEventListener("click", ()=>{
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(currentSongIndex);
+    audio.play();
+    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
 });
 
-// Intro Countdown
-let count=3;
-const countdown=setInterval(()=>{
-  centerText.textContent=count;
-  count--;
-  if(count<0){clearInterval(countdown); intro.style.display='none'; slider.classList.add('active');}
-},1000);
+[playerCover,playerTitle,playerArtist].forEach(el=>el.addEventListener("click",()=>window.open(songs[currentSongIndex].spotifyTrack,"_blank")));
+audio.addEventListener("ended",()=>{ currentSongIndex=(currentSongIndex+1)%songs.length; loadSong(currentSongIndex); audio.play(); });
 
-// Card Switch
-cards.forEach((card,i)=>card.addEventListener('click',()=>{
-  cards[current].classList.remove('active');
-  card.classList.add('active');
-  current=i;
-  const videoSrc=card.dataset.video;
-  const color=card.dataset.color;
-  const cursor=card.dataset.cursor;
-  bgVideo.src=videoSrc;
-  document.documentElement.style.setProperty('--card-color',color);
-  document.body.style.cursor=`url('${cursor}'), auto`;
-}));
+// Besucherzähler
+function startAutoCounter(){
+  const startDate=new Date('2025-11-01T00:00:00Z'); const dailyIncrease=10; const randomMax=30;
+  const baseViews=[1200,200];
+  const visitorElems=document.querySelectorAll(".visitor-count");
+  const randomOffsets=Array.from(visitorElems).map(()=>Math.floor(Math.random()*randomMax)+1);
+  function updateCounts(){
+    const now=new Date();
+    const daysPassed=Math.floor((now-startDate)/(1000*60*60*24));
+    visitorElems.forEach((el,i)=>{ const count=(baseViews[i]||100)+randomOffsets[i]+Math.max(0,daysPassed)*dailyIncrease; el.textContent=count; });
+  }
+  updateCounts();
+  setInterval(updateCounts,1000*60*60);
+}
 
-cards[0].classList.add('active');
-bgVideo.src=cards[0].dataset.video;
+// Start Intro
+startIntroCountdown();
 
-// Switch Button
-switchBtn.addEventListener('click',()=>{
-  cards[current].classList.remove('active');
-  current=(current+1)%cards.length;
-  cards[current].classList.add('active');
-  const videoSrc=cards[current].dataset.video;
-  const color=cards[current].dataset.color;
-  const cursor=cards[current].dataset.cursor;
-  bgVideo.src=videoSrc;
-  document.documentElement.style.setProperty('--card-color',color);
-  document.body.style.cursor=`url('${cursor}'), auto`;
+const timeSlider = document.getElementById('time-slider');
+const currentTimeEl = document.getElementById('current-time');
+const totalTimeEl = document.getElementById('total-time');
+
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateTimeUI() {
+  if (!audio.duration) return;
+  const percent = (audio.currentTime / audio.duration) * 100;
+  timeSlider.value = percent;
+  currentTimeEl.textContent = formatTime(audio.currentTime);
+}
+
+audio.addEventListener('timeupdate', updateTimeUI);
+
+// Neu laden = Metadaten warten → Dauer anzeigen
+audio.addEventListener('loadedmetadata', () => {
+  totalTimeEl.textContent = formatTime(audio.duration);
 });
+
+// Wenn ein neuer Song geladen wird → neu binden
+function loadSong(index) {
+  const song = songs[index];
+  audio.src = song.src;
+  audio.load(); // wichtig!
+  playerCover.src = song.cover;
+  playerTitle.textContent = song.title;
+  playerTitle.href = song.spotifyTrack;
+  playerArtist.textContent = song.artist;
+  playerArtist.href = song.spotifyArtist;
+
+  playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+
+  // Aktualisiere Zeit-UI direkt nach Laden
+  audio.addEventListener('loadedmetadata', () => {
+    totalTimeEl.textContent = formatTime(audio.duration);
+    currentTimeEl.textContent = "0:00";
+    timeSlider.value = 0;
+  }, { once: true });
+}
+
+timeSlider.addEventListener('input', (e) => {
+  if (audio.duration) {
+    audio.currentTime = (e.target.value / 100) * audio.duration;
+  }
+});
+
+volumeIcon.addEventListener('click', () => {
+  audioElement.muted = !audioElement.muted;
+  volumeIcon.classList.toggle('muted', audioElement.muted);
+});
+
+// Slider steuert Lautstärke
+volumeSlider.addEventListener('input', () => {
+  audioElement.volume = volumeSlider.value;
+  audioElement.muted = volumeSlider.value == 0;
+  volumeIcon.classList.toggle('muted', audioElement.muted);
+});
+
+function positionVolumeSlider() {
+  const rect = volumeContainer.getBoundingClientRect();
+  volumeSlider.style.left = `${rect.right + 10}px`; // rechts neben Icon
+  volumeSlider.style.top = `${rect.top}px`;         // auf gleicher Höhe
+}
+
+// immer nach Kartenwechsel oder Resize aufrufen
+showCard(current);
+window.addEventListener('resize', positionVolumeSlider);
+positionVolumeSlider();
