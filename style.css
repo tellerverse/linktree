@@ -168,6 +168,8 @@ a, button {
   display: flex;
   align-items: center;
   cursor: pointer;
+  /* erweitere Container, damit Slider im Hoverbereich bleibt */
+  padding-right: 110px; /* Slider-Breite + Abstand */
 }
 
 /* Lautsprecher Icon */
@@ -200,15 +202,14 @@ a, button {
   left: 28px;
   width: 100px;
   opacity: 0;
-  pointer-events: none;
+  pointer-events: all; /* wichtig */
   transition: opacity 0.2s ease;
 }
 
-/* Slider erscheint beim Hover auf Container */
+/* Slider erscheint, wenn Container oder Slider gehovt wird */
 #volume-container:hover #volume-slider,
 #volume-slider:hover {
   opacity: 1;
-  pointer-events: all;
 }
 
 /* --- Switch Button --- */
