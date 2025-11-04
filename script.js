@@ -201,45 +201,51 @@ timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
 
-// Texte für jede Karte
-const cardThoughts = [
-  ["Hi, ich bin Moritz!", "Fortnite is life", "Coden macht Spaß"],
-  ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"]
-];
+// Nur Karte 2
+const card = cards[1]; // zweite Karte
+const profile = card.querySelector('.profile-pic');
 
-// Blasen erstellen
-cards.forEach((card, i) => {
-  const profile = card.querySelector('.profile-pic');
-  const bubble = document.createElement('div');
-  bubble.classList.add('thought-bubble');
-  card.appendChild(bubble);
+// Texte für Karte 2
+const thoughts = ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"];
 
-  // Positionieren über Profilbild
-  function updatePosition() {
-    const rect = profile.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-    bubble.style.left = `${rect.left - cardRect.left + rect.width/2}px`;
-    bubble.style.top = `${rect.top - cardRect.top - 40}px`;
-    bubble.style.transform = 'translateX(-50%)';
-  }
+// Gedankenblase erstellen
+const bubble = document.createElement('div');
+bubble.classList.add('thought-bubble');
+card.appendChild(bubble);
 
-  // Zufälligen Text anzeigen
-  function showRandomThought() {
-    const thoughts = cardThoughts[i];
-    bubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
-    bubble.style.opacity = 1;
-  }
+// Positionieren über Profilbild
+function updatePosition() {
+  const rect = profile.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  bubble.style.left = `${rect.left - cardRect.left + rect.width/2}px`;
+  bubble.style.top = `${rect.top - cardRect.top - 40}px`;
+  bubble.style.transform = 'translateX(-50%)';
+}
 
-  // Initial
-  updatePosition();
+// Blasenstil anpassen an Karte
+function updateStyle() {
+  const color = card.dataset.color || '#fff';
+  bubble.style.background = color + '33'; // transparente Version
+  bubble.style.border = `2px solid ${color}`;
+  bubble.style.color = color;
+}
+
+// Zufälligen Text anzeigen
+function showRandomThought() {
+  bubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
+  bubble.style.opacity = 1;
+}
+
+// Initial
+updatePosition();
+updateStyle();
+showRandomThought();
+
+// Alle 4 Sekunden wechseln
+setInterval(() => {
   showRandomThought();
+  updatePosition();
+}, 4000);
 
-  // Alle 4 Sekunden wechseln
-  setInterval(() => {
-    showRandomThought();
-    updatePosition();
-  }, 4000);
-
-  // Bei Fensterresize
-  window.addEventListener('resize', updatePosition);
-});
+// Bei Fensterresize
+window.addEventListener('resize', updatePosition);
