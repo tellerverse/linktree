@@ -493,12 +493,12 @@ adjust if needed */
 }
 
 /* --- mobile layout fix --- */
-/* --- MOBILE PLAYER SCROLL LAYOUT --- */
+/* --- MOBILE PLAYER SCROLL LAYOUT (FIXED CLEAN VERSION) --- */
 @media (max-width: 600px) {
   .card { 
     width: 95vw;
     padding: 20px;
-    margin-bottom: 280px; /* zusätzlicher Raum für Scroll */
+    margin-bottom: 40px; /* kleiner, realer Abstand */
   }
 
   .card-header { 
@@ -516,9 +516,10 @@ adjust if needed */
     font-size: 2rem;
   }
 
+  /* Player ist EIGENER Abschnitt unterhalb der Karte */
   #media-player {
-    position: relative; /* NICHT absolute – gehört jetzt in Scrollflow */
-    margin-top: 220px; /* erzeugt “versteckten” Scrollraum */
+    position: relative;
+    margin-top: 120px; /* scrollbarer Abstand nach der Karte */
     display: flex;
     flex-direction: column;
     align-items: center;
