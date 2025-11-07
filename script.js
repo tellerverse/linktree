@@ -201,7 +201,9 @@ timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
 
- // --- Gedankblasen für Karte 2 ---
+// ...existing code until thought bubbles section...
+
+// --- Gedankblasen für Karte 2 ---
 const card = cards[1];
 const profile = card.querySelector('.profile-pic');
 const thoughts = ["Döner ohne Gurke 😎", "Rumänien vibes", "Ich liebe Musik"];
@@ -220,81 +222,93 @@ card.appendChild(bubbleContainer);
 // Hauptblase
 const mainBubble = document.createElement('div');
 mainBubble.classList.add('thought-bubble');
+mainBubble.style.opacity = 0;
+mainBubble.style.transition = 'opacity 0.3s, transform 0.3s';
+mainBubble.style.position = 'absolute';
+mainBubble.style.padding = '15px';
+mainBubble.style.borderRadius = '20px';
+mainBubble.style.maxWidth = '200px';
+mainBubble.style.textAlign = 'center';
 bubbleContainer.appendChild(mainBubble);
 
-// Kleine Blasen (gedankenblasen-kette)
+// Kleine Blasen
 const smallBubbles = [];
-const smallSizes = [14, 10, 6]; // abnehmende Größe
+const smallSizes = [14, 10, 6];
 for (let i = 0; i < smallSizes.length; i++) {
-  const sb = document.createElement('div');
-  sb.classList.add('thought-bubble');
-  sb.style.display = 'block';
-  sb.style.width = `${smallSizes[i]}px`;
-  sb.style.height = `${smallSizes[i]}px`;
-  sb.style.padding = '0';
-  sb.style.borderRadius = '50%';
-  sb.style.textAlign = 'center';
-  sb.style.opacity = 0.6;
-  sb.style.overflow = 'hidden';
-  bubbleContainer.appendChild(sb);
-  smallBubbles.push(sb);
+    const sb = document.createElement('div');
+    sb.classList.add('thought-bubble');
+    sb.style.position = 'absolute';
+    sb.style.width = `${smallSizes[i]}px`;
+    sb.style.height = `${smallSizes[i]}px`;
+    sb.style.padding = '0';
+    sb.style.borderRadius = '50%';
+    sb.style.opacity = 0;
+    sb.style.transition = 'opacity 0.3s, transform 0.3s';
+    bubbleContainer.appendChild(sb);
+    smallBubbles.push(sb);
 }
 
-// Funktion zur Positionierung
 function updateBubbles() {
-  if (!card.classList.contains('active')) {
-    bubbleContainer.style.display = 'none';
-    return;
-  }
-  bubbleContainer.style.display = 'block';
+    if (!card.classList.contains('active')) {
+        [mainBubble, ...smallBubbles].forEach(b => {
+            b.style.opacity = 0;
+            b.style.transform = 'translateX(-50%) translateY(-6px)';
+        });
+        setTimeout(() => bubbleContainer.style.display = 'none', 300);
+        return;
+    }
 
-  const rect = profile.getBoundingClientRect();
-  const cardRect = card.getBoundingClientRect();
-  const x = rect.left - cardRect.left + rect.width / 2;
-  const y = rect.top - cardRect.top;
+    bubbleContainer.style.display = 'block';
+    
+    const rect = profile.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const x = rect.left - cardRect.left + rect.width / 2;
+    const y = rect.top - cardRect.top;
 
-  // Hauptblase
-  mainBubble.style.left = `${x}px`;
-  mainBubble.style.top = `${y - 80}px`; // oben über Profilbild
-  mainBubble.style.transform = 'translateX(-50%)';
+    // Hauptblase
+    mainBubble.style.left = `${x}px`;
+    mainBubble.style.top = `${y - 80}px`;
+    mainBubble.style.transform = 'translateX(-50%) translateY(0)';
+    mainBubble.style.opacity = 1;
 
-  // Kleine Blasen als Kette unter der großen Blase
-  let offsetX = 0;
-  let offsetY = 0;
-  smallBubbles.forEach((sb, i) => {
-    sb.style.left = `${x + offsetX}px`;
-    sb.style.top = `${y - 80 + 40 + offsetY}px`; // 40px unter Hauptblase
-    sb.style.transform = 'translateX(-50%)';
-    offsetX += 4;  // leicht nach rechts versetzt
-    offsetY += 10; // leicht nach unten versetzt
-  });
+    // Kleine Blasen
+    let offsetX = 0;
+    let offsetY = 0;
+    smallBubbles.forEach((sb, i) => {
+        sb.style.left = `${x + offsetX}px`;
+        sb.style.top = `${y - 80 + 40 + offsetY}px`;
+        sb.style.transform = 'translateX(-50%) translateY(0)';
+        sb.style.opacity = 0.6;
+        offsetX += 4;
+        offsetY += 10;
+    });
 
-  // Farben
-  const color = card.dataset.color || '#fff';
-  [mainBubble, ...smallBubbles].forEach(b => {
-    b.style.background = color + '33';
-    b.style.border = `2px solid ${color}`;
-    b.style.color = color;
-  });
+    // Farben
+    const color = card.dataset.color || '#fff';
+    [mainBubble, ...smallBubbles].forEach(b => {
+        b.style.background = color + '33';
+        b.style.border = `2px solid ${color}`;
+        b.style.color = color;
+    });
 }
 
-// Zufälliger Text
 function showRandomThought() {
-  mainBubble.textContent = thoughts[Math.floor(Math.random() * thoughts.length)];
+    const thought = thoughts[Math.floor(Math.random() * thoughts.length)];
+    mainBubble.textContent = thought;
+    updateBubbles();
 }
 
 // Initial
 showRandomThought();
-updateBubbles();
 
 // Text alle 4 Sekunden wechseln
-setInterval(() => {
-  showRandomThought();
-  updateBubbles();
-}, 4000);
+setInterval(showRandomThought, 4000);
 
+// Resize Handler
 window.addEventListener('resize', updateBubbles);
 
 // Kartenswitch beobachten
-const observer = new MutationObserver(() => updateBubbles());
+const observer = new MutationObserver(updateBubbles);
 observer.observe(card, { attributes: true, attributeFilter: ['class'] });
+
+// ...rest of existing code...
