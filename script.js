@@ -225,17 +225,18 @@ mainBubble.classList.add('thought-bubble');
 mainBubble.style.opacity = 0;
 mainBubble.style.transition = 'opacity 0.3s, transform 0.3s';
 mainBubble.style.position = 'absolute';
-mainBubble.style.padding = '10px'; // von 15px reduziert
-mainBubble.style.borderRadius = '15px'; // von 20px reduziert
-mainBubble.style.maxWidth = '150px'; // von 200px reduziert
+mainBubble.style.padding = '10px';
+mainBubble.style.borderRadius = '15px';
+mainBubble.style.maxWidth = '150px';
 mainBubble.style.textAlign = 'center';
-mainBubble.style.fontSize = '14px'; // Neue Zeile: kleinere Schrift
-mainBubble.style.outline = 'none'; // Neue Zeile: entfernt den grünen Outline
+mainBubble.style.fontSize = '14px';
+mainBubble.style.outline = 'none';
+mainBubble.style.backgroundColor = 'transparent'; // Hintergrund transparent
 bubbleContainer.appendChild(mainBubble);
 
-// Kleine Blasen - kleinere Größen
+// Kleine Blasen
 const smallBubbles = [];
-const smallSizes = [10, 7, 4]; // von [14, 10, 6] reduziert
+const smallSizes = [10, 7, 4];
 for (let i = 0; i < smallSizes.length; i++) {
     const sb = document.createElement('div');
     sb.classList.add('thought-bubble');
@@ -245,7 +246,8 @@ for (let i = 0; i < smallSizes.length; i++) {
     sb.style.padding = '0';
     sb.style.borderRadius = '50%';
     sb.style.opacity = 0;
-    sb.style.outline = 'none'; // Neue Zeile: entfernt den grünen Outline
+    sb.style.outline = 'none';
+    sb.style.backgroundColor = 'transparent'; // Hintergrund transparent
     sb.style.transition = 'opacity 0.3s, transform 0.3s';
     bubbleContainer.appendChild(sb);
     smallBubbles.push(sb);
