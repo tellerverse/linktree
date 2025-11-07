@@ -225,15 +225,17 @@ mainBubble.classList.add('thought-bubble');
 mainBubble.style.opacity = 0;
 mainBubble.style.transition = 'opacity 0.3s, transform 0.3s';
 mainBubble.style.position = 'absolute';
-mainBubble.style.padding = '15px';
-mainBubble.style.borderRadius = '20px';
-mainBubble.style.maxWidth = '200px';
+mainBubble.style.padding = '10px'; // von 15px reduziert
+mainBubble.style.borderRadius = '15px'; // von 20px reduziert
+mainBubble.style.maxWidth = '150px'; // von 200px reduziert
 mainBubble.style.textAlign = 'center';
+mainBubble.style.fontSize = '14px'; // Neue Zeile: kleinere Schrift
+mainBubble.style.outline = 'none'; // Neue Zeile: entfernt den grünen Outline
 bubbleContainer.appendChild(mainBubble);
 
-// Kleine Blasen
+// Kleine Blasen - kleinere Größen
 const smallBubbles = [];
-const smallSizes = [14, 10, 6];
+const smallSizes = [10, 7, 4]; // von [14, 10, 6] reduziert
 for (let i = 0; i < smallSizes.length; i++) {
     const sb = document.createElement('div');
     sb.classList.add('thought-bubble');
@@ -243,6 +245,7 @@ for (let i = 0; i < smallSizes.length; i++) {
     sb.style.padding = '0';
     sb.style.borderRadius = '50%';
     sb.style.opacity = 0;
+    sb.style.outline = 'none'; // Neue Zeile: entfernt den grünen Outline
     sb.style.transition = 'opacity 0.3s, transform 0.3s';
     bubbleContainer.appendChild(sb);
     smallBubbles.push(sb);
@@ -265,22 +268,17 @@ function updateBubbles() {
     const x = rect.left - cardRect.left + rect.width / 2;
     const y = rect.top - cardRect.top;
 
-    // Hauptblase
     mainBubble.style.left = `${x}px`;
-    mainBubble.style.top = `${y - 80}px`;
-    mainBubble.style.transform = 'translateX(-50%) translateY(0)';
-    mainBubble.style.opacity = 1;
-
-    // Kleine Blasen
-    let offsetX = 0;
-    let offsetY = 0;
+    mainBubble.style.top = `${y - 60}px`; // von -80px reduziert
+    
+    // Kleine Blasen Position anpassen
     smallBubbles.forEach((sb, i) => {
         sb.style.left = `${x + offsetX}px`;
-        sb.style.top = `${y - 80 + 40 + offsetY}px`;
+        sb.style.top = `${y - 60 + 30 + offsetY}px`; // von -80 und 40 reduziert
         sb.style.transform = 'translateX(-50%) translateY(0)';
         sb.style.opacity = 0.6;
-        offsetX += 4;
-        offsetY += 10;
+        offsetX += 3; // von 4 reduziert
+        offsetY += 7; // von 10 reduziert
     });
 
     // Farben
