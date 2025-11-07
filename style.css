@@ -481,7 +481,6 @@ adjust if needed */
   font-size: 0.9rem;
   letter-spacing: 1px;
 }
-
 /* --- responsive --- */
 @media (max-width:900px) {
   #media-player { 
@@ -492,79 +491,74 @@ adjust if needed */
     width: 160px;
   }
 }
+
+/* --- mobile layout fix --- */
 @media (max-width:600px) {
   .card { 
     width:95vw;
     padding:20px;
   }
+
   .card-header { 
     flex-direction:column;
     align-items:center;
     text-align:center;
   }
+
   .profile-pic { 
     width:100px;
     height:100px;
   }
+
   .header-info h1 { 
     font-size:2rem;
   }
-  .player-info { 
-    display:none;
-  } /* save space */
-  #media-player { 
-    bottom: -110px;
+
+  #media-player {
+    position: absolute;
+    bottom: -150px;
     left: 50%;
     transform: translateX(-50%);
-  }
-}
-
-/* --- MOBILE PLAYER OPTIMIERUNG --- */
-@media (max-width: 600px) {
-  #media-player {
-    position: static; /* hängt direkt im Card-Flow, nicht mehr absolute */
-    margin-top: 20px;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 360px;
     gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 12px;
   }
 
   #player-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     text-align: center;
-    max-width: 90%;
+    align-items: center;
   }
 
   #player-controls {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
   }
 
   #time-slider {
     order: 3;
-    width: 90%;
-    margin-top: 10px;
+    width: 100%;
+    margin-top: 6px;
   }
 
   #volume-slider {
     transform: rotate(0deg);
-    width: 80%;
+    width: 100px;
     height: 5px;
   }
 
-  /* sorgt dafür, dass der Player nie abgeschnitten ist */
-  .card {
-    overflow: visible !important;
+  .card.active {
+    margin-bottom: 180px;
   }
 
-  body, html {
+  html, body {
     overflow-y: auto !important;
     overflow-x: hidden;
   }
