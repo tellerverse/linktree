@@ -519,24 +519,53 @@ adjust if needed */
   }
 }
 
-.thought-bubble {
-  position: absolute;
-  padding: 8px 12px;
-  border-radius: 15px;
-  font-size: 0.9rem;
-  max-width: 180px;
-  text-align: center;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
+/* --- MOBILE PLAYER OPTIMIERUNG --- */
+@media (max-width: 600px) {
+  #media-player {
+    position: static; /* hängt direkt im Card-Flow, nicht mehr absolute */
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-.thought-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 10px 8px 0 8px;
-  border-style: solid;
+  #player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  #player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  #time-slider {
+    order: 3;
+    width: 90%;
+    margin-top: 10px;
+  }
+
+  #volume-slider {
+    transform: rotate(0deg);
+    width: 80%;
+    height: 5px;
+  }
+
+  /* sorgt dafür, dass der Player nie abgeschnitten ist */
+  .card {
+    overflow: visible !important;
+  }
+
+  body, html {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+  }
 }
