@@ -419,7 +419,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
 
 /* --- MOBILE FIX --- */
 @media (max-width: 600px) {
-  .card { 
+  .card {
     position: relative !important;
     top: auto !important;
     left: auto !important;
@@ -427,6 +427,8 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
     width: 95vw;
     padding: 20px;
     margin: 60px auto;
+    height: auto !important;       /* ← das verhindert das “Ziehen” nach unten */
+    overflow: visible !important;  /* ← kein Clipping oder Stretch */
   }
 
   .card-header { 
