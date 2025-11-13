@@ -65,65 +65,63 @@ function introClickHandler() {
 
 // Switch / Cards
 function showCard(index) {
-  // 1) Card aktivieren
-  cards.forEach((card, i) => card.classList.toggle('active', i === index));
-  const activeCard = cards[index];
-  if (!activeCard) return;
-
-  // 2) ensure switch button is inside active card
-  if (!activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
-
-  // 3) set card color variable
-  const color = activeCard.dataset.color || '#ff66cc';
-  activeCard.style.setProperty('--card-color', color);
-
-  // 4) cursor
-  const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
-  setCursor(cursorFile);
-
-  // 5) video crossfade
-  const newVideoSrc = activeCard.dataset.video;
-  const nextSource = bgVideoNext.querySelector('source');
-  const mainSource = bgVideo.querySelector('source');
-  if (!nextSource.src.includes(newVideoSrc)) {
-    nextSource.src = newVideoSrc;
-    bgVideoNext.load();
-    bgVideoNext.classList.remove('hidden');
-    bgVideoNext.style.opacity = 0;
-    setTimeout(() => {
-      bgVideoNext.style.transition = 'opacity 1s ease';
-      bgVideoNext.style.opacity = 1;
-    }, 50);
-    setTimeout(() => {
-      mainSource.src = newVideoSrc;
-      bgVideo.load();
-      bgVideoNext.classList.add('hidden');
-      bgVideoNext.style.transition = '';
-      bgVideoNext.style.opacity = 0;
-    }, 1050);
-  }
-
-  // 6) move media player element INTO the active card, position absolute relative to it
+  const cards = document.querySelectorAll('.card');
+  const videos = document.querySelectorAll('.bg-video');
   const mediaPlayer = document.getElementById('media-player');
-  if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
-    activeCard.appendChild(mediaPlayer);
+  const color = cards[index].getAttribute('data-color');
+  const cursor = cards[index].getAttribute('data-cursor');
+  const videoSrc = cards[index].getAttribute('data-video');
+
+  // 1) Karten umschalten
+  cards.forEach((c, i) => {
+    c.classList.toggle('active', i === index);
+  });
+
+  // 2) Hintergrundvideo wechseln
+  videos.forEach((v) => {
+    if (v.getAttribute('src') === videoSrc) {
+      v.classList.remove('hidden');
+      v.play();
+    } else {
+      v.classList.add('hidden');
+      v.pause();
+    }
+  });
+
+  // 3) Farbe / Cursor
+  document.documentElement.style.setProperty('--card-color', color);
+  document.body.style.cursor = `url(${cursor}), auto`;
+
+  // 4) Media Player positionieren je nach Gerät
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+  if (!isMobile) {
+    // 💻 Desktop → Player IN Karte einfügen (wie bisher)
+    if (mediaPlayer && cards[index] !== mediaPlayer.parentElement) {
+      cards[index].appendChild(mediaPlayer);
+    }
+    mediaPlayer.style.position = 'absolute';
+    mediaPlayer.style.bottom = '-78px';
+    mediaPlayer.style.left = '50%';
+    mediaPlayer.style.transform = 'translateX(-50%)';
+  } else {
+    // 📱 Mobile → Player bleibt im Slider (unterhalb aller Karten)
+    const slider = document.getElementById('slider');
+    if (mediaPlayer && slider && mediaPlayer.parentElement !== slider) {
+      slider.appendChild(mediaPlayer);
+    }
+    mediaPlayer.style.position = 'relative';
+    mediaPlayer.style.bottom = 'auto';
+    mediaPlayer.style.left = 'auto';
+    mediaPlayer.style.transform = 'none';
+    mediaPlayer.style.margin = '100px auto 40px auto';
   }
 
-  // 7) style media player to match card color
-  mediaPlayer.style.setProperty('--card-color', color);
-  mediaPlayer.style.background = 'rgba(0,0,0,0.45)';
+  // 5) Player-Styling
   mediaPlayer.style.border = `2px solid ${color}`;
-  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`; // subtle colored glow
-
-  // 8) ensure active card allows overflow so player is visible
-  activeCard.style.overflow = 'visible';
-
-  // 9) update slider thumbs if present so border matches color
-  const timeSlider = document.getElementById('time-slider');
-  const volumeSlider = document.getElementById('volume-slider');
-  if (timeSlider) timeSlider.style.setProperty('--thumb-border', color);
-  if (volumeSlider) volumeSlider.style.setProperty('--thumb-border', color);
+  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`;
 }
+
 
 switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(current); });
 
