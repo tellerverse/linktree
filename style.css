@@ -424,11 +424,16 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
     top: auto !important;
     left: auto !important;
     transform: none !important;
-    width: 95vw;
+    width: 90vw;
+    max-width: 400px;
+    margin: 40px auto;
     padding: 20px;
-    margin: 60px auto;
-    height: auto !important;       /* ← das verhindert das “Ziehen” nach unten */
-    overflow: visible !important;  /* ← kein Clipping oder Stretch */
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .card.active {
+    transform: none !important;
   }
 
   .card-header { 
