@@ -53,22 +53,29 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   animation: blink 1.8s infinite, pulse 2s infinite;
 }
 @keyframes blink { 
-  50% { opacity:0.4; }
+  50% { 
+    opacity:0.4;
+  }
 }
 @keyframes pulse {
-  0%,100%{ transform:scale(1); } 
-  50%{ transform:scale(1.1); } 
+  0%,100%{
+    transform:scale(1);
+  } 
+  50%{
+    transform:scale(1.1);
+  } 
 }
 
 /* --- Slider container --- */
-#slider { 
-  position: relative;
+#slider { position: relative;
   width:100%;
   height:100%;
   opacity:0;
   transition: opacity 1s ease;
 }
-#slider.active { opacity:1; }
+#slider.active { 
+  opacity:1;
+}
 
 /* --- Card --- */
 .card {
@@ -91,6 +98,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   opacity:0;
   transition: all 0.8s ease;
   overflow: visible;
+/* wichtig: player kann außerhalb platziert werden */
 }
 .card.active {
   opacity:1;
@@ -98,7 +106,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   z-index:2;
 }
 
-/* Farb-Puls */
+/* Farb-Puls (optional) */
 @keyframes colorPulse {
   0% {
     border-color: color-mix(in srgb, var(--card-color) 80%, white 20%);
@@ -113,6 +121,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
     color: color-mix(in srgb, var(--card-color) 80%, white 20%);
   }
 }
+
 /* --- Header --- */
 .card-header {
   display:flex;
@@ -174,6 +183,10 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   mask: var(--icon-url) no-repeat center / contain; 
   -webkit-mask: var(--icon-url) no-repeat center / contain; 
 } 
+.social-icon.primary { 
+  color: var(--currentColor); 
+  transform: scale(1); 
+}
 
 /* --- Card text --- */
 .card-text { 
@@ -209,7 +222,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   filter: drop-shadow(0 0 2px currentColor);
 }
 
-/* --- Play Button --- */
+/* --- card-play-btn (wichtig, existiert) --- */
 .card-play-btn {
   width: 40%;
   padding: 15px 0;
@@ -231,9 +244,55 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   box-shadow: 0 0 30px var(--card-color);
 }
 
-/* --- Player Controls Icons --- */
+
+.player-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+/* funktioniert nur, wenn das SVG fill="currentColor" hat */
+}
+
+#player-controls button:hover .player-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px var(--card-color));
+}
+
+/* --- Switch Button --- */
+/* --- Switch Button (unten rechts in der Karte) --- */
+.switch-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: var(--card-color);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px var(--card-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 5;
+}
+
+.switch-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px var(--card-color);
+}
+
+.switch-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Allgemeine Mask-Button/Icons */
 .player-btn {
   all: unset;
+/* entfernt Browser-Styles */
   display: inline-block;
   width: 35px;
   height: 35px;
@@ -251,15 +310,51 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   transition: transform 0.3s ease, filter 0.3s ease;
   border-radius: 6px;
 }
+
 .player-btn:hover {
   transform: scale(1.2);
   filter: drop-shadow(0 0 10px var(--card-color));
 }
 
-/* --- Media Player Desktop --- */
+/* --- Eye Icon (div) --- */
+.visitor-eye {
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+          mask-image: var(--icon-url);
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: contain;
+  color: var(--card-color);
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+.player-btn.primary, .visitor-eye.primary {
+  color: var(--card-color);
+}
+
+.player-btn.primary:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px var(--card-color));
+}
+
+.visitor-eye.primary {
+  width: 16px;
+  height: 16px;
+}
+
+/* --- media player (wird INNEN in active card positioniert) --- */
+/* Position absolute relative to the card (JS will move the element into the active card) */
 #media-player {
   position: absolute;
+/* important: inside card */
   bottom: -78px;
+     /* offset under the card;
+adjust if needed */
   left: 50%;
   transform: translateX(-50%);
   display:flex;
@@ -268,11 +363,14 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   padding:10px 14px;
   border-radius:14px;
   background: rgba(0,0,0,0.5);
+/* overwritten by JS to add border and shadow */
   backdrop-filter: blur(12px);
   z-index:6;
   min-width: 320px;
   box-shadow: 0 6px 30px rgba(0,0,0,0.45);
 }
+
+/* media player internals */
 #player-cover { 
   width:48px;
   height:48px;
@@ -297,16 +395,28 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   text-overflow:ellipsis;
   overflow:hidden;
 }
+
 #player-info a:hover { 
   text-decoration: underline #fff 1px;
   filter: brightness(1.2) drop-shadow(0 0 10px var(--card-color));
 }
+
 #player-controls { 
   display:flex;
   align-items:center;
   gap:8px;
 }
 
+/* buttons */
+#player-controls button { 
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:1.15rem;
+  cursor:pointer;
+}
+
+/* time slider (playback) */
 #time-slider {
   -webkit-appearance:none;
   width:220px;
@@ -329,10 +439,20 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   background: var(--card-color);
   transform:scale(1.18);
 }
+#time-slider::-moz-range-thumb { 
+  width:14px;
+  height:14px;
+  background:#fff;
+  border-radius:50%;
+  border:2px solid var(--card-color);
+}
 
+/* volume slider (small) */
 #volume-slider { 
   transform: rotate(-90deg);
+  transform-origin: 50% 50%;
   width:50px;
+
   height:5px;
   -webkit-appearance:none;
   background: var(--card-color);
@@ -347,8 +467,12 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   background:#fff;
   border:2px solid var(--card-color);
 }
+#volume-slider:hover::-webkit-slider-thumb { 
+  background: var(--card-color);
+  transform:scale(1.15);
+}
 
-/* --- Version --- */
+/* --- version label --- */
 #version { 
   position: fixed;
   bottom: 10px;
@@ -356,4 +480,41 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   color: rgba(255,255,255,0.4);
   font-size: 0.9rem;
   letter-spacing: 1px;
+}
+
+/* --- responsive --- */
+@media (max-width:900px) {
+  #media-player { 
+    min-width: 260px;
+    bottom: -90px;
+  } 
+  #time-slider { 
+    width: 160px;
+  }
+}
+@media (max-width:600px) {
+  .card { 
+    width:95vw;
+    padding:20px;
+  }
+  .card-header { 
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .profile-pic { 
+    width:100px;
+    height:100px;
+  }
+  .header-info h1 { 
+    font-size:2rem;
+  }
+  .player-info { 
+    display:none;
+  } /* save space */
+  #media-player { 
+    bottom: -110px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
