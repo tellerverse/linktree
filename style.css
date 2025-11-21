@@ -383,7 +383,7 @@ adjust if needed */
   display:flex;
   flex-direction:column;
   gap:2px;
-  min-width:120px;
+  min-width:60px;
   max-width:260px;
   overflow:hidden;
 }
