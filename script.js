@@ -65,9 +65,24 @@ function introClickHandler() {
 
 // Switch / Cards
 function showCard(index) {
+  const activeCard = cards[index];
+  const mediaPlayer = document.getElementById('media-player');
+  
+  if (window.innerWidth > 768) {
+    // Desktop / Tablet: Player in Card
+    if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
+      activeCard.appendChild(mediaPlayer);
+      mediaPlayer.style.position = 'absolute';
+    }
+  } else {
+    // Mobile: Player unten fixieren
+    if (mediaPlayer && mediaPlayer.parentElement !== document.body) {
+      document.body.appendChild(mediaPlayer);
+      mediaPlayer.style.position = 'fixed';
+    }
+  }
   // 1) Card aktivieren
   cards.forEach((card, i) => card.classList.toggle('active', i === index));
-  const activeCard = cards[index];
   if (!activeCard) return;
 
   // 2) ensure switch button is inside active card
@@ -104,7 +119,6 @@ function showCard(index) {
   }
 
   // 6) move media player element INTO the active card, position absolute relative to it
-  const mediaPlayer = document.getElementById('media-player');
   if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
     activeCard.appendChild(mediaPlayer);
   }
