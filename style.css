@@ -343,8 +343,8 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
 
 /* --- Eye Icon (div) --- */
 .visitor-eye {
-  width: 16px;
-  height: 16px;
+  width: 25px;
+  height: 25px;
   background-color: currentColor;
   -webkit-mask-image: var(--icon-url);
   -webkit-mask-repeat: no-repeat;
@@ -368,8 +368,8 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
 }
 
 .visitor-eye.primary {
-  width: 16px;
-  height: 16px;
+  width: 25px;
+  height: 25px;
 }
 
 /* --- media player (wird INNEN in active card positioniert) --- */
