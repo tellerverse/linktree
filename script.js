@@ -230,3 +230,19 @@ audio.addEventListener('timeupdate', () => {
 timeSlider.addEventListener('input', (e) => {
   audio.currentTime = (e.target.value / 100) * audio.duration;
 });
+
+function wrapLetters() {
+  const elements = document.querySelectorAll('.letterblink');
+  elements.forEach(el => {
+    const text = el.textContent;         // Originaltext
+    el.textContent = '';                  // Leeren
+    text.split('').forEach(char => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      el.appendChild(span);
+    });
+  });
+}
+
+// Aufrufen, nachdem der DOM geladen ist
+document.addEventListener('DOMContentLoaded', wrapLetters);
