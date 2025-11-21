@@ -128,8 +128,15 @@ function showCard(index) {
   }
 
   // 6) move media player element INTO the active card, position absolute relative to it
-  if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
-    activeCard.appendChild(mediaPlayer);
+  if (window.innerWidth > 768) {  // <-- nur Desktop
+    if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
+        activeCard.appendChild(mediaPlayer);
+    }
+  } else {
+      // Mobile: sicherstellen, dass player im body bleibt
+      if (mediaPlayer && mediaPlayer.parentElement !== document.body) {
+          document.body.appendChild(mediaPlayer);
+      }
   }
 
   // 7) style media player to match card color
