@@ -524,6 +524,9 @@ adjust if needed */
   #volume-slider {
     display: none;
   }
+  #time-slider { 
+    width: 100px;
+  }
   #media-player {
     position: fixed !important;
     bottom: 0 !important;
