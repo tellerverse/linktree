@@ -68,17 +68,26 @@ function showCard(index) {
   const activeCard = cards[index];
   const mediaPlayer = document.getElementById('media-player');
   
-  if (window.innerWidth > 768) {
-    // Desktop / Tablet: Player in Card
+    if (window.innerWidth > 768) {
+    // Desktop: Player bleibt in Card
     if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
       activeCard.appendChild(mediaPlayer);
       mediaPlayer.style.position = 'absolute';
+      mediaPlayer.style.bottom = '-78px'; // oder dein Standardwert
+      mediaPlayer.style.left = '50%';
+      mediaPlayer.style.transform = 'translateX(-50%)';
     }
   } else {
-    // Mobile: Player unten fixieren
+    // Mobile: Player fixed am Bildschirm unten
     if (mediaPlayer && mediaPlayer.parentElement !== document.body) {
       document.body.appendChild(mediaPlayer);
       mediaPlayer.style.position = 'fixed';
+      mediaPlayer.style.bottom = '0';
+      mediaPlayer.style.left = '0';
+      mediaPlayer.style.width = '100%';
+      mediaPlayer.style.transform = 'none';
+      mediaPlayer.style.borderRadius = '0';
+      mediaPlayer.style.padding = '10px';
     }
   }
   // 1) Card aktivieren

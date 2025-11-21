@@ -522,10 +522,10 @@ adjust if needed */
 /* Mobile Media Player fixieren */
 @media (max-width: 768px) {
   #media-player {
-    position: fixed !important;   /* fixed statt absolute */
-    bottom: 0 !important;         /* immer unten */
+    position: fixed !important;
+    bottom: 0 !important;
     left: 0 !important;
-    width: 100% !important;       /* volle Breite */
+    width: 100% !important;
     border-radius: 0 !important;
     padding: 10px;
     box-sizing: border-box;
@@ -537,7 +537,7 @@ adjust if needed */
   }
 
   #player-info {
-    display: flex; /* optional, kannst du text reduzieren */
+    display: flex;
     flex-direction: column;
     overflow: hidden;
     white-space: nowrap;
