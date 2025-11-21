@@ -308,7 +308,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   color: var(--card-color);
   cursor: pointer;
   transition: transform 0.3s ease, filter 0.3s ease;
-  border-radius: 6px;
+  border-radius: 0px;
 }
 
 .player-btn:hover {
@@ -521,12 +521,15 @@ adjust if needed */
 
 /* Mobile Media Player fixieren */
 @media (max-width: 768px) {
+  #volume-slider {
+    display: none;
+  }
   #media-player {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    border-radius: 0 !important;
+    border-radius: 14px !important;
     padding: 10px;
     box-sizing: border-box;
     backdrop-filter: blur(12px);

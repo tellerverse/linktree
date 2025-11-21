@@ -86,7 +86,7 @@ function showCard(index) {
       mediaPlayer.style.left = '0';
       mediaPlayer.style.width = '100%';
       mediaPlayer.style.transform = 'none';
-      mediaPlayer.style.borderRadius = '0';
+      mediaPlayer.style.borderRadius = '14px';
       mediaPlayer.style.padding = '10px';
     }
   }
