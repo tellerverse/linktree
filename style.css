@@ -77,6 +77,17 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   opacity:1;
 }
 
+.card-wrapper {
+  position: relative;   /* FIX */
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;    /* nicht 90vh */
+  overflow-y: auto;     /* scrollt */
+  display: flex;
+  justify-content: center;
+  align-items: center;  /* Card bleibt in Mitte */
+}
+
 /* --- Card --- */
 .card {
   position:absolute;
@@ -238,13 +249,13 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
 }
 
 /* --- visitor display --- */
-.visitor-display { 
+.visitor-display {
   display:flex;
   align-items:center;
   gap:6px;
   font-size:0.85rem;
   margin-top:10px;
-  opacity:0.9;
+  
 }
 .visitor-eye {
   width:25px;
@@ -297,9 +308,9 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 20px var(--card-color);
   transition: transform 0.2s, box-shadow 0.2s;
   z-index: 5;
+  animation: borderPulse 2s infinite;
 }
 
 .switch-btn:hover {
@@ -382,6 +393,7 @@ a, button, button > div, a > div, .player-btn, .switch-btn {
 adjust if needed */
   left: 50%;
   transform: translateX(-50%);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
   display:flex;
   align-items:center;
   gap:12px;
@@ -416,7 +428,7 @@ adjust if needed */
 #player-info a { 
   color: var(--card-color);
   text-decoration:none;
-  font-size:0.85rem;
+  font-size:1.4rem;
   white-space:nowrap;
   text-overflow:ellipsis;
   overflow:hidden;
@@ -547,11 +559,35 @@ adjust if needed */
 
 /* Mobile Media Player fixieren */
 @media (max-width: 768px) {
+  .social-links li a {
+    gap:4px;
+    font-size:1.7rem;
+  }
+  .social-icon {
+    width: 35px; 
+    height: 35px;
+  }
+  .card-text { 
+    font-size:1rem;
+    line-height:1.5;
+  }
   #volume-slider {
     display: none;
   }
   #time-slider { 
     width: 100px;
+  }
+  .card {
+    transform: translateX(-50%) scale(0.85);
+    top: 5%;
+    margin: 20px auto; /* zentriert horizontal, Abstand oben */
+    scale: 1; /* optional */
+  }
+  .card-wrapper {
+    position: relative;
+    max-height: 100vh; /* ganze Höhe */
+    overflow-y: auto;
+    display: block; /* flex/center entfernen */
   }
   #media-player {
     position: fixed !important;
@@ -567,7 +603,9 @@ adjust if needed */
     justify-content: space-between;
     align-items: center;
   }
-
+  #player-info a { 
+    font-size:1.2rem;
+  }
   #player-info {
     display: flex;
     flex-direction: column;
@@ -581,12 +619,40 @@ adjust if needed */
   }
 
   #version {
-    bottom: 60px; /* etwas über dem Player */
-    right: 10px;
-    font-size: 0.75rem; /* kleiner */
+    display: none;
   }
   
   body, html {
     overflow-x: hidden;
   }
 }
+
+.card-content > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.6s ease;
+}
+
+.card.active .card-content > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card.active .card-content > *:nth-child(1) { transition-delay: 0.3s; }
+.card.active .card-content > *:nth-child(2) { transition-delay: 0.6s; }
+.card.active .card-content > *:nth-child(3) { transition-delay: 0.8s; }
+.card.active .card-content > *:nth-child(4) { transition-delay: 1.0s; }
+
+.social-links > * {
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.6s ease;
+}
+
+.card.active .social-links > * {
+  opacity: 1;
+}
+
+.card.active .social-links > *:nth-child(1) { transition-delay: 0.3s; }
+.card.active .social-links > *:nth-child(2) { transition-delay: 0.4s; }
+.card.active .social-links > *:nth-child(3) { transition-delay: 0.5s; }
+.card.active .social-links > *:nth-child(4) { transition-delay: 0.6s; }

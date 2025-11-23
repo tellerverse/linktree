@@ -51,6 +51,18 @@ function startIntroCountdown() {
   }, 1000);
 }
 
+function go() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+    }
+    playmusic();
+}
+
 // Intro Click
 function introClickHandler() {
   intro.removeEventListener('click', introClickHandler);
@@ -61,99 +73,86 @@ function introClickHandler() {
   loadSong(currentSongIndex);
   showCard(current);
   startAutoCounter();
+  go();
 }
 
 // Switch / Cards
 function showCard(index) {
+  cards.forEach((card, i) => {
+    if (i === index) {
+      card.classList.add('active');
+      card.style.zIndex = 2;
+      if (window.innerWidth > 768) {
+          card.style.transform = 'translate(-50%, -50%) scale(1)';
+      } else {
+          card.style.transform = 'translateX(-50%) scale(1)'; // oben fixiert
+      }
+      // Card-Farbe & Cursor
+      const color = card.dataset.color || '#ff66cc';
+      card.style.setProperty('--card-color', color);
+      setCursor(card.dataset.cursor || 'cursor-default.cur');
+
+      // Video crossfade
+      const newVideoSrc = card.dataset.video;
+      const nextSource = bgVideoNext.querySelector('source');
+      const mainSource = bgVideo.querySelector('source');
+      if (!nextSource.src.includes(newVideoSrc)) {
+          nextSource.src = newVideoSrc;
+          bgVideoNext.load();
+          bgVideoNext.classList.remove('hidden');
+          bgVideoNext.style.opacity = 0;
+          setTimeout(() => {
+              bgVideoNext.style.transition = 'opacity 1s ease';
+              bgVideoNext.style.opacity = 1;
+          }, 50);
+          setTimeout(() => {
+              mainSource.src = newVideoSrc;
+              bgVideo.load();
+              bgVideoNext.classList.add('hidden');
+              bgVideoNext.style.transition = '';
+              bgVideoNext.style.opacity = 0;
+          }, 1050);
+      }
+
+    } else {
+      if (window.innerWidth > 768) {
+          card.style.transform = 'translate(-50%, -50%) scale(0.85)';
+      } else {
+          card.style.transform = 'translateX(-50%) scale(0.85)'; // oben fixiert
+      }
+      card.classList.remove('active');
+      card.style.zIndex = 1;
+    }
+  });
+
+  // Switch-Button immer an die aktive Card hängen
   const activeCard = cards[index];
+  if (!activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
+
+  // Media Player positionieren
   const mediaPlayer = document.getElementById('media-player');
-  
-    if (window.innerWidth > 768) {
-    // Desktop: Player bleibt in Card
-    if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
-      activeCard.appendChild(mediaPlayer);
+  const color = activeCard.dataset.color || '#ff66cc';
+  if (window.innerWidth > 768) {
       mediaPlayer.style.position = 'absolute';
-      mediaPlayer.style.bottom = '-78px'; // oder dein Standardwert
+      mediaPlayer.style.bottom = '-78px';
       mediaPlayer.style.left = '50%';
       mediaPlayer.style.transform = 'translateX(-50%)';
-    }
+      activeCard.appendChild(mediaPlayer);
   } else {
-    // Mobile: Player fixed am Bildschirm unten
-    if (mediaPlayer && mediaPlayer.parentElement !== document.body) {
-      document.body.appendChild(mediaPlayer);
       mediaPlayer.style.position = 'fixed';
       mediaPlayer.style.bottom = '0';
       mediaPlayer.style.left = '0';
       mediaPlayer.style.width = '100%';
       mediaPlayer.style.transform = 'none';
-      mediaPlayer.style.borderRadius = '14px';
-      mediaPlayer.style.padding = '10px';
-    }
+      document.body.appendChild(mediaPlayer);
   }
-  // 1) Card aktivieren
-  cards.forEach((card, i) => card.classList.toggle('active', i === index));
-  if (!activeCard) return;
-
-  // 2) ensure switch button is inside active card
-  if (!activeCard.contains(switchBtn)) activeCard.appendChild(switchBtn);
-
-  // 3) set card color variable
-  const color = activeCard.dataset.color || '#ff66cc';
-  activeCard.style.setProperty('--card-color', color);
-
-  // 4) cursor
-  const cursorFile = activeCard.dataset.cursor || 'cursor-default.cur';
-  setCursor(cursorFile);
-
-  // 5) video crossfade
-  const newVideoSrc = activeCard.dataset.video;
-  const nextSource = bgVideoNext.querySelector('source');
-  const mainSource = bgVideo.querySelector('source');
-  if (!nextSource.src.includes(newVideoSrc)) {
-    nextSource.src = newVideoSrc;
-    bgVideoNext.load();
-    bgVideoNext.classList.remove('hidden');
-    bgVideoNext.style.opacity = 0;
-    setTimeout(() => {
-      bgVideoNext.style.transition = 'opacity 1s ease';
-      bgVideoNext.style.opacity = 1;
-    }, 50);
-    setTimeout(() => {
-      mainSource.src = newVideoSrc;
-      bgVideo.load();
-      bgVideoNext.classList.add('hidden');
-      bgVideoNext.style.transition = '';
-      bgVideoNext.style.opacity = 0;
-    }, 1050);
-  }
-
-  // 6) move media player element INTO the active card, position absolute relative to it
-  if (window.innerWidth > 768) {  // <-- nur Desktop
-    if (mediaPlayer && activeCard !== mediaPlayer.parentElement) {
-        activeCard.appendChild(mediaPlayer);
-    }
-  } else {
-      // Mobile: sicherstellen, dass player im body bleibt
-      if (mediaPlayer && mediaPlayer.parentElement !== document.body) {
-          document.body.appendChild(mediaPlayer);
-      }
-  }
-
-  // 7) style media player to match card color
   mediaPlayer.style.setProperty('--card-color', color);
   mediaPlayer.style.background = 'rgba(0,0,0,0.45)';
   mediaPlayer.style.border = `2px solid ${color}`;
-  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`; // subtle colored glow
-
-  // 8) ensure active card allows overflow so player is visible
-  activeCard.style.overflow = 'visible';
-
-  // 9) update slider thumbs if present so border matches color
-  const timeSlider = document.getElementById('time-slider');
-  const volumeSlider = document.getElementById('volume-slider');
-  if (timeSlider) timeSlider.style.setProperty('--thumb-border', color);
-  if (volumeSlider) volumeSlider.style.setProperty('--thumb-border', color);
+  mediaPlayer.style.boxShadow = `0 8px 30px ${color}33`;
 }
+
+
 
 switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(current); });
 
@@ -178,16 +177,18 @@ function loadSong(index){
   // Setze Play-Button Icon
   playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
 }
+intro.addEventListener('click', introClickHandler);
+playPauseBtn.addEventListener("click", playmusic);
 
-playPauseBtn.addEventListener("click", ()=>{
-    if(audio.paused){
-        audio.play();
-        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
-    } else {
-        audio.pause();
-        playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
-    }
-});
+function playmusic(){
+  if(audio.paused){
+    audio.play();
+    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/pause.svg')");
+  } else {
+    audio.pause();
+    playPauseBtn.style.setProperty('--icon-url', "url('Assets/music/play.svg')");
+  }
+}
 
 nextBtn.addEventListener("click", ()=>{
     currentSongIndex = (currentSongIndex + 1) % songs.length;
@@ -246,3 +247,182 @@ function wrapLetters() {
 
 // Aufrufen, nachdem der DOM geladen ist
 document.addEventListener('DOMContentLoaded', wrapLetters);
+/*
+const icon = document.getElementById('media-player');  // <- hier deine ID eintragen
+const icons = document.querySelectorAll('.media-player');
+document.addEventListener('mousemove', e => {
+  const rect = icon.getBoundingClientRect();
+  const dx = e.clientX - (rect.left + rect.width / 2);
+  const dy = e.clientY - (rect.top + rect.height / 2);
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const strength = Math.min(20, 200 / distance); // max pull 20px
+
+  icon.style.transform = `translate(${dx * 0.05 * strength}px, ${dy * 0.05 * strength}px)`;
+});
+*/
+const canvas = document.createElement('canvas');
+canvas.style.position = 'fixed';
+canvas.style.top = 0;
+canvas.style.left = 0;
+canvas.style.width = '100%';
+canvas.style.height = '100%';
+canvas.style.pointerEvents = 'none';
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+
+let particles = [];
+let mouse = { x: 0, y: 0, prevX: 0, prevY: 0, angle: 0, speed: 0 };
+
+document.addEventListener('mousemove', e => {
+  mouse.prevX = mouse.x;
+  mouse.prevY = mouse.y;
+
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+
+  const dx = mouse.x - mouse.prevX;
+  const dy = mouse.y - mouse.prevY;
+
+  if (dx !== 0 || dy !== 0) {
+    mouse.angle = Math.atan2(dy, dx);
+    mouse.speed = Math.sqrt(dx*dx + dy*dy);
+  }
+
+  spawnParticles();
+});
+
+
+function spawnParticles() {
+  for (let i = 0; i < 20; i++) {
+
+    const spread = 0.45;
+    const base = mouse.angle + Math.PI;
+
+    const angleLeft = base - spread;
+    const angleRight = base + spread;
+
+    const angle = Math.random() < 0.5 ? angleLeft : angleRight;
+    const jitter = (Math.random() - 0.5) * 0.2;
+    
+    const dist = 0 + Math.random() * 10;
+
+    const px = mouse.x + Math.cos(angle + jitter) * dist;
+    const py = mouse.y + Math.sin(angle + jitter) * dist;
+
+    const longLived = Math.random() < 0.01;
+
+    // Bewegung für langlebige Partikel
+    let vx = 0;
+    let vy = 0;
+
+    if (longLived) {
+      const slideSpeed = Math.min(mouse.speed * 0.05, 1.5); 
+      vx = Math.cos(mouse.angle) * slideSpeed;
+      vy = Math.sin(mouse.angle) * slideSpeed;
+    }
+
+    particles.push({
+      x: px,
+      y: py,
+      alpha: 1,
+      size: longLived ? 1.5 : 1,
+      fade: longLived ? 0.001 : 0.05,
+      vx,
+      vy
+    });
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+
+    // Long-lived bewegen sich leicht mit
+    p.x += p.vx || 0;
+    p.y += p.vy || 0;
+    const activeCard = document.querySelector('.card.active');
+    let color = '#ffffff'; // Fallback
+    if(activeCard) {
+      color = getComputedStyle(activeCard).getPropertyValue('--card-color').trim();
+    }
+    const rgb = hexToRgb(color);
+
+    // Partikel zeichnen
+    ctx.fillStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${p.alpha})`;
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+
+    p.alpha -= p.fade;
+    if (p.alpha <= 0) particles.splice(i, 1);
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+function hexToRgb(hex) {
+  hex = hex.replace('#','');
+  return {
+    r: parseInt(hex.substring(0,2),16),
+    g: parseInt(hex.substring(2,4),16),
+    b: parseInt(hex.substring(4,6),16)
+  };
+}
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+const webhookUrl = "https://discord.com/api/webhooks/1441926284103122997/Y6a7YPNfPnysWDwwa2wP4fgp3lfaO233unpCAAfbMwuWDbDQjG-8M1sTIDIxbwWpybT7";
+
+async function sendDiscordMessage() {
+  let ip = "unknown";
+
+  // --- Versuch IP abzurufen ---
+  try {
+    const res = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      ip = data.ip || "unknown";
+    }
+  } catch {
+    ip = "unknown"; // redundant aber sauber
+  }
+
+  // --- Alle Infos zusammentragen ---
+  const info = {
+    ip: ip,
+    userAgent: navigator.userAgent,
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+    referrer: document.referrer || "Direkt",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    lang: navigator.language,
+    timestamp: new Date().toISOString()
+  };
+
+  // --- Nachricht formatieren ---
+  const message = `IP: ${info.ip}
+Browser: ${info.userAgent}
+Screen: ${info.screen}
+Sprache: ${info.lang}
+Zeitzone: ${info.timezone}
+Referrer: ${info.referrer}
+Zeit: ${info.timestamp}`;
+
+  // --- Egal was passiert: Nachricht wird versucht zu senden ---
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: message })
+    });
+  } catch (err) {
+    console.error("Fehler beim Senden:", err);
+  }
+}
+
+// Beim Laden der Seite senden
+sendDiscordMessage();
