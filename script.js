@@ -86,7 +86,28 @@ function introClickHandler() {
   startAutoCounter();
   go();
 }
+function switchBackgroundVideo(newVideoSrc) {
+    const mainSource = bgVideo.querySelector('source');
+    const nextSource = bgVideoNext.querySelector('source');
 
+    nextSource.src = newVideoSrc;
+    bgVideoNext.load();
+    bgVideoNext.classList.remove('hidden');
+    bgVideoNext.style.opacity = 0;
+
+    setTimeout(() => {
+        bgVideoNext.style.transition = 'opacity 1s ease';
+        bgVideoNext.style.opacity = 1;
+    }, 50);
+
+    setTimeout(() => {
+        mainSource.src = newVideoSrc;
+        bgVideo.load();
+        bgVideoNext.classList.add('hidden');
+        bgVideoNext.style.transition = '';
+        bgVideoNext.style.opacity = 0;
+    }, 1050);
+}
 // Switch / Cards
 function showCard(index) {
   cards.forEach((card, i) => {
@@ -105,25 +126,7 @@ function showCard(index) {
 
       // Video crossfade
       const newVideoSrc = card.dataset.video;
-      const nextSource = bgVideoNext.querySelector('source');
-      const mainSource = bgVideo.querySelector('source');
-      if (!nextSource.src.includes(newVideoSrc)) {
-          nextSource.src = newVideoSrc;
-          bgVideoNext.load();
-          bgVideoNext.classList.remove('hidden');
-          bgVideoNext.style.opacity = 0;
-          setTimeout(() => {
-              bgVideoNext.style.transition = 'opacity 1s ease';
-              bgVideoNext.style.opacity = 1;
-          }, 50);
-          setTimeout(() => {
-              mainSource.src = newVideoSrc;
-              bgVideo.load();
-              bgVideoNext.classList.add('hidden');
-              bgVideoNext.style.transition = '';
-              bgVideoNext.style.opacity = 0;
-          }, 1050);
-      }
+      switchBackgroundVideo(newVideoSrc);
 
     } else {
       if (window.innerWidth > 768) {
