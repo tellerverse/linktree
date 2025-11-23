@@ -39,8 +39,3 @@ v2.8<span style="font-family: 'Arial', monospace;"><a href="https://www.instagra
 
 
 
-
-const BOT_TOKEN = 'MTQ0MTkzMTkzMzY3MDk2NTI4OA.Gy83Ck.8qqH_AnZPcQe7BOEHuJh1pbc_ej4e8SBgChREg';
-const GUILD_ID = '1441926221779833056';
-const FORUM_CHANNEL_ID = '1441936609581989928'; // Kanal für Threads
-const STATS_CHANNEL_ID = '1441937056463982765'; // Kanal für Statistik
