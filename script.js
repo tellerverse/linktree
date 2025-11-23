@@ -63,6 +63,16 @@ function go() {
     playmusic();
 }
 
+function getCardFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const card = parseInt(params.get('card'));
+  if (!isNaN(card) && card >= 0 && card < cards.length) {
+    return card;
+  }
+  return 0; // Default
+}
+
+
 // Intro Click
 function introClickHandler() {
   intro.removeEventListener('click', introClickHandler);
@@ -71,6 +81,7 @@ function introClickHandler() {
   slider.classList.add('active');
   currentSongIndex = Math.floor(Math.random()*songs.length);
   loadSong(currentSongIndex);
+  current = getCardFromURL();
   showCard(current);
   startAutoCounter();
   go();
