@@ -158,6 +158,7 @@ switchBtn.addEventListener('click', ()=>{ current=(current+1)%total; showCard(cu
 
 // Media Player
 const audio = new Audio();
+audio.volume = 0.5;
 const playerCover=document.getElementById("player-cover");
 const playerTitle=document.getElementById("player-title");
 const playerArtist=document.getElementById("player-artist");
