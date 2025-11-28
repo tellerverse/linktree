@@ -51,18 +51,6 @@ function startIntroCountdown() {
   }, 1000);
 }
 
-function go() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-    }
-    playmusic();
-}
-
 function getCardFromURL() {
   const params = new URLSearchParams(window.location.search);
   const card = parseInt(params.get('card'));
@@ -84,7 +72,7 @@ function introClickHandler() {
   current = getCardFromURL();
   showCard(current);
   startAutoCounter();
-  go();
+  playmusic();
 }
 function switchBackgroundVideo(newVideoSrc) {
     const mainSource = bgVideo.querySelector('source');
